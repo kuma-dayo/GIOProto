@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+import "server_only/redis_data.proto";
+
+message SendMailReq {
+    string ticket = 2;
+    MailData mail_data = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10301;
+    }
+}
+
+message SendMailRsp {
+    int32 retcode = 1;
+    string ticket = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10302;
+    }
+}
+
+message NewMailNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10303;
+    }
+}
+
+message ReceiveMailReq {
+    uint32 mail_index = 1;
+    uint32 rest_num = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10304;
+    }
+}
+
+message ReceiveMailRsp {
+    int32 retcode = 1;
+    uint32 old_mail_index = 2;
+    repeated MailData mail_data_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10305;
+    }
+}
+
+message UpdateMailNotify {
+    uint32 saved_mail_index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10306;
+    }
+}
+
+message ClearMailBoxDataReq {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10307;
+    }
+}
+
+message SendOfflineMsgReq {
+    OfflineMsg msg = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10308;
+    }
+}
+
+message SendOfflineMsgRsp {
+    int32 retcode = 1;
+    string ticket = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10309;
+    }
+}
+
+message NewOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10310;
+    }
+}
+
+message GetOfflineMsgReq {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10311;
+    }
+}
+
+message GetOfflineMsgRsp {
+    int32 retcode = 1;
+    uint32 last_index = 2;
+    repeated OfflineMsg offline_msg_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10312;
+    }
+}
+
+message RemoveOfflineMsgNotify {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10313;
+    }
+}

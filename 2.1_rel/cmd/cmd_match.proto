@@ -1,0 +1,260 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message PlayerStartMatchReq {
+    MatchType match_type = 1;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_difficult_level = 13;
+    uint32 match_id = 14;
+    repeated uint32 match_param_list = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4153;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerStartMatchRsp {
+    int32 retcode = 1;
+    MatchType match_type = 2;
+    uint32 param = 3;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_difficult_level = 13;
+    uint32 match_id = 14;
+    uint32 punish_end_time = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4193;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerMatchInfoNotify {
+    uint32 host_uid = 1;
+    MatchType match_type = 2;
+    uint32 match_begin_time = 3;
+    uint32 estimate_match_cost_time = 4;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_difficult_level = 13;
+    uint32 match_id = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4177;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerCancelMatchReq {
+    MatchType match_type = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4155;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerCancelMatchRsp {
+    int32 retcode = 1;
+    MatchType match_type = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4174;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerMatchStopNotify {
+    uint32 host_uid = 1;
+    MatchReason reason = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4182;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MatchPlayerInfo {
+    OnlinePlayerInfo player_info = 1;
+    bool is_agreed = 2;
+}
+
+message GeneralMatchInfo {
+    uint32 match_id = 1;
+    repeated MatchPlayerInfo player_list = 2;
+    uint32 match_param = 3;
+}
+
+message PlayerMatchSuccNotify {
+    MatchType match_type = 1;
+    uint32 confirm_end_time = 2;
+    uint32 host_uid = 3;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_difficult_level = 13;
+    GeneralMatchInfo general_match_info = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4157;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerConfirmMatchReq {
+    MatchType match_type = 1;
+    bool is_agreed = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4165;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerConfirmMatchRsp {
+    int32 retcode = 1;
+    MatchType match_type = 2;
+    bool is_agreed = 3;
+    uint32 match_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4197;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerAllowEnterMpAfterAgreeMatchNotify {
+    uint32 target_uid = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4200;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerMatchAgreedResultNotify {
+    uint32 target_uid = 1;
+    
+    Reason reason = 2;
+    enum Reason {
+        SUCC = 0;
+        TARGET_SCENE_CANNOT_ENTER = 1;
+        SELF_MP_UNAVAILABLE = 2;
+        OTHER_DATA_VERSION_NOT_LATEST = 3;
+        DATA_VERSION_NOT_LATEST = 4;
+    }
+    
+    MatchType match_type = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4158;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerApplyEnterMpAfterMatchAgreedNotify {
+    MatchType match_type = 1;
+    OnlinePlayerInfo src_player_info = 2;
+    uint32 matchserver_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4198;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerGeneralMatchDismissNotify {
+    uint32 match_id = 1;
+    MatchReason reason = 2;
+    repeated uint32 uid_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4194;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerGeneralMatchConfirmNotify {
+    uint32 match_id = 1;
+    uint32 uid = 2;
+    bool is_agree = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4159;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerGetForceQuitBanInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4180;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerGetForceQuitBanInfoRsp {
+    int32 retcode = 1;
+    uint32 match_id = 2;
+    uint32 expire_time = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4188;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

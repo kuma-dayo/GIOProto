@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin_common.server.proto";
+
+message OfflineOpDefaultContext {
+    uint32 tag = 1;
+}
+
+message OfflineOpPlantFlowerActivityGiveFlowerContext {
+    uint32 uid = 1;
+    map<uint32, uint32> flower_num_map = 2;
+}
+
+message OfflineOpContext {
+    oneof context {
+        OfflineOpDefaultContext default_context = 1;
+        OfflineOpPlantFlowerActivityGiveFlowerContext plant_flower_give_flower_context = 2;
+    }
+}
+
+message OfflineOpData {
+    OfflineOpBin bin = 1;
+    OfflineOpContext context = 2;
+    uint32 max_length = 3;
+}
+
+message SendOfflineOpReq {
+    uint32 uid = 1;
+    fixed32 time = 2;
+    OfflineOpType op_type = 3;
+    OfflineOpData op_data = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12218;
+    }
+}
+
+message SendOfflineOpRsp {
+    int32 retcode = 1;
+    uint32 index = 2;
+    OfflineOpType op_type = 3;
+    OfflineOpContext context = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12209;
+    }
+}
+
+message GetOfflineOpReq {
+    OfflineOpType op_type = 1;
+    uint32 index = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12243;
+    }
+}
+
+message GetOfflineOpRsp {
+    int32 retcode = 1;
+    repeated bytes bin_str_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12204;
+    }
+}
+
+message NewOfflineOpNotify {
+    OfflineOpType op_type = 1;
+    uint32 index = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12228;
+    }
+}
+
+message RemoveOfflineOpReq {
+    OfflineOpType op_type = 1;
+    uint32 index = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12203;
+    }
+}
+
+message RemoveOfflineOpRsp {
+    int32 retcode = 1;
+    OfflineOpType op_type = 2;
+    uint32 index = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12226;
+    }
+}

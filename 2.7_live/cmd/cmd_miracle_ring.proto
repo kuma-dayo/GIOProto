@@ -1,0 +1,140 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+import "cmd/cmd_gadget.proto";
+
+message UseMiracleRingReq {
+    uint32 miracle_ring_op_type = 2;
+    Vector pos = 8;
+    Vector rot = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5218;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+    
+    enum MiracleRingOpType {
+        MIRACLE_RING_OP_NONE = 0;
+        MIRACLE_RING_OP_PLACE = 1;
+        MIRACLE_RING_OP_RETRACT = 2;
+    }
+}
+
+message UseMiracleRingRsp {
+    int32 retcode = 3;
+    uint32 miracle_ring_op_type = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5209;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MiracleRingDataNotify {
+    uint32 last_deliver_item_time = 12;
+    uint32 last_take_reward_time = 6;
+    uint32 miracle_ring_cd = 10;
+    bool is_gadget_created = 14;
+    uint32 gadget_entity_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5243;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MiracleRingTakeRewardReq {
+    uint32 gadget_entity_id = 1;
+    uint32 gadget_id = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5204;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MiracleRingTakeRewardRsp {
+    int32 retcode = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5228;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MiracleRingDropResultNotify {
+    int32 drop_result = 1;
+    int32 last_take_reward_time = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5203;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MiracleRingDeliverItemReq {
+    uint32 gadget_entity_id = 3;
+    InterOpType op_type = 13;
+    uint32 gadget_id = 5;
+    repeated uint64 food_weapon_guid_list = 2;
+    repeated ItemParam item_param_list = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5226;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MiracleRingDeliverItemRsp {
+    int32 retcode = 1;
+    uint32 gadget_entity_id = 12;
+    InteractType interact_type = 8;
+    InterOpType op_type = 5;
+    uint32 gadget_id = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5247;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MiracleRingDestroyNotify {
+    uint32 entity_id = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5216;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

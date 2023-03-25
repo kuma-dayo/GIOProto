@@ -1,0 +1,4991 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+import "cmd/cmd_gallery.proto";
+
+message GetActivityScheduleReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2011;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityScheduleInfo {
+    uint32 activity_id = 1;
+    bool is_open = 2;
+    uint32 schedule_id = 3;
+    uint32 begin_time = 4;
+    uint32 end_time = 5;
+}
+
+message GetActivityScheduleRsp {
+    int32 retcode = 1;
+    repeated ActivityScheduleInfo activity_schedule_list = 2;
+    uint32 remain_fly_sea_lamp_num = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2170;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GetActivityInfoReq {
+    repeated uint32 activity_id_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2164;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityInfo {
+    uint32 activity_id = 1;
+    uint32 schedule_id = 2;
+    uint32 begin_time = 3;
+    uint32 end_time = 4;
+    uint32 activity_type = 5;
+    bool is_play_open_anim = 6;
+    bool is_finished = 7;
+    bool is_starting = 8;
+    repeated ActivityWatcherInfo watcher_info_list = 9;
+    repeated uint32 meet_cond_list = 10;
+    repeated uint32 expire_cond_list = 15;
+    uint32 selected_avatar_reward_id = 17;
+    map<uint32, uint32> activity_coin_map = 18;
+    uint32 score_limit = 19;
+    uint32 cur_score = 20;
+    repeated uint32 taken_reward_list = 24;
+    bool is_hidden = 26;
+    uint32 first_day_start_time = 27;
+    
+    oneof detail {
+        SeaLampActivityDetailInfo sam_lamp_info = 11;
+        CrucibleActivityDetailInfo crucible_info = 12;
+        SalesmanActivityDetailInfo salesman_info = 13;
+        TrialAvatarActivityDetailInfo trial_avatar_info = 14;
+        DeliveryActivityDetailInfo delivery_info = 16;
+        AsterActivityDetailInfo aster_info = 21;
+        FlightActivityDetailInfo flight_info = 25;
+        DragonSpineActivityDetailInfo dragon_spine_info = 31;
+        EffigyActivityDetailInfo effigy_info = 32;
+        TreasureMapActivityDetailInfo treasure_map_info = 35;
+        BlessingActivityDetailInfo blessing_info = 41;
+        SeaLampActivityInfo sea_lamp_info = 42;
+        ExpeditionActivityDetailInfo expedition_info = 43;
+        ArenaChallengeActivityDetailInfo arena_challenge_info = 44;
+        FleurFairActivityDetailInfo fleur_fair_info = 51;
+        WaterSpiritActivityDetailInfo water_spirit_info = 52;
+        ChannelerSlabActivityDetailInfo challneler_slab_info = 61;
+        MistTrialActivityDetailInfo mist_trial_activity_info = 62;
+        HideAndSeekActivityDetailInfo hide_and_seek_info = 63;
+        FindHilichurlDetailInfo find_hilichurl_info = 64;
+        SummerTimeDetailInfo summer_time_info = 65;
+        BuoyantCombatDetailInfo buoyant_combat_info = 66;
+        EchoShellDetailInfo echo_shell_info = 67;
+        BounceConjuringActivityDetailInfo bounce_conjuring_info = 68;
+        BlitzRushActivityDetailInfo blitz_rush_info = 69;
+        ChessActivityDetailInfo chess_info = 70;
+        SumoActivityDetailInfo sumo_info = 71;
+        MoonfinTrialActivityDetailInfo moonfin_trial_info = 72;
+        LunaRiteDetailInfo luna_rite_info = 73;
+        PlantFlowerActivityDetailInfo plant_flower_info = 74;
+        MusicGameActivityDetailInfo music_game_info = 75;
+        RoguelikeDungeonActivityDetailInfo roguelike_dungoen_info = 76;
+        DigActivityDetailInfo dig_info = 77;
+        HachiActivityDetailInfo hachi_info = 78;
+        WinterCampActivityDetailInfo winter_camp_info = 79;
+    }
+}
+
+message GetActivityInfoRsp {
+    int32 retcode = 1;
+    repeated ActivityInfo activity_info_list = 2;
+    repeated uint32 activated_sale_id_list = 3;
+    repeated Uint32Pair disable_transfer_point_interaction_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2023;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityPlayOpenAnimNotify {
+    uint32 activity_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2187;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityInfoNotify {
+    ActivityInfo activity_info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2074;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityScheduleInfoNotify {
+    repeated ActivityScheduleInfo activity_schedule_list = 1;
+    uint32 remain_fly_sea_lamp_num = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2180;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityWatcherInfo {
+    uint32 watcher_id = 1;
+    uint32 cur_progress = 2;
+    uint32 total_progress = 3;
+    bool is_taken_reward = 4;
+}
+
+message ActivityTakeWatcherRewardReq {
+    uint32 activity_id = 1;
+    uint32 watcher_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2101;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityTakeWatcherRewardRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 watcher_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2153;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityUpdateWatcherNotify {
+    uint32 activity_id = 1;
+    ActivityWatcherInfo watcher_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2069;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivitySelectAvatarCardReq {
+    uint32 activity_id = 1;
+    uint32 reward_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2056;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivitySelectAvatarCardRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 reward_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2174;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityCoinInfoNotify {
+    uint32 schedule_id = 1;
+    map<uint32, uint32> activity_coin_map = 2;
+    uint32 activity_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2080;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeaLampActivityDetailInfo {
+    uint32 phase_id = 1;
+    uint32 progress = 2;
+    uint32 days = 3;
+    uint32 contribution = 4;
+    repeated uint32 taken_contribution_reward_list = 5;
+    repeated uint32 taken_phase_reward_list = 6;
+    uint32 factor = 7;
+}
+
+message SeaLampFlyLampReq {
+    uint32 item_id = 1;
+    uint32 item_num = 2;
+    Vector pos = 3;
+    int32 param = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2052;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SeaLampFlyLampRsp {
+    int32 retcode = 1;
+    uint32 item_id = 2;
+    uint32 item_num = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2057;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeaLampTakeContributionRewardReq {
+    uint32 activity_id = 2;
+    uint32 config_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2109;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SeaLampTakeContributionRewardRsp {
+    int32 retcode = 1;
+    uint32 config_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2132;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeaLampTakePhaseRewardReq {
+    uint32 activity_id = 2;
+    uint32 phase_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2122;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SeaLampTakePhaseRewardRsp {
+    int32 retcode = 1;
+    uint32 phase_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2084;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeaLampContributeItemReq {
+    uint32 activity_id = 2;
+    repeated ItemParam item_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2075;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SeaLampContributeItemRsp {
+    int32 retcode = 1;
+    uint32 total_contribution = 2;
+    uint32 add_contribution = 3;
+    uint32 add_progress = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2028;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeaLampSectionInfo {
+    uint32 section_id = 1;
+}
+
+message SeaLampActivityInfo {
+    uint32 day_index = 1;
+    uint32 popularity = 2;
+    uint32 sea_lamp_coin = 3;
+    bool is_content_closed = 4;
+    repeated SeaLampSectionInfo section_info_list = 5;
+    uint32 mechanicus_id = 6;
+    bool is_mechanicus_open = 7;
+    uint32 first_day_start_time = 8;
+    bool is_mechanicus_feature_close = 9;
+}
+
+message SeaLampFlyLampNotify {
+    uint32 item_id = 1;
+    uint32 item_num = 2;
+    Vector pos = 3;
+    int32 param = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2062;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeaLampCoinNotify {
+    uint32 sea_lamp_coin = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2152;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeaLampPopularityNotify {
+    uint32 popularity = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2199;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AnnounceData {
+    uint32 config_id = 1;
+    uint32 begin_time = 2;
+    uint32 end_time = 3;
+    string center_system_text = 4;
+    string count_down_text = 5;
+    string dungeon_confirm_text = 6;
+    uint32 center_system_frequency = 7;
+    uint32 count_down_frequency = 8;
+    bool is_center_system_last_5_every_minutes = 9;
+}
+
+message LoadActivityTerrainNotify {
+    uint32 activity_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2129;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ServerAnnounceNotify {
+    repeated AnnounceData announce_data_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2103;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerAnnounceRevokeNotify {
+    repeated uint32 config_id_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2198;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SalesmanActivityDetailInfo {
+    SalesmanStatusType status = 1;
+    uint32 day_index = 2;
+    uint32 last_deliver_time = 3;
+    uint32 deliver_count = 4;
+    map<uint32, uint32> selected_reward_id_map = 5;
+    uint32 day_reward_id = 6;
+    uint32 special_reward_preview_id = 7;
+    uint32 cond_day_count = 8;
+    bool is_has_taken_special_reward = 9;
+    bool is_today_has_delivered = 10;
+}
+
+message SalesmanDeliverItemReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2091;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SalesmanDeliverItemRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2171;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SalesmanTakeRewardReq {
+    uint32 schedule_id = 1;
+    uint32 position = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2162;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SalesmanTakeRewardRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 reward_id = 3;
+    uint32 position = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2156;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityCondStateChangeNotify {
+    uint32 schedule_id = 1;
+    uint32 activity_id = 2;
+    repeated uint32 meet_cond_list = 3;
+    repeated uint32 expire_cond_list = 4;
+    repeated uint32 activated_sale_id_list = 5;
+    repeated Uint32Pair disable_transfer_point_interaction_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2102;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SalesmanTakeSpecialRewardReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2082;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SalesmanTakeSpecialRewardRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2173;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GetAuthSalesmanInfoReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2031;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetAuthSalesmanInfoRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 day_reward_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2175;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TrialAvatarActivityRewardDetailInfo {
+    uint32 trial_avatar_index_id = 1;
+    bool passed_dungeon = 2;
+    bool received_reward = 3;
+    uint32 reward_id = 4;
+}
+
+message TrialAvatarActivityDetailInfo {
+    repeated TrialAvatarActivityRewardDetailInfo reward_info_list = 1;
+}
+
+message EnterTrialAvatarActivityDungeonReq {
+    uint32 activity_id = 1;
+    uint32 trial_avatar_index_id = 2;
+    uint32 enter_point_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2020;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message EnterTrialAvatarActivityDungeonRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 trial_avatar_index_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2087;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ReceivedTrialAvatarActivityRewardReq {
+    uint32 trial_avatar_index_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2093;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ReceivedTrialAvatarActivityRewardRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 trial_avatar_index_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2138;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TrialAvatarFirstPassDungeonNotify {
+    uint32 trial_avatar_index_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2055;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TrialAvatarInDungeonIndexNotify {
+    uint32 trial_avatar_index_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2104;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CrucibleBattleUidInfo {
+    uint32 uid = 1;
+    string nickname = 2;
+    uint32 icon = 3;
+    string online_id = 4;
+    ProfilePicture profile_picture = 5;
+}
+
+message CrucibleActivityDetailInfo {
+    uint32 cost_time = 1;
+    repeated CrucibleBattleUidInfo uid_info_list = 2;
+    Vector pos = 3;
+    uint32 battle_world_level = 4;
+}
+
+message DeliveryActivityDetailInfo {
+    uint32 day_index = 1;
+    repeated uint32 finished_delivery_quest_index = 2;
+    bool is_taken_reward = 3;
+}
+
+message TakeDeliveryDailyRewardReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2126;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeDeliveryDailyRewardRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2019;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FinishDeliveryNotify {
+    uint32 schedule_id = 1;
+    uint32 day_index = 2;
+    uint32 finished_quest_index = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2003;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AsterLittleDetailInfo {
+    bool is_open = 1;
+    uint32 stage_id = 2;
+    AsterLittleStageState stage_state = 3;
+    uint32 begin_time = 4;
+    uint32 stage_begin_time = 5;
+}
+
+message AsterMidCampInfo {
+    uint32 camp_id = 1;
+    Vector pos = 2;
+}
+
+message AsterMidDetailInfo {
+    bool is_open = 1;
+    repeated AsterMidCampInfo camp_list = 2;
+    uint32 collect_count = 3;
+    uint32 begin_time = 4;
+}
+
+message AsterLargeDetailInfo {
+    bool is_open = 1;
+    uint32 begin_time = 2;
+}
+
+message AsterProgressDetailInfo {
+    uint32 count = 1;
+    uint32 last_auto_add_time = 2;
+}
+
+message AsterActivityDetailInfo {
+    AsterLittleDetailInfo aster_little = 1;
+    AsterMidDetailInfo aster_mid = 2;
+    AsterLargeDetailInfo aster_large = 3;
+    AsterProgressDetailInfo aster_progress = 5;
+    uint32 aster_credit = 6;
+    uint32 aster_token = 7;
+    bool is_special_reward_taken = 8;
+    bool is_content_closed = 9;
+    uint32 content_close_time = 10;
+}
+
+message SelectAsterMidDifficultyReq {
+    uint32 schedule_id = 1;
+    uint32 gadget_entity_id = 2;
+    uint32 difficulty_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2065;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SelectAsterMidDifficultyRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 gadget_entity_id = 3;
+    uint32 difficulty_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2058;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AsterProgressInfoNotify {
+    AsterProgressDetailInfo info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2151;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AsterLittleInfoNotify {
+    AsterLittleDetailInfo info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2098;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AsterMidInfoNotify {
+    AsterMidDetailInfo info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2051;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AsterMiscInfoNotify {
+    uint32 aster_credit = 1;
+    uint32 aster_token = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2041;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakeAsterSpecialRewardReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2133;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeAsterSpecialRewardRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2195;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AsterLargeInfoNotify {
+    AsterLargeDetailInfo info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2073;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FlightDailyRecord {
+    bool is_touched = 1;
+    uint32 best_score = 2;
+    uint32 start_time = 3;
+    repeated uint32 watcher_id_list = 4;
+    uint32 group_id = 5;
+}
+
+message FlightActivityDetailInfo {
+    repeated FlightDailyRecord daily_record_list = 1;
+    uint32 preview_reward_id = 2;
+    uint32 min_open_player_level = 3;
+}
+
+message FlightActivitySettleNotify {
+    bool is_success = 1;
+    uint32 left_time = 2;
+    uint32 collect_num = 3;
+    uint32 total_num = 4;
+    uint32 score = 5;
+    bool is_new_record = 6;
+    uint32 medal_level = 7;
+    uint32 group_id = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2045;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FlightActivityRestartReq {
+    uint32 schedule_id = 1;
+    uint32 group_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2115;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FlightActivityRestartRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 group_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2070;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AsterMidCampInfoNotify {
+    repeated AsterMidCampInfo camp_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2001;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DragonSpineActivityDetailInfo {
+    repeated DragonSpineChapterInfo chapter_info_list = 1;
+    uint32 weapon_enhance_level = 2;
+    uint32 shimmering_essence = 3;
+    uint32 warm_essence = 4;
+    uint32 wondrous_essence = 5;
+    bool is_content_closed = 6;
+    uint32 content_finish_time = 7;
+}
+
+message DragonSpineChapterInfo {
+    uint32 chapter_id = 1;
+    bool is_open = 2;
+    uint32 progress = 3;
+    uint32 finished_mission_num = 4;
+    uint32 open_time = 5;
+}
+
+message DragonSpineChapterOpenNotify {
+    uint32 schedule_id = 1;
+    uint32 chapter_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2196;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DragonSpineChapterProgressChangeNotify {
+    uint32 schedule_id = 1;
+    uint32 chapter_id = 2;
+    uint32 cur_progress = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2189;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DragonSpineChapterFinishNotify {
+    uint32 schedule_id = 1;
+    uint32 chapter_id = 2;
+    uint32 weapon_enhance_level = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2043;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DragonSpineCoinChangeNotify {
+    uint32 schedule_id = 1;
+    uint32 shimmering_essence = 2;
+    uint32 warm_essence = 3;
+    uint32 wondrous_essence = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2123;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivitySaleChangeNotify {
+    uint32 sale_id = 1;
+    bool is_close = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2166;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EffigyDailyInfo {
+    uint32 day_index = 1;
+    uint32 begin_time = 2;
+    uint32 challenge_id = 3;
+    uint32 challenge_count = 4;
+    uint32 challenge_max_score = 5;
+    bool is_first_pass_reward_taken = 6;
+    uint32 challenge_total_score = 7;
+}
+
+message EffigyActivityDetailInfo {
+    repeated EffigyDailyInfo daily_info_list = 1;
+    uint32 last_difficulty_id = 2;
+    uint32 cur_score = 3;
+    repeated uint32 taken_reward_index_list = 4;
+}
+
+message StartEffigyChallengeReq {
+    uint32 challenge_id = 1;
+    uint32 difficulty_id = 2;
+    repeated uint32 condition_id_list = 3;
+    uint32 point_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2159;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message StartEffigyChallengeRsp {
+    int32 retcode = 1;
+    uint32 challenge_id = 2;
+    uint32 difficulty_id = 3;
+    repeated uint32 condition_id_list = 4;
+    uint32 point_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2024;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EffigyChallengeInfoNotify {
+    uint32 challenge_id = 1;
+    uint32 difficulty_id = 2;
+    repeated uint32 condition_id_list = 3;
+    uint32 challenge_score = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2071;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EffigyChallengeDungeonResultInfo {
+    uint32 challenge_id = 1;
+    bool is_success = 2;
+    uint32 challenge_score = 3;
+    uint32 challenge_max_score = 4;
+    bool is_in_time_limit = 5;
+}
+
+message EffigyChallengeResultNotify {
+    uint32 challenge_id = 1;
+    bool is_success = 2;
+    uint32 challenge_score = 3;
+    uint32 challenge_max_score = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2034;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakeEffigyFirstPassRewardReq {
+    uint32 challenge_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2113;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeEffigyFirstPassRewardRsp {
+    int32 retcode = 1;
+    uint32 challenge_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2008;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakeEffigyRewardReq {
+    uint32 reward_index = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2143;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeEffigyRewardRsp {
+    int32 retcode = 1;
+    uint32 reward_index = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2072;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SelectEffigyChallengeConditionReq {
+    uint32 challenge_id = 1;
+    uint32 difficulty_id = 2;
+    repeated uint32 condition_id_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2061;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SelectEffigyChallengeConditionRsp {
+    int32 retcode = 1;
+    uint32 challenge_id = 2;
+    uint32 difficulty_id = 3;
+    repeated uint32 condition_id_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2112;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RestartEffigyChallengeReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2120;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RestartEffigyChallengeRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2127;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapRegionInfo {
+    uint32 region_id = 1;
+    uint32 start_time = 3;
+    Vector region_center_pos = 4;
+    uint32 region_radius = 5;
+    uint32 current_progress = 6;
+    uint32 goal_points = 7;
+    uint32 scene_id = 8;
+    bool is_find_mp_spot = 9;
+    bool is_done_mp_spot = 10;
+}
+
+message TreasureMapBonusChallengeInfo {
+    uint32 config_id = 1;
+    bool is_active = 2;
+    bool is_done = 3;
+    map<uint32, bool> fragment_map = 4;
+    uint32 solution_id = 5;
+}
+
+message TreasureMapActivityDetailInfo {
+    repeated TreasureMapRegionInfo region_info_list = 1;
+    uint32 active_region_index = 2;
+    uint32 treasure_close_time = 3;
+    uint32 preview_reward_id = 4;
+    uint32 min_open_player_level = 5;
+    uint32 currency_num = 6;
+    repeated TreasureMapBonusChallengeInfo bonus_challenge_list = 7;
+    bool is_mp_challenge_touched = 8;
+    uint32 total_mp_spot_num = 9;
+}
+
+message TreasureMapRegionInfoNotify {
+    TreasureMapRegionInfo region_info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2141;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapCurrencyNotify {
+    uint32 currency_num = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2177;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapRegionActiveNotify {
+    uint32 active_region_index = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2121;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapMpChallengeNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2200;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapBonusChallengeNotify {
+    TreasureMapBonusChallengeInfo info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2188;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapGuideTaskDoneNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2186;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapPreTaskDoneNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2007;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingActivityDetailInfo {
+    bool is_activated = 1;
+    bool is_content_closed = 2;
+    uint32 cur_day_scan_type = 3;
+    uint32 cur_day_scan_num = 4;
+    map<uint32, uint32> pic_num_map = 5;
+    uint32 redeem_reward_num = 6;
+    uint32 next_refresh_time = 7;
+    uint32 content_close_time = 8;
+}
+
+message BlessingScanReq {
+    uint32 entity_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2172;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlessingScanRsp {
+    int32 retcode = 1;
+    uint32 scan_pic_id = 2;
+    uint32 cur_day_scan_num = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2039;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingRedeemRewardReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2077;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlessingRedeemRewardRsp {
+    int32 retcode = 1;
+    map<uint32, uint32> pic_num_map = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2182;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingFriendPicData {
+    uint32 uid = 1;
+    uint32 avatar_id = 2;
+    string signature = 3;
+    string nickname = 4;
+    map<uint32, uint32> pic_num_map = 5;
+    string remark_name = 6;
+    ProfilePicture profile_picture = 7;
+}
+
+message BlessingRecvPicRecord {
+    uint32 uid = 1;
+    uint32 avatar_id = 2;
+    string nickname = 3;
+    string signature = 4;
+    uint32 pic_id = 5;
+    bool is_recv = 6;
+    uint32 index = 7;
+    string remark_name = 8;
+    ProfilePicture profile_picture = 9;
+}
+
+message BlessingGetFriendPicListReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2161;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlessingGetFriendPicListRsp {
+    int32 retcode = 1;
+    repeated BlessingFriendPicData friend_pic_data_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2076;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingGiveFriendPicReq {
+    uint32 uid = 1;
+    uint32 pic_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2134;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlessingGiveFriendPicRsp {
+    int32 retcode = 1;
+    uint32 uid = 2;
+    uint32 pic_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2117;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingAcceptGivePicReq {
+    uint32 uid = 1;
+    uint32 index = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2090;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlessingAcceptGivePicRsp {
+    int32 retcode = 1;
+    uint32 uid = 2;
+    uint32 index = 3;
+    uint32 pic_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2140;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingGetAllRecvPicRecordListReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2184;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlessingGetAllRecvPicRecordListRsp {
+    int32 retcode = 1;
+    repeated BlessingRecvPicRecord recv_pic_record_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2176;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingRecvFriendPicNotify {
+    uint32 pic_id = 1;
+    uint32 uid = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2050;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlessingAcceptAllGivePicReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2032;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlessingAcceptAllGivePicRsp {
+    int32 retcode = 1;
+    map<uint32, uint32> accept_pic_num_map = 2;
+    repeated uint32 accept_index_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2148;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExpeditionPathInfo {
+    uint32 path_id = 1;
+    ExpeditionState state = 2;
+    uint32 start_time = 3;
+    repeated uint32 avatar_id_list = 4;
+    uint32 assist_uid = 5;
+    uint32 assist_avatar_id = 6;
+    uint32 mark_id = 7;
+    float bonus_probability = 8;
+    uint32 challenge_id = 9;
+    uint32 assist_costume_id = 10;
+}
+
+message ExpeditionChallengeInfo {
+    uint32 id = 1;
+    uint32 open_time = 2;
+    bool is_finished = 3;
+}
+
+message ExpeditionActivityDetailInfo {
+    repeated ExpeditionPathInfo path_info_list = 1;
+    uint32 expedition_count = 2;
+    repeated ExpeditionChallengeInfo challenge_info_list = 3;
+    bool is_content_closed = 4;
+    uint32 content_close_time = 5;
+    uint32 cur_challenge_id = 6;
+}
+
+message ExpeditionStartReq {
+    uint32 path_id = 1;
+    repeated uint32 avatar_id_list = 2;
+    uint32 assist_uid = 3;
+    uint32 assist_avatar_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2114;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ExpeditionStartRsp {
+    int32 retcode = 1;
+    uint32 path_id = 2;
+    repeated uint32 avatar_id_list = 3;
+    uint32 assist_uid = 4;
+    uint32 assist_avatar_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2108;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExpeditionRecallReq {
+    uint32 path_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2053;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ExpeditionRecallRsp {
+    int32 retcode = 1;
+    uint32 path_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2181;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExpeditionTakeRewardReq {
+    uint32 path_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2124;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ExpeditionTakeRewardRsp {
+    int32 retcode = 1;
+    uint32 path_id = 2;
+    bool is_bonus = 3;
+    uint32 reward_level = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2168;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExpeditionAssistInfo {
+    uint32 avatar_id = 1;
+    uint32 assist_time = 2;
+    string target_nick_name = 3;
+    string online_id = 4;
+    uint32 costume_id = 5;
+}
+
+message GetExpeditionAssistInfoListReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2017;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetExpeditionAssistInfoListRsp {
+    int32 retcode = 1;
+    repeated ExpeditionAssistInfo assist_info_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2099;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetCurExpeditionChallengeIdReq {
+    uint32 id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2095;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetCurExpeditionChallengeIdRsp {
+    int32 retcode = 1;
+    uint32 id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2197;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExpeditionChallengeEnterRegionNotify {
+    bool is_puzzle_finished = 1;
+    uint32 id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2192;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExpeditionChallengeFinishedNotify {
+    uint32 id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2015;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WaterSpiritActivityDetailInfo {
+    uint32 region_search_id = 1;
+    uint32 mp_play_id = 2;
+    map<uint32, uint32> search_time_map = 3;
+}
+
+message FleurFairChapterInfo {
+    uint32 chapter_id = 1;
+    uint32 open_time = 2;
+}
+
+message FleurFairBalloonInfo {
+    uint32 best_score = 1;
+}
+
+message FleurFairFallInfo {
+    uint32 best_score = 1;
+}
+
+message FleurFairMusicRecord {
+    uint32 max_score = 1;
+    uint32 max_combo = 2;
+    bool is_unlock = 3;
+}
+
+message FleurFairMusicGameInfo {
+    map<uint32, FleurFairMusicRecord> music_record_map = 1;
+}
+
+message FleurFairMinigameInfo {
+    uint32 minigame_id = 1;
+    uint32 open_time = 2;
+    bool is_open = 3;
+    
+    oneof detail {
+        FleurFairBalloonInfo balloon_info = 11;
+        FleurFairFallInfo fall_info = 12;
+        FleurFairMusicGameInfo music_info = 13;
+    }
+}
+
+message FleurFairDungeonSectionInfo {
+    uint32 section_id = 1;
+    uint32 open_time = 2;
+    bool is_open = 3;
+}
+
+message FleurFairActivityDetailInfo {
+    repeated FleurFairChapterInfo chapter_info_list = 1;
+    bool is_content_closed = 2;
+    uint32 content_close_time = 3;
+    map<uint32, FleurFairMinigameInfo> minigame_info_map = 4;
+    map<uint32, FleurFairDungeonSectionInfo> dungeon_section_info_map = 5;
+    bool is_dungeon_unlocked = 6;
+    uint32 dungeon_punish_over_time = 7;
+    uint32 obtained_token = 8;
+}
+
+message FleurFairBalloonSettleInfo {
+    BalloonSettleInfo settle_info = 1;
+    bool is_new_record = 2;
+}
+
+message FleurFairFallSettleInfo {
+    FallSettleInfo settle_info = 1;
+    bool is_new_record = 2;
+}
+
+message FleurFairBalloonSettleNotify {
+    map<uint32, FleurFairBalloonSettleInfo> settle_info_map = 1;
+    uint32 minigame_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2064;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FleurFairFallSettleNotify {
+    map<uint32, FleurFairFallSettleInfo> settle_info_map = 1;
+    uint32 minigame_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2040;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FleurFairMusicGameSettleReq {
+    uint32 music_basic_id = 1;
+    uint32 score = 2;
+    uint32 combo = 3;
+    uint32 correct_hit = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2105;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FleurFairMusicGameSettleRsp {
+    int32 retcode = 1;
+    uint32 music_basic_id = 2;
+    bool is_unlock_next_level = 3;
+    bool is_new_record = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2179;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FleurFairMusicGameStartReq {
+    uint32 music_basic_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2146;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FleurFairMusicGameStartRsp {
+    int32 retcode = 1;
+    uint32 music_basic_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2089;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FleurFairReplayMiniGameReq {
+    uint32 minigame_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2022;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FleurFairReplayMiniGameRsp {
+    int32 retcode = 1;
+    uint32 minigame_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2033;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ArenaChallengeMonsterLevel {
+    uint32 arena_challenge_id = 1;
+    uint32 arena_challenge_level = 2;
+    uint32 monster_level = 3;
+}
+
+message ArenaChallengeActivityDetailInfo {
+    uint32 world_level = 1;
+    repeated ArenaChallengeMonsterLevel level_list = 2;
+    map<uint32, uint32> level_open_time_map = 3;
+}
+
+message StartArenaChallengeLevelReq {
+    uint32 gadget_entity_id = 1;
+    uint32 arena_challenge_id = 2;
+    uint32 arena_challenge_level = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2083;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message StartArenaChallengeLevelRsp {
+    int32 retcode = 1;
+    uint32 gadget_entity_id = 2;
+    uint32 arena_challenge_id = 3;
+    uint32 arena_challenge_level = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2097;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ArenaChallengeChildChallengeInfo {
+    uint32 challenge_index = 1;
+    uint32 challenge_id = 2;
+    uint32 challenge_type = 3;
+    bool is_success = 4;
+    bool is_settled = 5;
+}
+
+message ArenaChallengeFinishNotify {
+    uint32 arena_challenge_id = 1;
+    uint32 arena_challenge_level = 2;
+    bool is_success = 3;
+    repeated ArenaChallengeChildChallengeInfo child_challenge_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2027;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WaterSpritePhaseFinishNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2036;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityTakeWatcherRewardBatchReq {
+    uint32 activity_id = 1;
+    repeated uint32 watcher_id_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2042;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityTakeWatcherRewardBatchRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    repeated uint32 watcher_id_list = 3;
+    repeated ItemParam item_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2013;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannelerSlabCamp {
+    uint32 group_id = 1;
+    uint32 reward_id = 2;
+    Vector pos = 3;
+    uint32 buff_num = 4;
+}
+
+message ChannelerSlabChallenge {
+    repeated ChannelerSlabCamp camp_list = 1;
+    uint32 active_camp_index = 2;
+}
+
+message ChannelerSlabOneoffDungeon {
+    uint32 dungeon_id = 1;
+    bool is_done = 2;
+    uint32 reward_id = 3;
+}
+
+message ChannelerSlabChallengeStage {
+    uint32 stage_id = 1;
+    uint32 open_time = 2;
+    repeated ChannelerSlabChallenge challenge_list = 3;
+    ChannelerSlabOneoffDungeon dungeon_info = 4;
+    bool is_open = 5;
+}
+
+message ChannellerSlabBuffSchemeInfo {
+    map<uint32, uint32> slot_map = 1;
+    uint32 total_energy = 2;
+    uint32 self_energy = 3;
+}
+
+message ChannellerSlabAssistInfo {
+    uint32 uid = 1;
+    uint32 avatar_id = 2;
+    uint32 avatar_level = 3;
+}
+
+message ChannellerSlabBuffInfo {
+    repeated uint32 buff_id_list = 1;
+    ChannellerSlabBuffSchemeInfo single_buff_scheme_info = 2;
+    ChannellerSlabBuffSchemeInfo mp_buff_scheme_info = 3;
+    repeated ChannellerSlabAssistInfo assist_info_list = 4;
+}
+
+message ChannellerSlabLoopDungeonInfo {
+    uint32 dungeon_index = 1;
+    uint32 score = 2;
+    bool is_first_pass_reward_taken = 3;
+    repeated uint32 last_condition_id_list = 4;
+    uint32 open_time = 5;
+    bool is_open = 6;
+}
+
+message ChannellerSlabLoopDungeonStageInfo {
+    repeated ChannellerSlabLoopDungeonInfo dungeon_info_list = 1;
+    uint32 last_difficulty_id = 2;
+    repeated uint32 taken_reward_index_list = 3;
+    uint32 open_time = 4;
+    bool is_open = 5;
+}
+
+message ChannelerSlabActivityDetailInfo {
+    repeated ChannelerSlabChallengeStage stage_list = 1;
+    uint32 play_end_time = 2;
+    ChannellerSlabBuffInfo buff_info = 3;
+    ChannellerSlabLoopDungeonStageInfo loop_dungeon_stage_info = 4;
+}
+
+message ChannelerSlabStageActiveChallengeIndexNotify {
+    uint32 stage_id = 1;
+    uint32 challenge_index = 2;
+    uint32 active_camp_index = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8578;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannelerSlabStageOneoffDungeonNotify {
+    uint32 stage_id = 1;
+    bool is_done = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8137;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabWearBuffReq {
+    uint32 buff_id = 1;
+    uint32 slot_id = 2;
+    bool is_mp = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8850;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabWearBuffRsp {
+    int32 retcode = 1;
+    uint32 buff_id = 2;
+    uint32 slot_id = 3;
+    bool is_mp = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8203;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabTakeoffBuffReq {
+    uint32 buff_id = 1;
+    uint32 slot_id = 2;
+    bool is_mp = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8407;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabTakeoffBuffRsp {
+    int32 retcode = 1;
+    uint32 buff_id = 2;
+    uint32 slot_id = 3;
+    bool is_mp = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8260;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabEnterLoopDungeonReq {
+    uint32 dungeon_index = 1;
+    uint32 difficulty_id = 2;
+    repeated uint32 condition_id_list = 3;
+    uint32 point_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8090;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabEnterLoopDungeonRsp {
+    int32 retcode = 1;
+    uint32 dungeon_index = 2;
+    uint32 difficulty_id = 3;
+    repeated uint32 condition_id_list = 4;
+    uint32 point_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8120;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonTakeFirstPassRewardReq {
+    uint32 dungeon_index = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8914;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonTakeFirstPassRewardRsp {
+    int32 retcode = 1;
+    uint32 dungeon_index = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8503;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonTakeScoreRewardReq {
+    uint32 reward_index = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8012;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonTakeScoreRewardRsp {
+    int32 retcode = 1;
+    uint32 reward_index = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8123;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonChallengeInfoNotify {
+    uint32 dungeon_index = 1;
+    uint32 difficulty_id = 2;
+    repeated uint32 condition_id_list = 3;
+    uint32 challenge_score = 4;
+    repeated uint32 scheme_buff_id_list = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8263;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonSelectConditionReq {
+    uint32 dungeon_index = 1;
+    uint32 difficulty_id = 2;
+    repeated uint32 condition_id_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8741;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonSelectConditionRsp {
+    int32 retcode = 1;
+    uint32 dungeon_index = 2;
+    uint32 difficulty_id = 3;
+    repeated uint32 condition_id_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8341;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabLoopDungeonResultInfo {
+    uint32 dungeon_index = 1;
+    bool is_success = 2;
+    uint32 challenge_score = 3;
+    uint32 challenge_max_score = 4;
+    bool is_in_time_limit = 5;
+}
+
+message ChannellerSlabOneOffDungeonInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8772;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabOneOffDungeonInfoRsp {
+    int32 retcode = 1;
+    repeated uint32 scheme_buff_id_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8715;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabOneOffDungeonInfoNotify {
+    repeated uint32 scheme_buff_id_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8795;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabSaveAssistInfoReq {
+    repeated ChannellerSlabAssistInfo assist_info_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8518;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabSaveAssistInfoRsp {
+    int32 retcode = 1;
+    repeated ChannellerSlabAssistInfo assist_info_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8773;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MistTrialLevelData {
+    uint32 level_id = 1;
+    bool is_open = 2;
+    uint32 open_time = 3;
+}
+
+message MistTrialActivityDetailInfo {
+    repeated MistTrialLevelData trial_level_data_list = 1;
+}
+
+message MistTrialSelectAvatarAndEnterDungeonReq {
+    repeated uint32 select_trial_avatar_id_list = 1;
+    uint32 trial_id = 2;
+    uint32 enter_point_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8186;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MistTrialSelectAvatarAndEnterDungeonRsp {
+    int32 retcode = 1;
+    uint32 trial_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8522;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MistTrialMissionInfo {
+    uint32 watcher_list_id = 1;
+    uint32 param = 2;
+}
+
+message MistTrialGetChallengeMissionReq {
+    uint32 trial_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8250;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MistTrialGetChallengeMissionRsp {
+    int32 retcode = 1;
+    uint32 trial_id = 2;
+    repeated MistTrialMissionInfo mission_info_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8894;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MistTrialDunegonFailNotify {
+    int32 dungeon_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8337;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChannellerSlabCheckEnterLoopDungeonReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8684;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChannellerSlabCheckEnterLoopDungeonRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8376;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HideAndSeekActivityDetailInfo {
+    repeated uint32 chosen_hunter_skill_list = 1;
+    repeated uint32 chosen_hider_skill_list = 2;
+    repeated uint32 unlock_map_list = 3;
+}
+
+message HideAndSeekSelectSkillReq {
+    repeated uint32 skill_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8689;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HideAndSeekSelectSkillRsp {
+    int32 retcode = 1;
+    repeated uint32 skill_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8948;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityTakeScoreRewardReq {
+    uint32 activity_id = 1;
+    uint32 reward_config_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8767;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityTakeScoreRewardRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 reward_config_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8445;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityTakeAllScoreRewardReq {
+    uint32 activity_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8708;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ActivityTakeAllScoreRewardRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    repeated uint32 reward_config_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8836;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FindHilichurlDayContentInfo {
+    uint32 start_time = 1;
+}
+
+message FindHilichurlDetailInfo {
+    uint32 day_index = 1;
+    uint32 player_day_index = 2;
+    repeated FindHilichurlDayContentInfo day_content_info_list = 3;
+    bool is_content_closed = 4;
+    uint32 content_close_time = 5;
+    uint32 min_open_player_level = 6;
+    bool is_end_quest_accept = 7;
+}
+
+message CommonPlayerTipsNotify {
+    repeated string text_map_id_list = 1;
+    uint32 notify_type = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8928;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FindHilichurlFinishSecondQuestNotify {
+    uint32 day_index = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8799;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FindHilichurlAcceptQuestNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8292;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SummerTimeSprintBoatRecord {
+    bool is_touched = 1;
+    uint32 best_score = 2;
+    uint32 start_time = 3;
+    repeated uint32 watcher_id_list = 4;
+    uint32 group_id = 5;
+}
+
+message SummerTimeSprintBoatInfo {
+    repeated SummerTimeSprintBoatRecord record_list = 1;
+}
+
+message SummerTimeDetailInfo {
+    map<uint32, SummerTimeStageInfo> stage_map = 1;
+    bool is_content_closed = 2;
+    uint32 content_close_time = 3;
+    SummerTimeSprintBoatInfo sprint_boat_info = 4;
+}
+
+message SummerTimeStageInfo {
+    uint32 stage_id = 1;
+    bool is_open = 2;
+    uint32 open_time = 3;
+}
+
+message SummerTimeFloatSignalPositionNotify {
+    uint32 float_signal_id = 1;
+    Vector position = 2;
+    bool is_transfer_anchor = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8389;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SummerTimeFloatSignalUpdateNotify {
+    uint32 float_signal_id = 1;
+    Vector position = 2;
+    bool is_transfer_anchor = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8763;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SummerTimeSprintBoatSettleNotify {
+    bool is_success = 1;
+    uint32 left_time = 2;
+    uint32 collect_num = 3;
+    uint32 total_num = 4;
+    uint32 score = 5;
+    bool is_new_record = 6;
+    uint32 medal_level = 7;
+    uint32 group_id = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8150;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SummerTimeSprintBoatRestartReq {
+    uint32 schedule_id = 1;
+    uint32 group_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8682;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SummerTimeSprintBoatRestartRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 group_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8562;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BuoyantCombatDailyInfo {
+    uint32 best_score = 1;
+    uint32 start_time = 2;
+}
+
+message BuoyantCombatDetailInfo {
+    repeated BuoyantCombatDailyInfo daily_info_list = 1;
+}
+
+message StartBuoyantCombatGalleryReq {
+    uint32 gallery_id = 1;
+    uint32 gallery_level = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8313;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message StartBuoyantCombatGalleryRsp {
+    int32 retcode = 1;
+    uint32 gallery_id = 2;
+    uint32 gallery_level = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8754;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BuoyantCombatSettleInfo {
+    BuoyantCombatGallerySettleInfo settle_info = 1;
+    bool is_new_record = 2;
+}
+
+message BuoyantCombatSettleNotify {
+    BuoyantCombatSettleInfo settle_info = 1;
+    uint32 gallery_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 9000;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetLimitOptimizationNotify {
+    bool is_active = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8189;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EchoShellDetailInfo {
+    repeated uint32 taken_reward_list = 1;
+    repeated uint32 shell_list = 2;
+}
+
+message EchoShellUpdateNotify {
+    uint32 shell_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8730;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EchoShellTakeRewardReq {
+    uint32 reward_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8801;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message EchoShellTakeRewardRsp {
+    int32 retcode = 1;
+    uint32 reward_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8888;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BounceConjuringChapterInfo {
+    uint32 chapter_id = 1;
+    uint32 best_score = 2;
+    uint32 open_time = 3;
+}
+
+message BounceConjuringActivityDetailInfo {
+    repeated BounceConjuringChapterInfo chapter_info_list = 1;
+    uint32 content_close_time = 2;
+    bool is_content_closed = 3;
+}
+
+message BounceConjuringSettleNotify {
+    map<uint32, BounceConjuringGallerySettleInfo> settle_info_map = 1;
+    bool is_new_record = 2;
+    uint32 total_score = 3;
+    uint32 chapter_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8339;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlitzRushStage {
+    uint32 open_time = 1;
+    bool is_open = 2;
+}
+
+message ParkourLevelInfo {
+    uint32 open_time = 1;
+    uint32 best_record = 2;
+    bool is_open = 3;
+    Vector pos = 4;
+}
+
+message BlitzRushActivityDetailInfo {
+    repeated BlitzRushStage stage_list = 1;
+    uint32 content_close_time = 2;
+    repeated ParkourLevelInfo parkour_level_info_list = 3;
+    bool is_content_closed = 4;
+}
+
+message BlitzRushParkourRestartReq {
+    uint32 schedule_id = 1;
+    uint32 group_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8212;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BlitzRushParkourRestartRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 group_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8962;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChessActivityDetailInfo {
+    uint32 level = 1;
+    uint32 exp = 2;
+    bool is_teach_dungeon_finished = 3;
+    uint32 obtained_exp = 4;
+    uint32 available_exp = 5;
+    repeated uint32 finished_map_id_list = 6;
+    uint32 punish_over_time = 7;
+    uint32 content_close_time = 8;
+    bool is_content_closed = 9;
+}
+
+message EnterChessDungeonReq {
+    uint32 map_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8336;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message EnterChessDungeonRsp {
+    int32 retcode = 1;
+    uint32 map_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8581;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TreasureMapHostInfoNotify {
+    repeated uint32 mp_challenge_region_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8960;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoActivityDetailInfo {
+    map<uint32, SumoStageData> sumo_stage_map = 1;
+    uint32 difficulty_id = 2;
+}
+
+message SumoAvatarInfo {
+    bool is_trial = 1;
+    uint64 avatar_id = 2;
+}
+
+message SumoTeamData {
+    repeated SumoAvatarInfo avatar_info_list = 1;
+    repeated uint32 skill_id_list = 2;
+}
+
+message SumoStageData {
+    uint32 stage_id = 1;
+    uint32 max_score = 2;
+    uint32 open_time = 3;
+    bool is_open = 4;
+    repeated SumoTeamData team_list = 5;
+}
+
+message SumoSaveTeamReq {
+    uint32 activity_id = 1;
+    uint32 stage_id = 2;
+    uint32 difficulty_id = 3;
+    repeated SumoTeamData team_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8874;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SumoSaveTeamRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 stage_id = 3;
+    uint32 difficulty_id = 4;
+    repeated SumoTeamData team_list = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8287;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoSelectTeamAndEnterDungeonReq {
+    uint32 activity_id = 1;
+    uint32 stage_id = 2;
+    uint32 difficulty_id = 3;
+    repeated SumoTeamData team_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8605;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SumoSelectTeamAndEnterDungeonRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 stage_id = 3;
+    uint32 difficulty_id = 4;
+    repeated SumoTeamData team_list = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8998;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoDungeonSettleNotify {
+    uint32 stage_id = 1;
+    uint32 difficulty_id = 2;
+    uint32 final_score = 3;
+    bool is_new_record = 4;
+    uint32 kill_monster_num = 5;
+    uint32 kill_elite_monster_num = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8946;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoDungeonAvatar {
+    uint64 avatar_guid = 1;
+    bool is_trial = 2;
+    bool is_avlive = 3;
+}
+
+message SumoDungeonTeam {
+    repeated SumoDungeonAvatar dungeon_avatar_list = 1;
+}
+
+message SumoEnterDungeonNotify {
+    uint32 activity_id = 1;
+    uint32 stage_id = 2;
+    repeated SumoDungeonTeam dungeon_team_list = 3;
+    uint32 cur_team_index = 4;
+    uint32 next_valid_switch_time = 5;
+    uint32 no_switch_punish_time = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8540;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoSwitchTeamReq {
+    uint32 activity_id = 1;
+    uint32 stage_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8718;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SumoSwitchTeamRsp {
+    int32 retcode = 1;
+    uint32 activity_id = 2;
+    uint32 stage_id = 3;
+    uint32 cur_team_index = 4;
+    repeated SumoDungeonTeam dungeon_team_list = 5;
+    uint32 next_valid_switch_time = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8356;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoLeaveDungeonNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8460;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoRestartDungeonReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8602;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SumoRestartDungeonRsp {
+    int32 retcode = 1;
+    uint32 point_id = 2;
+    uint32 dungeon_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8498;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ActivityDisableTransferPointInteractionNotify {
+    Uint32Pair scene_point_pair = 1;
+    bool is_disable = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8295;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SumoSetNoSwitchPunishTimeNotify {
+    uint32 activity_id = 1;
+    uint32 stage_id = 2;
+    repeated SumoDungeonTeam dungeon_team_list = 3;
+    uint32 cur_team_index = 4;
+    uint32 next_valid_switch_time = 5;
+    uint32 no_switch_punish_time = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8804;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MoonfinTrialLevelInfo {
+    uint32 best_record = 1;
+    uint32 open_time = 2;
+}
+
+message MoonfinTrialActivityDetailInfo {
+    map<uint32, MoonfinTrialLevelInfo> level_info_map = 1;
+    uint32 special_fish_count = 2;
+}
+
+message FishingGallerySettleNotify {
+    FishingGallerySettleInfo settle_info = 1;
+    uint32 gallery_id = 2;
+    uint32 level_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8870;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message LunaRiteHintPoint {
+    uint32 index = 1;
+    uint32 area_id = 2;
+    Vector pos = 3;
+    LunaRiteHintPointType type = 4;
+}
+
+message LunaRiteAreaInfo {
+    uint32 area_id = 1;
+    uint32 challenge_index = 2;
+    repeated uint32 sacrifice_list = 3;
+    repeated uint32 sacrifice_reward_list = 4;
+    LunaRiteHintStatusType hint_status = 5;
+}
+
+message LunaRiteDetailInfo {
+    repeated LunaRiteAreaInfo area_info_list = 1;
+    repeated LunaRiteHintPoint hint_point = 2;
+}
+
+message LunaRiteSacrificeReq {
+    uint32 area_id = 1;
+    uint32 index = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8364;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message LunaRiteSacrificeRsp {
+    int32 retcode = 1;
+    uint32 area_id = 2;
+    uint32 index = 3;
+    repeated uint32 sacrifice_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8328;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message LunaRiteTakeSacrificeRewardReq {
+    uint32 area_id = 1;
+    uint32 index = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8987;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message LunaRiteTakeSacrificeRewardRsp {
+    int32 retcode = 1;
+    uint32 area_id = 2;
+    uint32 index = 3;
+    repeated uint32 sacrifice_reward_list = 4;
+    uint32 sacrifice_reward_index = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8352;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message LunaRiteHintPointReq {
+    uint32 area_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8173;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message LunaRiteHintPointRsp {
+    int32 retcode = 1;
+    uint32 area_id = 2;
+    repeated LunaRiteHintPoint hint_point = 3;
+    LunaRiteHintStatusType hint_status = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8129;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message LunaRiteHintPointRemoveNotify {
+    repeated uint32 hint_point_index = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8544;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message LunaRiteGroupBundleRegisterNotify {
+    uint32 group_link_bundle_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8956;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message LunaRiteAreaFinishNotify {
+    uint32 area_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8822;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerActivityDetailInfo {
+    uint32 day_index = 1;
+    uint32 today_seed_reward_id = 2;
+    bool is_today_has_awarded = 3;
+    bool is_content_closed = 4;
+    map<uint32, uint32> wish_flower_num_map = 5;
+    map<uint32, uint32> used_flower_num_map = 6;
+}
+
+message PlantFlowerGetSeedInfoReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8535;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerGetSeedInfoRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 seed_reward_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8584;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerTakeSeedRewardReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8317;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerTakeSeedRewardRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8152;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerSetFlowerWishReq {
+    uint32 schedule_id = 1;
+    map<uint32, uint32> flower_num_map = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8601;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerSetFlowerWishRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8550;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerGetFriendFlowerWishListReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8893;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerFriendFlowerWishData {
+    uint32 uid = 1;
+    ProfilePicture profile_picture = 2;
+    string nickname = 3;
+    map<uint32, uint32> flower_num_map = 4;
+}
+
+message PlantFlowerGetFriendFlowerWishListRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    repeated PlantFlowerFriendFlowerWishData friend_flower_wish_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8476;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerGiveFriendFlowerReq {
+    uint32 schedule_id = 1;
+    uint32 uid = 2;
+    map<uint32, uint32> flower_num_map = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8934;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerGiveFriendFlowerRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    repeated uint32 limit_flower_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8456;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerGetRecvFlowerListReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8459;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerRecvFlowerData {
+    uint32 uid = 1;
+    ProfilePicture profile_picture = 2;
+    string nickname = 3;
+    map<uint32, uint32> flower_num_map = 4;
+}
+
+message PlantFlowerGetRecvFlowerListRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    repeated PlantFlowerRecvFlowerData recv_flower_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8597;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerHaveRecvFlowerNotify {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8711;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerAcceptGiveFlowerReq {
+    uint32 schedule_id = 1;
+    uint32 uid = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8525;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerAcceptFlowerResultInfo {
+    uint32 uid = 1;
+    map<uint32, uint32> accept_flower_num_map = 2;
+    map<uint32, uint32> unaccept_flower_num_map = 3;
+}
+
+message PlantFlowerAcceptGiveFlowerRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    PlantFlowerAcceptFlowerResultInfo accept_flower_result_info = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8957;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerAcceptAllGiveFlowerReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8775;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerAcceptAllGiveFlowerRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    repeated PlantFlowerAcceptFlowerResultInfo accept_flower_result_info_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8174;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerGetCanGiveFriendFlowerReq {
+    uint32 schedule_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8617;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerGetCanGiveFriendFlowerRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    map<uint32, uint32> flower_num_map = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8091;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlantFlowerEditFlowerCombinationReq {
+    uint32 schedule_id = 1;
+    uint32 entity_id = 2;
+    CustomGadgetTreeInfo flower_combination_info = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8347;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlantFlowerEditFlowerCombinationRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8625;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MusicGameRecord {
+    uint32 max_score = 1;
+    uint32 max_combo = 2;
+    bool is_unlock = 3;
+}
+
+message MusicGameActivityDetailInfo {
+    map<uint32, MusicGameRecord> music_game_record_map = 1;
+}
+
+message MusicGameSettleReq {
+    uint32 music_basic_id = 1;
+    uint32 score = 2;
+    uint32 combo = 3;
+    uint32 correct_hit = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8851;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MusicGameSettleRsp {
+    int32 retcode = 1;
+    uint32 music_basic_id = 2;
+    bool is_unlock_next_level = 3;
+    bool is_new_record = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8028;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MusicGameStartReq {
+    uint32 music_basic_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8760;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MusicGameStartRsp {
+    int32 retcode = 1;
+    uint32 music_basic_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8922;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RogueAvatarInfo {
+    uint32 avatar_id = 1;
+    bool is_onstage = 2;
+    bool is_alive = 3;
+}
+
+message RogueShowAvatarTeamInfo {
+    repeated RogueAvatarInfo avatar_list = 1;
+}
+
+message RoguelikeShikigamiRecord {
+    uint32 id = 1;
+    uint32 level = 2;
+}
+
+message RogueEffectRecord {
+    uint32 source_id = 1;
+    uint32 count = 2;
+    repeated uint32 extra_param_list = 3;
+    bool is_new = 4;
+}
+
+message RoguelikeRuneRecord {
+    uint32 rune_id = 1;
+    uint32 left_count = 2;
+    uint32 max_count = 3;
+}
+
+message RogueStageInfo {
+    uint32 stage_id = 1;
+    bool is_open = 2;
+    uint32 coin_c_num = 3;
+    uint32 max_passed_level = 4;
+    bool is_in_combat = 5;
+    bool is_passed = 6;
+    bool is_taken_reward = 7;
+    RogueShowAvatarTeamInfo avatar_team = 10;
+    uint32 cur_level = 11;
+    uint32 explore_cell_num = 12;
+    repeated RoguelikeRuneRecord rune_record_list = 13;
+    bool is_explored = 14;
+    uint32 cached_coin_b_num = 15;
+    uint32 cached_coin_c_num = 16;
+    uint32 revise_monster_level = 17;
+}
+
+message RoguelikeDungeonActivityDetailInfo {
+    repeated uint32 rune_list = 1;
+    repeated RoguelikeShikigamiRecord shikigami_list = 2;
+    repeated RogueStageInfo stage_list = 3;
+    repeated uint32 equipped_rune_list = 4;
+    bool is_content_closed = 5;
+    uint32 content_close_time = 6;
+}
+
+message DoRoguelikeDungeonCardGachaReq {
+    uint32 dungeon_id = 1;
+    uint32 cell_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8897;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DoRoguelikeDungeonCardGachaRsp {
+    int32 retcode = 1;
+    repeated uint32 card_list = 2;
+    bool is_can_refresh = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8973;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RefreshRoguelikeDungeonCardReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8433;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RefreshRoguelikeDungeonCardRsp {
+    int32 retcode = 1;
+    repeated uint32 res_card_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8678;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SelectRoguelikeDungeonCardReq {
+    uint32 card_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8964;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SelectRoguelikeDungeonCardRsp {
+    int32 retcode = 1;
+    uint32 card_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8572;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EquipRoguelikeRuneReq {
+    repeated uint32 rune_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8579;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message EquipRoguelikeRuneRsp {
+    int32 retcode = 1;
+    repeated uint32 rune_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8412;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TriggerRoguelikeRuneReq {
+    uint32 rune_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8607;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TriggerRoguelikeRuneRsp {
+    int32 retcode = 1;
+    uint32 rune_id = 2;
+    uint32 available_count = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8246;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TriggerRoguelikeCurseNotify {
+    bool is_trigger_curse = 1;
+    uint32 curse_group_id = 2;
+    uint32 curse_level = 3;
+    repeated uint32 effect_param_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8878;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message UpgradeRoguelikeShikigamiReq {
+    uint32 shikigami_group_id = 1;
+    uint32 upgrade_level = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8575;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message UpgradeRoguelikeShikigamiRsp {
+    int32 retcode = 1;
+    uint32 shikigami_group_id = 2;
+    uint32 cur_level = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8440;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeSelectAvatarAndEnterDungeonReq {
+    uint32 stage_id = 1;
+    repeated uint64 onstage_avatar_guid_list = 2;
+    repeated uint64 backstage_avatar_guid_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8697;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RoguelikeSelectAvatarAndEnterDungeonRsp {
+    int32 retcode = 1;
+    uint32 stage_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8377;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeGiveUpReq {
+    uint32 stage_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8716;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RoguelikeGiveUpRsp {
+    uint32 stage_id = 1;
+    int32 retcode = 2;
+    
+    oneof info {
+        RoguelikeDungeonSettleInfo settle_info = 3;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8728;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeTakeStageFirstPassRewardReq {
+    uint32 stage_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8667;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RoguelikeTakeStageFirstPassRewardRsp {
+    int32 retcode = 1;
+    uint32 stage_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8101;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GiveUpRoguelikeDungeonCardReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8425;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GiveUpRoguelikeDungeonCardRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8976;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RogueCellInfo {
+    uint32 cell_id = 1;
+    uint32 dungeon_id = 2;
+    uint32 cell_config_id = 3;
+    RogueCellState state = 4;
+    uint32 cell_type = 5;
+}
+
+message EnterRoguelikeDungeonNotify {
+    uint32 dungeon_weight_config_id = 1;
+    uint32 dungeon_id = 2;
+    repeated uint64 onstage_avatar_guid_list = 3;
+    repeated uint64 backstage_avatar_guid_list = 4;
+    uint32 cur_cell_id = 5;
+    map<uint32, RogueCellInfo> cell_info_map = 6;
+    uint32 cur_level = 7;
+    uint32 stage_id = 8;
+    repeated RoguelikeRuneRecord rune_record_list = 11;
+    bool is_mist_clear = 12;
+    repeated uint32 explored_cell_list = 13;
+    float bonus_resource_prop = 14;
+    uint32 refresh_cost_item_id = 15;
+    uint32 refresh_cost_item_count = 16;
+    bool is_first_enter = 17;
+    uint32 revise_monster_level = 18;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8330;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message StartRogueEliteCellChallengeReq {
+    uint32 cell_id = 1;
+    uint32 dungeon_id = 2;
+    RogueEliteCellDifficultyType difficulty = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8620;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message StartRogueEliteCellChallengeRsp {
+    int32 retcode = 1;
+    uint32 cell_id = 2;
+    uint32 dungeon_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8198;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message StartRogueNormalCellChallengeReq {
+    uint32 cell_id = 1;
+    uint32 dungeon_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8748;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message StartRogueNormalCellChallengeRsp {
+    int32 retcode = 1;
+    uint32 cell_id = 2;
+    uint32 dungeon_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8630;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RogueCellUpdateNotify {
+    RogueCellInfo cell_info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8074;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RogueDungeonPlayerCellChangeNotify {
+    uint32 old_cell_id = 1;
+    uint32 cell_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8784;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RogueHealAvatarsReq {
+    uint32 cell_id = 1;
+    uint32 dungeon_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8959;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RogueHealAvatarsRsp {
+    int32 retcode = 1;
+    uint32 cell_id = 2;
+    uint32 dungeon_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8473;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RogueResumeDungeonReq {
+    uint32 stage_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8496;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RogueResumeDungeonRsp {
+    int32 retcode = 1;
+    uint32 stage_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8759;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ClearRoguelikeCurseNotify {
+    bool is_clear_all = 1;
+    map<uint32, uint32> clear_curse_map = 2;
+    uint32 card_id = 3;
+    bool is_curse_all_clear = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8997;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeCardGachaNotify {
+    repeated uint32 card_list = 1;
+    bool is_can_refresh = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8079;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RogueSwitchAvatarReq {
+    uint32 dungeon_id = 1;
+    uint32 cell_id = 2;
+    repeated uint64 onstage_avatar_guid_list = 3;
+    uint64 cur_avatar_guid = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8856;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RogueSwitchAvatarRsp {
+    int32 retcode = 1;
+    uint32 dungeon_id = 2;
+    uint32 cell_id = 3;
+    repeated uint64 onstage_avatar_guid_list = 4;
+    uint64 cur_avatar_guid = 5;
+    repeated uint64 backstage_avatar_guid_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8141;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DisableRoguelikeTrapNotify {
+    uint32 card_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8029;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeRuneRecordUpdateNotify {
+    repeated RoguelikeRuneRecord rune_record_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8985;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeMistClearNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8471;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeEffectDataNotify {
+    repeated RogueEffectRecord card_list = 1;
+    repeated RogueEffectRecord curse_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8529;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeEffectViewReq {
+    repeated uint32 view_card_list = 1;
+    repeated uint32 view_curse_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8396;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RoguelikeEffectViewRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8040;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RoguelikeResourceBonusPropUpdateNotify {
+    float bonus_resource_prop = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8312;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RoguelikeSettleCoinInfo {
+    uint32 cell_num = 1;
+    uint32 coin_b = 2;
+    uint32 coin_c = 3;
+}
+
+message RoguelikeDungeonSettleInfo {
+    uint32 stage_id = 1;
+    uint32 cur_level = 2;
+    map<uint32, RoguelikeSettleCoinInfo> finished_challenge_cell_num_map = 3;
+    bool is_final_level = 4;
+    uint32 total_coin_b_num = 5;
+    uint32 total_coin_c_num = 6;
+    bool is_coin_c_reach_limit = 7;
+}
+
+message RoguelikeRefreshCardCostUpdateNotify {
+    uint32 item_id = 1;
+    uint32 item_count = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8304;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DigMarkPoint {
+    Vector pos = 1;
+    Vector rot = 2;
+    uint32 bundle_id = 3;
+}
+
+message DigActivityDetailInfo {
+    uint32 stage_id = 1;
+    repeated DigMarkPoint dig_mark_point_list = 2;
+    repeated uint32 stage_id_list = 3;
+}
+
+message DigActivityMarkPointChangeNotify {
+    repeated DigMarkPoint dig_mark_point_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8143;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DigActivityChangeGadgetStateReq {
+    uint32 entity_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8283;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DigActivityChangeGadgetStateRsp {
+    int32 retcode = 1;
+    uint32 entity_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8609;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HachiActivityDetailInfo {
+    map<uint32, HachiStageInfo> stage_map = 1;
+}
+
+message HachiStageInfo {
+    uint32 stage_id = 1;
+    bool is_open = 2;
+    uint32 open_time = 3;
+    bool is_finished = 4;
+}
+
+message WinterCampStageInfo {
+    uint32 id = 1;
+    Vector pos = 2;
+    uint32 open_time = 3;
+    bool is_finished = 4;
+    uint32 cur_progress = 5;
+    uint32 total_progress = 6;
+}
+
+message WinterCampRaceStageInfo {
+    uint32 id = 1;
+    Vector pos = 2;
+    uint32 open_time = 3;
+    uint32 max_score = 4;
+}
+
+message WinterCampActivityDetailInfo {
+    bool is_content_closed = 1;
+    WinterCampStageInfo explore_info = 2;
+    WinterCampStageInfo battle_info = 3;
+    repeated WinterCampRaceStageInfo race_info_list = 4;
+    repeated uint32 explore_taken_reward_list = 5;
+    repeated uint32 battle_taken_reward_list = 6;
+    repeated uint32 wish_id_list = 7;
+    repeated ItemParam used_item_list = 8;
+}
+
+message WinterCampStageInfoChangeNotify {
+    WinterCampStageInfo explore_info = 1;
+    WinterCampStageInfo battle_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8429;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampRaceScoreNotify {
+    uint32 id = 1;
+    uint32 max_score = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8157;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampGiveFriendItemReq {
+    uint32 uid = 1;
+    repeated ItemParam item_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8405;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampGiveFriendItemRsp {
+    int32 retcode = 1;
+    repeated uint32 limit_item_id_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8787;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampSetWishListReq {
+    repeated uint32 item_id_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8024;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampSetWishListRsp {
+    int32 retcode = 1;
+    repeated uint32 item_id_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8154;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampFriendWishData {
+    uint32 uid = 1;
+    ProfilePicture profile_picture = 2;
+    string nickname = 3;
+    repeated uint32 item_id_list = 4;
+}
+
+message WinterCampGetFriendWishListReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8010;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampGetFriendWishListRsp {
+    int32 retcode = 1;
+    repeated WinterCampFriendWishData wish_data_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8114;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampRecvItemNotify {
+    WinterCampRecvItemData recv_item_data = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8761;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampAcceptItemResultInfo {
+    uint32 uid = 1;
+    repeated ItemParam accept_item_list = 2;
+    repeated ItemParam unaccept_item_list = 3;
+}
+
+message WinterCampAcceptGiveItemReq {
+    uint32 uid = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8439;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampAcceptGiveItemRsp {
+    int32 retcode = 1;
+    WinterCampAcceptItemResultInfo accept_item_result_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8580;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampAcceptAllGiveItemReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8385;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampAcceptAllGiveItemRsp {
+    int32 retcode = 1;
+    repeated WinterCampAcceptItemResultInfo accept_item_result_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8437;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampGetCanGiveFriendItemReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8188;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampGetCanGiveFriendItemRsp {
+    int32 retcode = 1;
+    repeated ItemParam item_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8710;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampRecvItemData {
+    uint32 uid = 1;
+    ProfilePicture profile_picture = 2;
+    string nickname = 3;
+    repeated ItemParam item_list = 4;
+}
+
+message WinterCampGetRecvItemListReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8559;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampGetRecvItemListRsp {
+    int32 retcode = 1;
+    repeated WinterCampRecvItemData recv_item_data_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8083;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampEditSnowmanCombinationReq {
+    uint32 entity_id = 1;
+    CustomGadgetTreeInfo combination_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8983;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampEditSnowmanCombinationRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8421;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampTriathlonSettleNotify {
+    uint32 gallery_id = 1;
+    uint32 score = 2;
+    uint32 remain_time = 3;
+    uint32 normal_coin = 4;
+    uint32 limited_coin = 5;
+    uint32 race_id = 6;
+    bool is_new_record = 7;
+    bool is_success = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8210;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampTakeExploreRewardReq {
+    uint32 id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8604;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampTakeExploreRewardRsp {
+    int32 retcode = 1;
+    uint32 id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8077;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampTakeBattleRewardReq {
+    uint32 id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8502;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampTakeBattleRewardRsp {
+    int32 retcode = 1;
+    uint32 id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8190;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WinterCampTriathlonRestartReq {
+    uint32 gallery_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8050;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WinterCampTriathlonRestartRsp {
+    uint32 retcode = 1;
+    uint32 gallery_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8461;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MistTrialSettleNotify {
+    uint32 dungeon_scene_id = 1;
+    map<uint32, uint32> exhibition_list_data_record_map = 2;
+    map<uint32, uint32> exhibition_list_data_result_map = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8420;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MistTrialGetDungeonExhibitionDataReq {
+    uint32 trial_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8877;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MistTrialGetDungeonExhibitionDataRsp {
+    uint32 retcode = 1;
+    uint32 trial_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 8830;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum RogueCellState {
+    ROGUE_CELL_NONE = 0;
+    ROGUE_CELL_BATTLE = 1;
+    ROGUE_CELL_SUCCESS = 2;
+    ROGUE_CELL_FINISH = 3;
+    ROGUE_CELL_TAKEN_CHEST = 4;
+}
+
+enum RogueEliteCellDifficultyType {
+    ROGUE_ELITE_NORMAL = 0;
+    ROGUE_ELITE_HARD = 1;
+}

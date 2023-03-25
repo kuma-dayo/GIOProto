@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message UnlockAvatarTalentReq {
+    uint64 avatar_guid = 1;
+    uint32 talent_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1001;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message UnlockAvatarTalentRsp {
+    int32 retcode = 1;
+    uint64 avatar_guid = 2;
+    uint32 talent_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1002;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarUnlockTalentNotify {
+    uint64 avatar_guid = 1;
+    uint32 entity_id = 2;
+    uint32 talent_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1003;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarSkillDepotChangeNotify {
+    uint64 avatar_guid = 1;
+    uint32 entity_id = 2;
+    uint32 skill_depot_id = 3;
+    repeated uint32 talent_id_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1004;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BigTalentPointConvertReq {
+    uint64 avatar_guid = 1;
+    repeated uint64 item_guid_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1005;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BigTalentPointConvertRsp {
+    int32 retcode = 1;
+    uint64 avatar_guid = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1006;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarSkillMaxChargeCountNotify {
+    uint64 avatar_guid = 1;
+    uint32 skill_id = 2;
+    uint32 max_charge_count = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1007;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarSkillInfoNotify {
+    uint64 guid = 1;
+    map<uint32, AvatarSkillInfo> skill_map = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1008;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

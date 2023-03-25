@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package proto;
+
+message OnlinePlayerNumReq {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10201;
+    }
+}
+
+message OnlinePlayerNumRsp {
+    int32 retcode = 1;
+    uint32 online_player_num = 2;
+    map<uint32, uint32> gameserver_player_num_map = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10202;
+    }
+}
+
+message KickoutPlayerNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10203;
+    }
+}
+
+message CheckOnlinePlayerReq {
+    uint32 gameserver_ip = 1;
+    uint32 ns_gameserver_ip = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10204;
+    }
+}
+
+message CheckOnlinePlayerRsp {
+    int32 retcode = 1;
+    
+    NodeStatus node_status = 2;
+    message NodeStatus {
+        uint32 gameserver_ip = 1;
+        uint32 nodeserver_ip = 2;
+    }
+    
+    GameStatus game_status = 3;
+    message GameStatus {
+        uint32 gameserver_ip = 1;
+        uint32 login_time = 2;
+        uint64 login_rand = 3;
+        bool is_wait_save = 4;
+    }
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10205;
+    }
+}

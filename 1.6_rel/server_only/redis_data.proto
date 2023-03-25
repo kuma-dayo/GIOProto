@@ -1,0 +1,184 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin_common.server.proto";
+import "cmd/cmd_social.proto";
+import "define.proto";
+
+message PlayerStatusRedisData {
+    PlayerStatusType status = 1;
+    uint32 gameserver_id = 2;
+    uint64 login_rand = 3;
+    uint32 login_time = 4;
+}
+
+message MailRedisData {
+    MailBin mail_bin = 1;
+    uint32 id = 2;
+    bool is_read = 3;
+    bool is_attachment_got = 4;
+}
+
+message MailMaxIdRedisData {
+    
+}
+
+message MailIdSortedSetRedisData {
+    
+}
+
+message MailTicketHashMapRedisData {
+    
+}
+
+message MailTransactionIdHashMapRedisData {
+    
+}
+
+message MailTicketMailIdHashMapRedisData {
+    
+}
+
+message TicketTimeBin {
+    uint32 enque_time = 1;
+    string ticket = 2;
+}
+
+message OfflineMsgRedisData {
+    uint32 last_index = 1;
+    repeated OfflineMsgBin offline_msg_list = 2;
+    repeated TicketTimeBin recent_ticket_list = 3;
+}
+
+message HomeOfflineMsgRedisData {
+    uint32 last_index = 1;
+    repeated HomeOfflineMsgBin offline_msg_list = 2;
+    repeated TicketTimeBin recent_ticket_list = 3;
+}
+
+message PlayerFriendListRedisData {
+    
+}
+
+message PlayerAskFriendListRedisData {
+    
+}
+
+message PlayerBlacklistRedisData {
+    
+}
+
+message PlayerMpBriefData {
+    bool is_mp_avaliable = 1;
+    bool is_only_mp_with_ps_player = 2;
+}
+
+message PlayerSocialBriefData {
+    Birthday birthday = 1;
+    string signature = 2;
+    uint32 name_card_id = 3;
+    uint32 finish_achievement_num = 4;
+    uint32 tower_floor_index = 5;
+    uint32 tower_level_index = 6;
+    repeated SocialShowAvatarInfo show_avatar_info_list = 7;
+    bool is_show_avatar = 8;
+    repeated uint32 show_name_card_id_list = 9;
+}
+
+message PlayerBasicBriefData {
+    string nickname = 1;
+    uint32 level = 2;
+    uint32 world_level = 3;
+    uint32 last_login_time = 4;
+    uint32 head_image_avatar_id = 5;
+    uint32 exp = 6;
+    uint32 hcoin = 7;
+    uint32 scoin = 8;
+    uint32 platform_type = 9;
+    string online_id = 10;
+    uint32 mcoin = 11;
+    string psn_id = 12;
+    uint32 profile_picture_costume_id = 13;
+}
+
+message PlayerHomeBriefData {
+    FriendEnterHomeOption friend_enter_home_option = 1;
+    bool is_home_available = 2;
+    fixed32 last_save_time = 3;
+    uint32 prior_check_time = 4;
+}
+
+message PlayerBriefDataRedisData {
+    PlayerSocialBriefData social_brief = 1;
+    PlayerBasicBriefData basic_brief = 2;
+    PlayerMpBriefData mp_brief = 3;
+    PlayerHomeBriefData home_brief = 4;
+}
+
+message PlayerShowAvatarRedisData {
+    ShowAvatarInfo show_avatar_info = 1;
+}
+
+message PlayerPrivateChatRedisData {
+    
+}
+
+message PlayerRecentChatRedisData {
+    
+}
+
+message PlayerPrivateChatUnreadRedisData {
+    
+}
+
+message BlessingSocialData {
+    map<uint32, uint32> pic_num_map = 1;
+}
+
+message ActivitySocialData {
+    uint32 schedule_id = 1;
+    
+    oneof data {
+        BlessingSocialData blessing_data = 2;
+    }
+}
+
+message PlayerActivitySocialRedisData {
+    map<uint32, ActivitySocialData> activity_social_data_map = 1;
+}
+
+message HomeStatusRedisData {
+    HomeStatusType status = 1;
+    uint32 gameserver_id = 2;
+    uint64 load_rand = 3;
+}
+
+message HomeBriefDataRedisData {
+    int32 furniture_manufacturing_max_finish_time = 1;
+}
+
+message OfflineOpGIndexRedisData {
+    
+}
+
+message OfflineOpSortedSetRedisData {
+    
+}
+
+message OfflineOpRedisData {
+    uint32 index = 1;
+    fixed32 time = 2;
+    OfflineOpType op_type = 3;
+    OfflineOpBin op_bin = 4;
+}
+
+enum PlayerStatusType {
+    PLAYER_STATUS_OFFLINE = 0;
+    PLAYER_STATUS_ONLINE = 1;
+}
+
+enum HomeStatusType {
+    HOME_STATUS_OFFLINE = 0;
+    HOME_STATUS_ONLINE = 1;
+}

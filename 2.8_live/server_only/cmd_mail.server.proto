@@ -1,0 +1,226 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin_common.server.proto";
+import "server_only/redis_data.proto";
+import "server_only/enum.server.proto";
+
+message AddRedisMailReq {
+    MailAddOpType op_type = 1;
+    MailBin mail_bin = 2;
+    string ticket = 3;
+    string transaction = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10372;
+    }
+}
+
+message AddRedisMailRsp {
+    int32 retcode = 1;
+    MailAddOpType op_type = 2;
+    string ticket = 3;
+    string transaction = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10398;
+    }
+}
+
+message DelRedisMailReq {
+    MailDelOpType op_type = 1;
+    repeated uint32 mail_id_list = 2;
+    repeated string ticket_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10312;
+    }
+}
+
+message DelRedisMailRsp {
+    int32 retcode = 1;
+    MailDelOpType op_type = 2;
+    repeated uint32 mail_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10335;
+    }
+}
+
+message GetRedisMailReq {
+    MailGetOPType op_type = 1;
+    MailGetType get_type = 2;
+    repeated uint32 mail_id_list = 3;
+    bool is_collectible_mail_transfered = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10307;
+    }
+}
+
+message GetRedisMailRsp {
+    int32 retcode = 1;
+    repeated bytes mail_str_list = 2;
+    MailGetOPType op_type = 3;
+    bool is_truncated = 4;
+    MailGetType get_type = 5;
+    bool is_collectible_mail_transfered = 6;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10321;
+    }
+}
+
+message RedisMailChangeNotify {
+    repeated MailRedisData update_mail_list = 1;
+    repeated uint32 del_mail_id_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10303;
+    }
+}
+
+message SendOfflineMsgReq {
+    OfflineMsgBin msg = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10390;
+    }
+}
+
+message SendOfflineMsgRsp {
+    int32 retcode = 1;
+    string ticket = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10373;
+    }
+}
+
+message NewOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10399;
+    }
+}
+
+message GetOfflineMsgReq {
+    uint32 index = 1;
+    bool is_login = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10331;
+    }
+}
+
+message GetOfflineMsgRsp {
+    int32 retcode = 1;
+    uint32 last_index = 2;
+    repeated OfflineMsgBin offline_msg_list = 3;
+    bool is_login = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10375;
+    }
+}
+
+message RemoveOfflineMsgNotify {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10348;
+    }
+}
+
+message ClearOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10397;
+    }
+}
+
+message UpdateRedisMailReq {
+    MailUpdateOpType op_type = 1;
+    repeated uint32 mail_id_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10381;
+    }
+}
+
+message UpdateRedisMailRsp {
+    int32 retcode = 1;
+    MailUpdateOpType op_type = 2;
+    repeated uint32 mail_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10305;
+    }
+}
+
+message GetRedisMailTransactionStatusReq {
+    repeated string transaction_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10382;
+    }
+}
+
+message GetRedisMailTransactionStatusRsp {
+    int32 retcode = 1;
+    map<string, bool> transaction_status_map = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10347;
+    }
+}
+
+message ClearUpRedisMailNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10339;
+    }
+}
+
+message CleanRedisMailNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10353;
+    }
+}
+
+message ResendRedisMailReq {
+    map<string, MailBin> mail_bin_map = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10322;
+    }
+}
+
+message ResendRedisMailRsp {
+    int32 retcode = 1;
+    map<string, bool> resend_status_map = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10365;
+    }
+}

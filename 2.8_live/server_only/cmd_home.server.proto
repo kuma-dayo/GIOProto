@@ -1,0 +1,232 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin.home.proto";
+import "server_only/bin_common.server.proto";
+import "define.proto";
+
+message GetHomeDataReq {
+    uint32 home_uid = 1;
+    uint64 load_rand = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12072;
+    }
+}
+
+message GetHomeDataRsp {
+    int32 retcode = 1;
+    uint32 home_uid = 2;
+    uint32 data_version = 3;
+    uint32 is_new_home = 4;
+    HomeData home_data = 5;
+    uint64 load_rand = 6;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12098;
+    }
+}
+
+message SaveHomeDataReq {
+    HomeData home_data = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12012;
+    }
+}
+
+message SaveHomeDataRsp {
+    int32 retcode = 1;
+    uint32 data_version = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12035;
+    }
+}
+
+message ServerTryEnterHomeReq {
+    uint32 source_uid = 1;
+    uint32 source_app_id = 2;
+    uint64 cur_load_rand = 3;
+    uint32 owner_init_home_module_id = 4;
+    uint32 try_times = 5;
+    uint32 source_thread_index = 6;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12007;
+    }
+}
+
+message ServerTryEnterHomeRsp {
+    int32 retcode = 1;
+    uint32 target_home_uid = 2;
+    uint32 target_app_id = 3;
+    uint32 target_thread_index = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12021;
+    }
+}
+
+message ServerBlockHomeNotify {
+    bool is_unlock = 1;
+    uint32 end_time = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12003;
+    }
+}
+
+message ServerGetFriendEnterHomeOptionReq {
+    uint32 target_uid = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12090;
+    }
+}
+
+message ServerGetFriendEnterHomeOptionRsp {
+    int32 retcode = 1;
+    uint32 target_uid = 2;
+    FriendEnterHomeOption friend_enter_home_option = 3;
+    bool is_online = 4;
+    bool is_home_avaliable = 5;
+    bool is_only_mp_with_ps_player = 6;
+    uint32 last_save_time = 7;
+    uint32 prior_check_time = 8;
+    bool is_home_in_audit = 9;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12073;
+    }
+}
+
+message HomeOnlineStatusInfo {
+    uint32 home_uid = 1;
+    
+    StatusType online_status = 2;
+    enum StatusType {
+        ONLINE = 0;
+        OFFLINE = 1;
+    }
+}
+
+message HomeOnlineStatusNotify {
+    repeated HomeOnlineStatusInfo home_info_list = 1;
+    
+    enum Enum {
+        NONE = 0;
+        CMD_ID = 12099;
+    }
+}
+
+message SendHomeOfflineMsgReq {
+    HomeOfflineMsgBin msg = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12031;
+    }
+}
+
+message SendHomeOfflineMsgRsp {
+    int32 retcode = 1;
+    string ticket = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12075;
+    }
+}
+
+message NewHomeOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12048;
+    }
+}
+
+message GetHomeOfflineMsgReq {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12097;
+    }
+}
+
+message GetHomeOfflineMsgRsp {
+    int32 retcode = 1;
+    uint32 last_index = 2;
+    repeated HomeOfflineMsgBin offline_msg_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12081;
+    }
+}
+
+message RemoveHomeOfflineMsgNotify {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12005;
+    }
+}
+
+message ClearHomeOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12082;
+    }
+}
+
+message ServerHomeGetOnlineStatusReq {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12047;
+    }
+}
+
+message ServerHomeGetOnlineStatusRsp {
+    int32 retcode = 1;
+    bool is_online = 2;
+    repeated OnlinePlayerInfo player_info_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12039;
+    }
+}
+
+message ServerHomeKickPlayerReq {
+    bool is_kick_all = 1;
+    uint32 target_uid = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12053;
+    }
+}
+
+message ServerHomeKickPlayerRsp {
+    int32 retcode = 1;
+    bool is_kick_all = 2;
+    uint32 target_uid = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 12022;
+    }
+}

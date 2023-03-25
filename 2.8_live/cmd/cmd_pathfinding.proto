@@ -1,0 +1,218 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message QueryFilter {
+    int32 type_id = 9;
+    int32 area_mask = 13;
+}
+
+message QueryPathReq {
+    OptionType query_type = 13;
+    enum OptionType {
+        OPTION_NONE = 0;
+        OPTION_NORMAL = 1;
+        OPTION_FIRST_CAN_GO = 2;
+    }
+    
+    Vector3Int source_extend = 6;
+    Vector source_pos = 2;
+    QueryFilter filter = 12;
+    int32 query_id = 15;
+    Vector3Int destination_extend = 4;
+    repeated Vector destination_pos = 10;
+    uint32 scene_id = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2372;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message QueryPathRsp {
+    int32 query_id = 12;
+    repeated Vector corners = 6;
+    
+    PathStatusType query_status = 8;
+    enum PathStatusType {
+        STATUS_FAIL = 0;
+        STATUS_SUCC = 1;
+        STATUS_PARTIAL = 2;
+    }
+    
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2398;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ObstacleInfo {
+    MathQuaternion rotation = 4;
+    int32 obstacle_id = 2;
+    Vector center = 14;
+    
+    ShapeType shape = 6;
+    enum ShapeType {
+        OBSTACLE_SHAPE_CAPSULE = 0;
+        OBSTACLE_SHAPE_BOX = 1;
+    }
+    
+    Vector3Int extents = 12;
+}
+
+message ObstacleModifyNotify {
+    repeated int32 remove_obstacle_ids = 9;
+    repeated ObstacleInfo add_obstacles = 6;
+    uint32 scene_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2312;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PathfindingPingNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2335;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PathfindingEnterSceneReq {
+    uint32 scene_id = 12;
+    repeated uint32 activity_id = 14;
+    uint32 scene_tag_hash = 15;
+    uint32 version = 6;
+    bool is_editor = 11;
+    repeated ObstacleInfo obstacles = 13;
+    uint32 polygon_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2307;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PathfindingEnterSceneRsp {
+    int32 retcode = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2321;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GMShowObstacleReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2361;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GMShowObstacleRsp {
+    int32 retcode = 5;
+    repeated ObstacleInfo obstacles = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2329;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GMShowNavMeshReq {
+    Vector center = 1;
+    Vector extent = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2357;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PBNavMeshPoly {
+    repeated EdgeType edge_types = 10;
+    enum EdgeType {
+        INNER = 0;
+        TILE_BOUND = 1;
+        TILE_BOUND_UNCONNECT = 2;
+        TILE_BOUND_OVERIDE = 3;
+    }
+    
+    int32 area = 6;
+    repeated int32 vects = 7;
+}
+
+message PBNavMeshTile {
+    repeated Vector vecs = 4;
+    repeated PBNavMeshPoly polys = 8;
+}
+
+message GMShowNavMeshRsp {
+    repeated PBNavMeshTile tiles = 11;
+    int32 retcode = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2400;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PbNavMeshStatsInfo {
+    int32 authority_ai_in_combat = 10;
+    int32 no_authority_ai_in_combat = 11;
+    int32 total_authority_ai = 8;
+    int32 total_no_authority_ai = 13;
+}
+
+message NavMeshStatsNotify {
+    repeated PbNavMeshStatsInfo infos = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 2316;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}

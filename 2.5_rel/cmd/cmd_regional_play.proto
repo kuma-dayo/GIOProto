@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message RegionalPlayVar {
+    uint32 type = 1;
+    float value = 2;
+    float base_value = 3;
+    float max_value = 4;
+}
+
+message RegionalPlayInfoNotify {
+    bool is_enabled = 1;
+    string play_name = 2;
+    uint32 play_type = 3;
+    repeated RegionalPlayVar var_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 6285;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

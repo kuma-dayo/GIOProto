@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package proto;
+
+message BaseActivityGlobalBin {
+    uint32 schedule_id = 1;
+    bool is_settled = 2;
+}
+
+message SeaLampActivityGlobalBin {
+    uint32 progress = 1;
+}
+
+message ActivityGlobalBin {
+    BaseActivityGlobalBin base_bin = 1;
+    
+    oneof detail {
+        SeaLampActivityGlobalBin sea_lamp_bin = 101;
+    }
+}

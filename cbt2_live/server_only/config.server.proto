@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+
+message StopServerConfig {
+    google.protobuf.Timestamp begin_time = 1;
+    google.protobuf.Timestamp end_time = 2;
+    string url = 3;
+    uint32 text_id = 4;
+}
+
+message StopRegisterConfig {
+    google.protobuf.Timestamp begin_time = 1;
+    google.protobuf.Timestamp end_time = 2;
+    uint32 max_player_num = 3;
+}
+
+message ForceUpdateConfig {
+    string url = 1;
+    uint32 text_id = 2;
+}
+
+message DateTimeIntervalConfig {
+    google.protobuf.Timestamp begin_time = 1;
+    google.protobuf.Timestamp end_time = 2;
+    uint32 text_id = 3;
+}
+
+message ClientResVersion {
+    repeated uint32 versions = 1;
+}
+
+message ClientResVersionConfig {
+    map<string, ClientResVersion> res_version_map = 1;
+}
+
+message SdkAccountReqConfig {
+    uint32 app_id = 1;
+    uint32 channel_id = 2;
+    string open_id = 3;
+    string combo_token = 4;
+    string sign = 5;
+}
+
+message GachaItemTypeWeightConfig {
+    uint32 item_type = 1;
+    uint32 weight = 2;
+}
+
+message DbGachaItemTypeWeightConfig {
+    repeated GachaItemTypeWeightConfig item_type_weight_list = 1;
+}
+
+message GachaUpConfig {
+    uint32 item_type = 1;
+    uint32 prob = 2;
+    repeated uint32 item_list = 3;
+}
+
+message DbGachaUpConfig {
+    repeated GachaUpConfig gacha_up_list = 1;
+}
+
+message DbGachaRuleConfig {
+    repeated uint32 gacha_rule_list = 1;
+}

@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message CodexTypeData {
+    CodexType type = 1;
+    repeated uint32 codex_id_list = 2;
+}
+
+message CodexDataFullNotify {
+    repeated CodexTypeData type_data_list = 1;
+    uint32 exp = 2;
+    uint32 level = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4201;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CodexDataUpdataNotify {
+    CodexType type = 1;
+    uint32 id = 2;
+    uint32 exp = 3;
+    uint32 level = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4202;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message QueryCodexMonsterBeKilledNumReq {
+    repeated uint32 codex_id_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4203;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message QueryCodexMonsterBeKilledNumRsp {
+    int32 retcode = 1;
+    repeated uint32 codex_id_list = 2;
+    repeated uint32 be_killed_num_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4204;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

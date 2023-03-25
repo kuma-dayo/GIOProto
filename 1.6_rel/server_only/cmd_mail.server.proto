@@ -1,0 +1,221 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin_common.server.proto";
+import "server_only/redis_data.proto";
+import "server_only/enum.server.proto";
+
+message AddRedisMailReq {
+    MailAddOpType op_type = 1;
+    MailBin mail_bin = 2;
+    string ticket = 3;
+    string transaction = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10349;
+    }
+}
+
+message AddRedisMailRsp {
+    int32 retcode = 1;
+    MailAddOpType op_type = 2;
+    string ticket = 3;
+    string transaction = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10318;
+    }
+}
+
+message DelRedisMailReq {
+    MailDelOpType op_type = 1;
+    repeated uint32 mail_id_list = 2;
+    repeated string ticket_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10389;
+    }
+}
+
+message DelRedisMailRsp {
+    int32 retcode = 1;
+    MailDelOpType op_type = 2;
+    repeated uint32 mail_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10384;
+    }
+}
+
+message GetRedisMailReq {
+    MailGetOPType op_type = 1;
+    MailGetType get_type = 2;
+    repeated uint32 mail_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10400;
+    }
+}
+
+message GetRedisMailRsp {
+    int32 retcode = 1;
+    repeated bytes mail_str_list = 2;
+    MailGetOPType op_type = 3;
+    bool is_truncated = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10301;
+    }
+}
+
+message RedisMailChangeNotify {
+    repeated MailRedisData update_mail_list = 1;
+    repeated uint32 del_mail_id_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10394;
+    }
+}
+
+message SendOfflineMsgReq {
+    OfflineMsgBin msg = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10342;
+    }
+}
+
+message SendOfflineMsgRsp {
+    int32 retcode = 1;
+    string ticket = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10361;
+    }
+}
+
+message NewOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10379;
+    }
+}
+
+message GetOfflineMsgReq {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10312;
+    }
+}
+
+message GetOfflineMsgRsp {
+    int32 retcode = 1;
+    uint32 last_index = 2;
+    repeated OfflineMsgBin offline_msg_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10326;
+    }
+}
+
+message RemoveOfflineMsgNotify {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10324;
+    }
+}
+
+message ClearOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10391;
+    }
+}
+
+message UpdateRedisMailReq {
+    MailUpdateOpType op_type = 1;
+    repeated uint32 mail_id_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10336;
+    }
+}
+
+message UpdateRedisMailRsp {
+    int32 retcode = 1;
+    MailUpdateOpType op_type = 2;
+    repeated uint32 mail_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10319;
+    }
+}
+
+message GetRedisMailTransactionStatusReq {
+    repeated string transaction_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10314;
+    }
+}
+
+message GetRedisMailTransactionStatusRsp {
+    int32 retcode = 1;
+    map<string, bool> transaction_status_map = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10315;
+    }
+}
+
+message ClearUpRedisMailNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10370;
+    }
+}
+
+message CleanRedisMailNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10332;
+    }
+}
+
+message ResendRedisMailReq {
+    map<string, MailBin> mail_bin_map = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10347;
+    }
+}
+
+message ResendRedisMailRsp {
+    int32 retcode = 1;
+    map<string, bool> resend_status_map = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10306;
+    }
+}

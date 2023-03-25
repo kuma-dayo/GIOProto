@@ -1,0 +1,202 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message GadgetInteractReq {
+    uint32 gadget_entity_id = 1;
+    InterOpType op_type = 2;
+    uint32 gadget_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 801;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GadgetInteractRsp {
+    int32 retcode = 1;
+    uint32 gadget_entity_id = 2;
+    InteractType interact_type = 3;
+    InterOpType op_type = 4;
+    uint32 gadget_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 802;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetStateNotify {
+    uint32 gadget_entity_id = 1;
+    uint32 gadget_state = 2;
+    bool is_enable_interact = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 803;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorktopOptionNotify {
+    uint32 gadget_entity_id = 1;
+    repeated uint32 option_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 804;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SelectWorktopOptionReq {
+    uint32 gadget_entity_id = 1;
+    uint32 option_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 805;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SelectWorktopOptionRsp {
+    int32 retcode = 1;
+    uint32 gadget_entity_id = 2;
+    uint32 option_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 806;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BossChestActivateNotify {
+    uint32 entity_id = 1;
+    repeated uint32 qualify_uid_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 807;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlossomChestInfoNotify {
+    uint32 entity_id = 1;
+    BlossomChestInfo blossom_chest_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 808;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayStartNotify {
+    uint32 play_type = 1;
+    uint32 entity_id = 2;
+    uint32 start_time = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 809;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayUidInfo {
+    uint32 uid = 1;
+    uint32 score = 2;
+    uint32 icon = 3;
+    string nickname = 4;
+    string online_id = 5;
+}
+
+message GadgetPlayStopNotify {
+    uint32 play_type = 1;
+    uint32 entity_id = 2;
+    bool is_win = 3;
+    uint32 cost_time = 4;
+    repeated GadgetPlayUidInfo uid_info_list = 5;
+    uint32 score = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 810;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayDataNotify {
+    uint32 play_type = 1;
+    uint32 entity_id = 2;
+    uint32 progress = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 811;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayUidOpNotify {
+    uint32 play_type = 1;
+    uint32 entity_id = 2;
+    repeated uint32 uid_list = 3;
+    uint32 op = 4;
+    string param_str = 5;
+    repeated uint32 param_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 812;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum InteractType {
+    INTERACT_NONE = 0;
+    INTERACT_PICK_ITEM = 1;
+    INTERACT_GATHER = 2;
+    INTERACT_OPEN_CHEST = 3;
+    INTERACT_OPEN_STATUE = 4;
+    INTERACT_CONSUM = 5;
+    INTERACT_MP_PLAY_REWARD = 6;
+}
+
+enum InterOpType {
+    INTER_OP_FINISH = 0;
+    INTER_OP_START = 1;
+}

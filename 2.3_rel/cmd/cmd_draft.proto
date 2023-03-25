@@ -1,0 +1,184 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message DraftOwnerStartInviteReq {
+    uint32 draft_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5410;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DraftInviteFailInfo {
+    uint32 uid = 1;
+    DraftInviteFailReason reason = 2;
+}
+
+message DraftOwnerStartInviteRsp {
+    int32 retcode = 1;
+    uint32 draft_id = 2;
+    uint32 wrong_uid = 3;
+    repeated DraftInviteFailInfo invite_fail_info_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5415;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DraftOwnerInviteNotify {
+    uint32 draft_id = 1;
+    uint32 invite_deadline_time = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5437;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DraftGuestReplyInviteReq {
+    uint32 draft_id = 1;
+    bool is_agree = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5493;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DraftGuestReplyInviteRsp {
+    int32 retcode = 1;
+    uint32 draft_id = 2;
+    bool is_agree = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5444;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DraftGuestReplyInviteNotify {
+    uint32 draft_id = 1;
+    uint32 guest_uid = 2;
+    bool is_agree = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5445;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DraftInviteResultNotify {
+    uint32 draft_id = 1;
+    bool is_all_argee = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5475;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DraftOwnerTwiceConfirmNotify {
+    uint32 draft_id = 1;
+    uint32 twice_confirm_deadline_time = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5434;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DraftGuestReplyTwiceConfirmReq {
+    uint32 draft_id = 1;
+    bool is_agree = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5479;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DraftGuestReplyTwiceConfirmRsp {
+    int32 retcode = 1;
+    uint32 draft_id = 2;
+    bool is_agree = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5491;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DraftTwiceConfirmResultNotify {
+    uint32 draft_id = 1;
+    bool is_all_argee = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5497;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DraftGuestReplyTwiceConfirmNotify {
+    uint32 draft_id = 1;
+    uint32 guest_uid = 2;
+    bool is_agree = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5488;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum DraftInviteFailReason {
+    DRAFT_FAIL_UNKNOWN = 0;
+    DRAFT_ACTIVITY_NOT_OPEN = 1;
+    DRAFT_ACTIVITY_PLAY_NOT_OPEN = 2;
+    DRAFT_SCENE_NOT_MEET = 3;
+    DRAFT_WORLD_NOT_MEET = 4;
+    DRAFT_PLAY_LIMIT_NOT_MEET = 5;
+}

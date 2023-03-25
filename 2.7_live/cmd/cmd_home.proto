@@ -1,0 +1,1958 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+import "cmd/cmd_gallery.proto";
+
+message HomeVerifyFurnitureData {
+    uint32 id = 1;
+    uint32 num = 2;
+    repeated uint32 type = 3;
+}
+
+message HomeVerifyBlockData {
+    uint32 block_id = 1;
+    uint32 furniture_count = 2;
+}
+
+message HomeVerifySceneData {
+    uint32 module_id = 1;
+    uint32 scene_id = 2;
+    uint32 is_room = 3;
+    repeated HomeVerifyBlockData blocks = 4;
+    uint32 version = 5;
+}
+
+message HomeVerifyData {
+    uint32 uid = 1;
+    string region = 2;
+    fixed32 timestamp = 3;
+    LanguageType lang = 4;
+    HomeVerifySceneData home_info = 5;
+    string token = 6;
+    string aid = 7;
+    HomeSceneArrangementMuipData arrangement_data = 8;
+}
+
+message TryEnterHomeReq {
+    uint32 target_uid = 10;
+    uint32 target_point = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4553;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TryEnterHomeRsp {
+    int32 retcode = 12;
+    uint32 target_uid = 2;
+    repeated uint32 param_list = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4610;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message JoinHomeWorldFailNotify {
+    int32 retcode = 10;
+    uint32 target_uid = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4863;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeBlockNotify {
+    uint32 end_time = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4542;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeBasicInfo {
+    uint32 cur_module_id = 1;
+    uint32 cur_room_scene_id = 2;
+    bool is_in_edit_mode = 3;
+    uint64 exp = 4;
+    uint32 level = 5;
+    uint32 home_owner_uid = 6;
+    HomeLimitedShopInfo limited_shop_info = 7;
+    string owner_nick_name = 8;
+}
+
+message HomeGetBasicInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4535;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeBasicInfoNotify {
+    HomeBasicInfo basic_info = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4872;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeChangeEditModeReq {
+    bool is_enter_edit_mode = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4625;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeChangeEditModeRsp {
+    int32 retcode = 11;
+    bool is_enter_edit_mode = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4885;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeChangeModuleReq {
+    uint32 target_module_id = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4688;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeChangeModuleRsp {
+    int32 retcode = 10;
+    uint32 target_module_id = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4821;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeFurnitureData {
+    uint32 furniture_id = 1;
+    Vector spawn_pos = 3;
+    Vector spawn_rot = 4;
+    int32 parent_furniture_index = 7;
+    uint32 guid = 8;
+    uint32 version = 9;
+}
+
+message HomeFurnitureSuiteData {
+    uint32 suite_id = 1;
+    Vector spawn_pos = 2;
+    repeated int32 included_furniture_index_list = 3;
+    uint32 guid = 5;
+    bool is_allow_summon = 6;
+}
+
+message HomeNpcData {
+    uint32 avatar_id = 1;
+    Vector spawn_pos = 2;
+    Vector spawn_rot = 3;
+    uint32 costume_id = 4;
+}
+
+message HomeAnimalData {
+    uint32 furniture_id = 1;
+    Vector spawn_pos = 2;
+    Vector spawn_rot = 3;
+}
+
+message WeekendDjinnInfo {
+    Vector pos = 1;
+    Vector rot = 2;
+}
+
+message HomeBlockDotPattern {
+    uint32 height = 1;
+    uint32 width = 2;
+    bytes data = 3;
+}
+
+message HomeBlockSubFieldData {
+    Vector pos = 1;
+    Vector rot = 2;
+}
+
+message HomeBlockFieldData {
+    uint32 guid = 1;
+    uint32 furniture_id = 2;
+    Vector pos = 3;
+    Vector rot = 4;
+    repeated HomeBlockSubFieldData sub_field_list = 5;
+}
+
+message HomeTransferData {
+    uint32 guid = 1;
+    Vector spawn_pos = 2;
+}
+
+message HomeFurnitureGroupData {
+    uint32 group_furniture_index = 1;
+    repeated HomeFurnitureData virtual_furniure_list = 2;
+}
+
+message HomeFurnitureCustomSuiteData {
+    Vector spawn_pos = 1;
+    repeated int32 included_furniture_index_list = 2;
+    uint32 guid = 3;
+}
+
+message HomeBlockArrangementInfo {
+    uint32 block_id = 1;
+    repeated HomeFurnitureData persistent_furniture_list = 2;
+    repeated HomeFurnitureData deploy_furniure_list = 3;
+    repeated HomeNpcData deploy_npc_list = 4;
+    repeated HomeFurnitureSuiteData furniture_suite_list = 5;
+    repeated HomeAnimalData deploy_animal_list = 6;
+    bool is_unlocked = 7;
+    uint32 comfort_value = 8;
+    repeated WeekendDjinnInfo weekend_djinn_info_list = 9;
+    repeated HomeBlockDotPattern dot_pattern_list = 10;
+    repeated HomeBlockFieldData field_list = 11;
+    repeated HomeFurnitureGroupData furniture_group_list = 12;
+    repeated HomeFurnitureCustomSuiteData furniture_custom_suite_list = 13;
+}
+
+message HomeSceneArrangementInfo {
+    uint32 scene_id = 1;
+    repeated HomeBlockArrangementInfo block_arrangement_info_list = 2;
+    bool is_set_born_pos = 3;
+    Vector born_pos = 4;
+    Vector born_rot = 5;
+    repeated HomeFurnitureData door_list = 7;
+    repeated HomeFurnitureData stair_list = 8;
+    HomeFurnitureData main_house = 9;
+    uint32 comfort_value = 10;
+    Vector djinn_pos = 11;
+    uint32 tmp_version = 12;
+    uint32 bgm_id = 13;
+}
+
+message HomeGetArrangementInfoReq {
+    repeated uint32 scene_id_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4848;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeGetArrangementInfoRsp {
+    int32 retcode = 1;
+    repeated HomeSceneArrangementInfo scene_arrangement_info_list = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4456;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeUpdateArrangementInfoReq {
+    HomeSceneArrangementInfo scene_arrangement_info = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4472;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeUpdateArrangementInfoRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4822;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerHomeCompInfo {
+    FriendEnterHomeOption friend_enter_home_option = 1;
+    repeated uint32 unlocked_module_id_list = 2;
+    repeated uint32 levelup_reward_got_level_list = 3;
+    repeated uint32 seen_module_id_list = 4;
+}
+
+message GetPlayerHomeCompInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4845;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerHomeCompInfoNotify {
+    PlayerHomeCompInfo comp_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4563;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetFriendEnterHomeOptionReq {
+    FriendEnterHomeOption option = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4761;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetFriendEnterHomeOptionRsp {
+    int32 retcode = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4590;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerApplyEnterHomeNotify {
+    OnlinePlayerInfo src_player_info = 14;
+    uint32 src_app_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4504;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerApplyEnterHomeResultReq {
+    uint32 apply_uid = 2;
+    bool is_agreed = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4568;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerApplyEnterHomeResultRsp {
+    int32 retcode = 4;
+    uint32 apply_uid = 15;
+    bool is_agreed = 2;
+    uint32 param = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4697;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerApplyEnterHomeResultNotify {
+    uint32 target_uid = 14;
+    bool is_agreed = 15;
+    
+    Reason reason = 12;
+    enum Reason {
+        PLAYER_JUDGE = 0;
+        PLAYER_ENTER_OPTION_REFUSE = 1;
+        PLAYER_ENTER_OPTION_DIRECT = 2;
+        SYSTEM_JUDGE = 3;
+        HOST_IN_MATCH = 4;
+        PS_PLAYER_NOT_ACCEPT_OTHERS = 5;
+        OPEN_STATE_NOT_OPEN = 6;
+        HOST_IN_EDIT_MODE = 7;
+        PRIOR_CHECK = 8;
+    }
+    
+    string target_nickname = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4766;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeSceneJumpReq {
+    bool is_enter_room_scene = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4659;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeSceneJumpRsp {
+    int32 retcode = 10;
+    bool is_enter_room_scene = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4570;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeChooseModuleReq {
+    uint32 module_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4479;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeChooseModuleRsp {
+    int32 retcode = 5;
+    uint32 module_id = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4745;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeModuleUnlockNotify {
+    uint32 module_id = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4781;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeGetOnlineStatusReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4796;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeGetOnlineStatusRsp {
+    int32 retcode = 3;
+    repeated OnlinePlayerInfo player_info_list = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4554;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeKickPlayerReq {
+    bool is_kick_all = 10;
+    uint32 target_uid = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4809;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeKickPlayerRsp {
+    int32 retcode = 14;
+    bool is_kick_all = 6;
+    uint32 target_uid = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4752;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeModuleSeenReq {
+    repeated uint32 seen_module_id_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4546;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeModuleSeenRsp {
+    int32 retcode = 14;
+    repeated uint32 seen_module_id_list = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4526;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message UnlockedFurnitureFormulaDataNotify {
+    bool is_all = 14;
+    repeated uint32 furniture_id_list = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4680;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message UnlockedFurnitureSuiteDataNotify {
+    bool is_all = 10;
+    repeated uint32 furniture_suite_id_list = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4717;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GetHomeLevelUpRewardReq {
+    uint32 level = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4747;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetHomeLevelUpRewardRsp {
+    int32 retcode = 4;
+    uint32 level = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4517;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GetFurnitureCurModuleArrangeCountReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4603;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FurnitureCurModuleArrangeCountNotify {
+    repeated Uint32Pair furniture_arrange_count_list = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4681;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeModuleComfortInfo {
+    uint32 module_id = 1;
+    repeated uint32 world_scene_block_comfort_value_list = 2;
+    uint32 room_scene_comfort_value = 3;
+}
+
+message HomeComfortInfoNotify {
+    repeated HomeModuleComfortInfo module_info_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4649;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerQuitFromHomeNotify {
+    QuitReason reason = 7;
+    enum QuitReason {
+        INVALID = 0;
+        KICK_BY_HOST = 1;
+        BACK_TO_MY_WORLD = 2;
+        HOME_BLOCKED = 3;
+        HOME_IN_EDIT_MODE = 4;
+        BY_MUIP = 5;
+        CUR_MODULE_CLOSED = 6;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4776;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message OtherPlayerEnterHomeNotify {
+    string nickname = 10;
+    
+    Reason reason = 1;
+    enum Reason {
+        INVALID = 0;
+        ENTER = 1;
+        LEAVE = 2;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4609;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePriorCheckNotify {
+    fixed32 end_time = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4690;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeMarkPointSceneData {
+    uint32 module_id = 1;
+    uint32 scene_id = 2;
+    repeated HomeMarkPointFurnitureData furniture_list = 3;
+    Vector teapot_spirit_pos = 4;
+}
+
+message HomeMarkPointNotify {
+    repeated HomeMarkPointSceneData mark_point_data_list = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4746;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAllUnlockedBgmIdListNotify {
+    repeated uint32 all_unlocked_bgm_id_list = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4820;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeNewUnlockedBgmIdListNotify {
+    repeated uint32 new_unlocked_bgm_id_list = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4826;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeChangeBgmReq {
+    uint32 bgm_id = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4507;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeChangeBgmRsp {
+    int32 retcode = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4662;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeChangeBgmNotify {
+    uint32 bgm_id = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4881;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePreChangeEditModeNotify {
+    bool is_enter_edit_mode = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4528;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeEnterEditModeFinishReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4857;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeEnterEditModeFinishRsp {
+    int32 retcode = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4670;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FurnitureMakeData {
+    uint32 index = 1;
+    uint32 make_id = 2;
+    fixed32 begin_time = 3;
+    uint32 dur_time = 4;
+    fixed32 accelerate_time = 5;
+    uint32 avatar_id = 6;
+}
+
+message FurnitureMakeSlot {
+    repeated FurnitureMakeData furniture_make_data_list = 1;
+}
+
+message FurnitureMakeBeHelpedData {
+    string player_name = 1;
+    fixed32 time = 2;
+    uint32 uid = 3;
+    uint32 icon = 4;
+    ProfilePicture profile_picture = 5;
+}
+
+message FurnitureMakeHelpData {
+    uint32 uid = 1;
+    uint32 times = 2;
+}
+
+message FurnitureMakeMakeInfo {
+    uint32 furniture_id = 1;
+    uint32 make_count = 2;
+}
+
+message FurnitureMakeReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4551;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FurnitureMakeRsp {
+    int32 retcode = 6;
+    FurnitureMakeSlot furniture_make_slot = 10;
+    repeated FurnitureMakeHelpData help_data_list = 13;
+    repeated FurnitureMakeBeHelpedData helped_data_list = 12;
+    repeated FurnitureMakeMakeInfo make_info_list = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4530;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakeFurnitureMakeReq {
+    uint32 index = 9;
+    uint32 make_id = 4;
+    bool is_fast_finish = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4768;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeFurnitureMakeRsp {
+    int32 retcode = 9;
+    uint32 make_id = 2;
+    FurnitureMakeSlot furniture_make_slot = 15;
+    repeated ItemParam output_item_list = 10;
+    repeated ItemParam return_item_list = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4599;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FurnitureMakeFinishNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4557;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FurnitureMakeStartReq {
+    uint32 make_id = 1;
+    uint32 avatar_id = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4582;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FurnitureMakeStartRsp {
+    int32 retcode = 8;
+    FurnitureMakeSlot furniture_make_slot = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4463;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FurnitureMakeCancelReq {
+    uint32 index = 13;
+    uint32 make_id = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4834;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FurnitureMakeCancelRsp {
+    int32 retcode = 8;
+    uint32 make_id = 1;
+    FurnitureMakeSlot furniture_make_slot = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4660;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FurnitureMakeBeHelpedNotify {
+    FurnitureMakeBeHelpedData furniture_make_helped_data = 3;
+    FurnitureMakeSlot furniture_make_slot = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4626;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FurnitureMakeHelpReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4580;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FurnitureMakeHelpRsp {
+    int32 retcode = 14;
+    repeated FurnitureMakeHelpData help_data_list = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4722;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FunitureMakeMakeInfoChangeNotify {
+    FurnitureMakeMakeInfo make_info = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4488;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeLimitedShopInfo {
+    uint32 uid = 1;
+    fixed32 next_open_time = 3;
+    fixed32 next_guest_open_time = 4;
+    fixed32 next_close_time = 5;
+    Vector djinn_pos = 6;
+    Vector djinn_rot = 7;
+}
+
+message HomeLimitedShopInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4616;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeLimitedShopInfoRsp {
+    int32 retcode = 9;
+    HomeLimitedShopInfo shop_info = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4585;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeLimitedShopInfoNotify {
+    HomeLimitedShopInfo shop_info = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4621;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeLimitedShopGoods {
+    uint32 goods_id = 1;
+    ItemParam goods_item = 2;
+    repeated ItemParam cost_item_list = 3;
+    uint32 bought_num = 4;
+    uint32 buy_limit = 5;
+    uint32 disable_type = 6;
+}
+
+message HomeLimitedShop {
+    repeated HomeLimitedShopGoods goods_list = 1;
+}
+
+message HomeLimitedShopGoodsListReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4579;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeLimitedShopGoodsListRsp {
+    int32 retcode = 3;
+    HomeLimitedShop shop = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4846;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeLimitedShopBuyGoodsReq {
+    HomeLimitedShopGoods goods = 13;
+    uint32 buy_count = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4638;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeLimitedShopBuyGoodsRsp {
+    int32 retcode = 6;
+    HomeLimitedShopGoods goods = 13;
+    uint32 buy_count = 7;
+    repeated HomeLimitedShopGoods goods_list = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4790;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeLimitedShopInfoChangeNotify {
+    repeated HomeLimitedShopGoods goods_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4814;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeResource {
+    uint32 store_value = 1;
+    uint32 store_limit = 2;
+    fixed32 next_refresh_time = 3;
+}
+
+message HomeResourceNotify {
+    HomeResource home_coin = 6;
+    HomeResource fetter_exp = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4806;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeResourceTakeHomeCoinReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4763;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeResourceTakeHomeCoinRsp {
+    int32 retcode = 11;
+    HomeResource home_coin = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4658;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeResourceTakeFetterExpReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4840;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeResourceTakeFetterExpRsp {
+    int32 retcode = 1;
+    HomeResource fetter_exp = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4500;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarTalkFinishInfo {
+    uint32 avatar_id = 1;
+    repeated uint32 finish_talk_id_list = 2;
+}
+
+message HomeAvatarTalkFinishInfoNotify {
+    repeated HomeAvatarTalkFinishInfo avatar_talk_info_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4502;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarTalkReq {
+    uint32 avatar_id = 13;
+    uint32 talk_id = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4712;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeAvatarTalkRsp {
+    int32 retcode = 2;
+    HomeAvatarTalkFinishInfo avatar_talk_info = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4700;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarRewardEventInfo {
+    uint32 avatar_id = 1;
+    uint32 event_id = 2;
+    uint32 suite_id = 3;
+    uint32 random_position = 4;
+    uint32 guid = 6;
+}
+
+message HomeAvatarRewardEventNotify {
+    bool is_event_trigger = 5;
+    HomeAvatarRewardEventInfo reward_event = 1;
+    repeated HomeAvatarRewardEventInfo pending_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4789;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarRewardEventGetReq {
+    uint32 avatar_id = 2;
+    uint32 event_id = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4775;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeAvatarRewardEventGetRsp {
+    int32 retcode = 9;
+    repeated ItemParam item_list = 10;
+    uint32 event_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4873;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarSummonEventInfo {
+    uint32 event_id = 1;
+    uint32 avatar_id = 2;
+    uint32 suit_id = 3;
+    uint32 event_over_time = 4;
+    uint32 random_position = 5;
+    uint32 guid = 7;
+}
+
+message HomeAvatarSummonAllEventNotify {
+    repeated HomeAvatarSummonEventInfo summon_event_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4617;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarSummonEventReq {
+    uint32 avatar_id = 1;
+    uint32 suit_id = 11;
+    uint32 guid = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4615;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeAvatarSummonEventRsp {
+    int32 retcode = 7;
+    uint32 event_id = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4498;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarCostumeChangeNotify {
+    uint32 avatar_id = 5;
+    uint32 costume_id = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4685;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarSummonFinishReq {
+    uint32 event_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4748;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeAvatarSummonFinishRsp {
+    int32 retcode = 3;
+    uint32 event_id = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4782;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvtarAllFinishRewardNotify {
+    repeated uint32 event_id_list = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4849;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeAvatarAllFinishRewardNotify {
+    repeated uint32 event_id_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4648;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeSceneInitFinishReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4552;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeSceneInitFinishRsp {
+    int32 retcode = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4592;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePlantSeedReq {
+    repeated uint32 seed_id_list = 10;
+    uint32 field_guid = 15;
+    uint32 index = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4614;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomePlantSeedRsp {
+    int32 retcode = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4804;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePlantWeedReq {
+    uint32 field_guid = 13;
+    uint32 index = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4877;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomePlantWeedRsp {
+    int32 retcode = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4575;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePlantSubFieldData {
+    uint32 seed_id = 1;
+    fixed32 end_time = 2;
+    repeated uint32 entity_id_list = 3;
+    HomePlantFieldStatus field_status = 4;
+    uint32 home_gather_id = 5;
+}
+
+message HomePlantFieldData {
+    uint32 field_guid = 1;
+    uint32 furniture_id = 2;
+    repeated HomePlantSubFieldData sub_field_list = 3;
+    uint32 scene_id = 4;
+    Vector spawn_pos = 5;
+}
+
+message HomePlantInfoNotify {
+    repeated HomePlantFieldData field_list = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4835;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePlantFieldNotify {
+    HomePlantFieldData field = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4466;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePlantInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4833;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomePlantInfoRsp {
+    int32 retcode = 10;
+    repeated HomePlantFieldData field_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4859;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeTransferReq {
+    uint32 guid = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4880;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeTransferRsp {
+    int32 retcode = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4767;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeFishFarmingInfo {
+    uint32 fishpond_guid = 1;
+    repeated uint32 fish_id_list = 2;
+}
+
+message HomeGetFishFarmingInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4455;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeGetFishFarmingInfoRsp {
+    int32 retcode = 10;
+    repeated HomeFishFarmingInfo fish_farming_info_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4889;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeFishFarmingInfoNotify {
+    repeated HomeFishFarmingInfo fish_farming_info_list = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4682;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeUpdateFishFarmingInfoReq {
+    HomeFishFarmingInfo fish_farming_info = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4604;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeUpdateFishFarmingInfoRsp {
+    int32 retcode = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4856;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeCustomFurnitureInfo {
+    uint32 guid = 1;
+    repeated CustomCommonNodeInfo sub_furniture_list = 2;
+}
+
+message HomeCustomFurnitureInfoNotify {
+    repeated HomeCustomFurnitureInfo custom_furniture_info_list = 3;
+    map<uint32, uint32> used_sub_furniture_count_map = 13;
+    repeated uint32 delete_custom_furniture_list = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4482;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeEditCustomFurnitureReq {
+    HomeCustomFurnitureInfo custom_furniture_info = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4516;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeEditCustomFurnitureRsp {
+    int32 retcode = 8;
+    HomeCustomFurnitureInfo custom_furniture_info = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4871;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomePictureFrameInfo {
+    uint32 guid = 1;
+    uint32 picture_id = 2;
+}
+
+message HomePictureFrameInfoNotify {
+    repeated HomePictureFrameInfo picture_frame_info_list = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4540;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeUpdatePictureFrameInfoReq {
+    HomePictureFrameInfo picture_frame_info = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4664;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeUpdatePictureFrameInfoRsp {
+    int32 retcode = 9;
+    HomePictureFrameInfo picture_frame_info = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4778;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeRacingGallerySettleNotify {
+    uint32 gallery_id = 12;
+    RacingGallerySettleInfo settle_info = 15;
+    uint32 rank = 3;
+    bool is_new_record = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4663;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeGroupPlayerInfo {
+    uint32 uid = 1;
+    string nickname = 2;
+    uint32 player_level = 3;
+    ProfilePicture profile_picture = 4;
+    string online_id = 5;
+    string psn_id = 6;
+}
+
+message HomeRacingGalleryRecord {
+    uint32 use_time = 1;
+    HomeGroupPlayerInfo player_info = 2;
+    uint32 timestamp = 3;
+}
+
+message HomeRacingRecord {
+    repeated HomeRacingGalleryRecord record_list = 1;
+}
+
+message HomeBalloonGalleryRecord {
+    uint32 score = 1;
+    uint32 hit_count = 2;
+    HomeGroupPlayerInfo player_info = 3;
+    uint32 timestamp = 4;
+}
+
+message HomeBalloonRecord {
+    repeated HomeBalloonGalleryRecord record_list = 1;
+}
+
+message HomeStakePlayRecord {
+    uint32 timestamp = 1;
+    repeated HomeGroupPlayerInfo engaged_player_info_list = 2;
+}
+
+message HomeStakeRecord {
+    repeated HomeStakePlayRecord record_list = 1;
+}
+
+message HomeSeekFurniturePlayerScore {
+    HomeGroupPlayerInfo player_info = 1;
+    uint32 score = 2;
+}
+
+message HomeSeekFurnitureOneRecord {
+    uint32 timestamp = 1;
+    repeated HomeSeekFurniturePlayerScore engaged_player_score_list = 2;
+}
+
+message HomeSeekFurnitureAllRecord {
+    repeated HomeSeekFurnitureOneRecord record_list = 1;
+}
+
+message HomeGroupRecord {
+    uint32 group_id = 1;
+    
+    oneof detail {
+        HomeRacingRecord racing_gallery_info = 101;
+        HomeBalloonRecord balloon_gallery_info = 102;
+        HomeStakeRecord stake_play_info = 103;
+        HomeSeekFurnitureAllRecord seek_furniture_gallery_info = 104;
+    }
+}
+
+message HomeGetGroupRecordReq {
+    uint32 group_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4545;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeGetGroupRecordRsp {
+    int32 retcode = 5;
+    HomeGroupRecord group_record = 2;
+    uint32 record_type = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4475;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeClearGroupRecordReq {
+    uint32 group_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4755;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message HomeClearGroupRecordRsp {
+    int32 retcode = 1;
+    uint32 group_id = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4666;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeBalloonGallerySettleNotify {
+    uint32 gallery_id = 14;
+    BalloonGallerySettleInfo settle_info = 12;
+    uint32 rank = 1;
+    bool is_new_record = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4829;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeBalloonGalleryScoreNotify {
+    uint32 gallery_id = 6;
+    uint32 cur_score = 15;
+    uint32 add_score = 5;
+    uint32 trigger_entity_id = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4694;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message HomeSeekFurnitureGalleryScoreNotify {
+    uint32 gallery_id = 10;
+    GalleryStopReason reason = 12;
+    HomeSeekFurnitureOneRecord record = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4656;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum HomePlantFieldStatus {
+    HOME_FIELD_STATUE_NONE = 0;
+    HOME_FIELD_STATUE_SEED = 1;
+    HOME_FIELD_STATUE_SPROUT = 2;
+    HOME_FIELD_STATUE_GATHER = 3;
+}

@@ -1,0 +1,940 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message PlayerStoreNotify {
+    StoreType store_type = 4;
+    repeated Item item_list = 3;
+    uint32 weight_limit = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 609;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message StoreWeightLimitNotify {
+    StoreType store_type = 4;
+    uint32 weight_limit = 2;
+    uint32 material_count_limit = 1;
+    uint32 weapon_count_limit = 5;
+    uint32 reliquary_count_limit = 6;
+    uint32 furniture_count_limit = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 631;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message StoreItemChangeNotify {
+    StoreType store_type = 9;
+    repeated Item item_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 641;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message StoreItemDelNotify {
+    StoreType store_type = 14;
+    repeated uint64 guid_list = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 637;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ItemHint {
+    uint32 item_id = 1;
+    uint32 count = 2;
+    bool is_new = 3;
+    uint64 guid = 4;
+}
+
+message ItemAddHintNotify {
+    repeated ItemHint item_list = 10;
+    Vector position = 12;
+    bool is_position_valid = 13;
+    uint32 reason = 5;
+    uint32 quest_id = 14;
+    bool is_transfered_from_avatar_card = 11;
+    repeated ItemHint overflow_transformed_item_list = 3;
+    bool is_general_reward_hiden = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 632;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message UseItemReq {
+    uint64 guid = 1;
+    uint32 count = 12;
+    uint64 target_guid = 14;
+    uint32 option_idx = 10;
+    bool is_enter_mp_dungeon_team = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 635;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message UseItemRsp {
+    int32 retcode = 15;
+    uint64 guid = 8;
+    uint32 item_id = 11;
+    uint64 target_guid = 12;
+    uint32 option_idx = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 649;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DropItemReq {
+    StoreType store_type = 8;
+    uint64 guid = 9;
+    uint32 count = 3;
+    Vector pos = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 682;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DropItemRsp {
+    int32 retcode = 15;
+    StoreType store_type = 2;
+    uint64 guid = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 655;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WearEquipReq {
+    uint64 avatar_guid = 14;
+    uint64 equip_guid = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 630;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WearEquipRsp {
+    int32 retcode = 6;
+    uint64 avatar_guid = 10;
+    uint64 equip_guid = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 697;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakeoffEquipReq {
+    uint64 avatar_guid = 15;
+    uint32 slot = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 698;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeoffEquipRsp {
+    int32 retcode = 8;
+    uint64 avatar_guid = 3;
+    uint32 slot = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 645;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarEquipChangeNotify {
+    uint64 avatar_guid = 1;
+    uint32 equip_type = 2;
+    uint32 item_id = 8;
+    uint64 equip_guid = 4;
+    SceneWeaponInfo weapon = 13;
+    SceneReliquaryInfo reliquary = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 690;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WeaponUpgradeReq {
+    uint64 target_weapon_guid = 3;
+    repeated uint64 food_weapon_guid_list = 8;
+    repeated ItemParam item_param_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 686;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WeaponUpgradeRsp {
+    int32 retcode = 11;
+    uint64 target_weapon_guid = 8;
+    uint32 old_level = 4;
+    uint32 cur_level = 7;
+    repeated ItemParam item_param_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 663;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WeaponPromoteReq {
+    uint64 target_weapon_guid = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 624;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WeaponPromoteRsp {
+    int32 retcode = 11;
+    uint64 target_weapon_guid = 15;
+    uint32 old_promote_level = 5;
+    uint32 cur_promote_level = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 638;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ReliquaryUpgradeReq {
+    uint64 target_reliquary_guid = 5;
+    repeated uint64 food_reliquary_guid_list = 15;
+    repeated ItemParam item_param_list = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 606;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ReliquaryUpgradeRsp {
+    int32 retcode = 1;
+    uint64 target_reliquary_guid = 10;
+    uint32 old_level = 5;
+    uint32 cur_level = 6;
+    uint32 power_up_rate = 2;
+    repeated uint32 old_append_prop_list = 7;
+    repeated uint32 cur_append_prop_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 619;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ReliquaryPromoteReq {
+    uint64 target_guid = 4;
+    uint64 item_guid = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 612;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ReliquaryPromoteRsp {
+    int32 retcode = 2;
+    uint64 target_reliquary_guid = 4;
+    uint32 old_promote_level = 11;
+    uint32 cur_promote_level = 14;
+    repeated uint32 old_append_prop_list = 3;
+    repeated uint32 cur_append_prop_list = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 658;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarCardChangeReq {
+    uint64 avatar_guid = 6;
+    uint32 item_id = 14;
+    uint32 count = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 650;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message AvatarCardChangeRsp {
+    int32 retcode = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 620;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GrantRewardNotify {
+    Reward reward = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 613;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WeaponAwakenReq {
+    uint64 target_weapon_guid = 9;
+    uint64 item_guid = 3;
+    map<uint32, uint32> affix_level_map = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 642;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message WeaponAwakenRsp {
+    int32 retcode = 3;
+    uint64 target_weapon_guid = 1;
+    uint32 target_weapon_awaken_level = 13;
+    map<uint32, uint32> old_affix_level_map = 7;
+    map<uint32, uint32> cur_affix_level_map = 14;
+    uint64 avatar_guid = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 601;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ItemCdGroupTimeNotify {
+    map<uint32, uint64> item_cd_map = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 611;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DropHintNotify {
+    repeated uint32 item_id_list = 12;
+    Vector position = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 622;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CombineReq {
+    uint32 combine_id = 5;
+    uint32 combine_count = 3;
+    uint64 avatar_guid = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 654;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message CombineRsp {
+    int32 retcode = 13;
+    uint32 combine_id = 12;
+    uint32 combine_count = 6;
+    uint64 avatar_guid = 15;
+    repeated ItemParam cost_item_list = 10;
+    repeated ItemParam result_item_list = 2;
+    repeated ItemParam total_random_item_list = 9;
+    repeated ItemParam total_return_item_list = 4;
+    repeated ItemParam total_extra_item_list = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 646;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ForgeQueueData {
+    uint32 queue_id = 1;
+    uint32 forge_id = 2;
+    uint32 finish_count = 3;
+    uint32 unfinish_count = 4;
+    uint32 next_finish_timestamp = 5;
+    uint32 total_finish_timestamp = 6;
+    uint32 avatar_id = 7;
+}
+
+message ForgeQueueDataNotify {
+    map<uint32, ForgeQueueData> forge_queue_map = 14;
+    repeated uint32 removed_forge_queue_list = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 633;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ForgeGetQueueDataReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 636;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ForgeGetQueueDataRsp {
+    int32 retcode = 15;
+    uint32 max_queue_num = 13;
+    map<uint32, ForgeQueueData> forge_queue_map = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 628;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ForgeStartReq {
+    uint32 forge_id = 9;
+    uint32 forge_count = 11;
+    uint32 avatar_id = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 676;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ForgeStartRsp {
+    int32 retcode = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 672;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ForgeQueueManipulateReq {
+    uint32 forge_queue_id = 11;
+    ForgeQueueManipulateType manipulate_type = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 659;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ForgeQueueManipulateRsp {
+    int32 retcode = 13;
+    ForgeQueueManipulateType manipulate_type = 8;
+    repeated ItemParam output_item_list = 6;
+    repeated ItemParam return_item_list = 10;
+    repeated ItemParam extra_output_item_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 684;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ResinChangeNotify {
+    uint32 cur_value = 4;
+    uint32 next_add_timestamp = 2;
+    uint32 cur_buy_count = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 670;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BuyResinReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 602;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message BuyResinRsp {
+    int32 retcode = 14;
+    uint32 cur_value = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 616;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message MaterialDeleteReturnNotify {
+    map<uint32, uint32> delete_material_map = 7;
+    map<uint32, uint32> return_item_map = 10;
+    MaterialDeleteReturnType type = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 693;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakeMaterialDeleteReturnReq {
+    MaterialDeleteReturnType type = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 660;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeMaterialDeleteReturnRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 677;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MaterialDeleteUpdateNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 643;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message McoinExchangeHcoinReq {
+    uint32 mcoin_cost = 8;
+    uint32 hcoin = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 687;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message McoinExchangeHcoinRsp {
+    int32 retcode = 9;
+    uint32 mcoin_cost = 10;
+    uint32 hcoin = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 689;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MaterilaInfo {
+    uint64 guid = 1;
+    uint32 count = 2;
+}
+
+message DestroyMaterialReq {
+    repeated MaterilaInfo material_list = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 678;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DestroyMaterialRsp {
+    int32 retcode = 9;
+    repeated uint32 item_id_list = 11;
+    repeated uint32 item_count_list = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 608;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetEquipLockStateReq {
+    uint64 target_equip_guid = 10;
+    bool is_locked = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 604;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetEquipLockStateRsp {
+    int32 retcode = 7;
+    uint64 target_equip_guid = 13;
+    bool is_locked = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 605;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CalcWeaponUpgradeReturnItemsReq {
+    uint64 target_weapon_guid = 9;
+    repeated uint64 food_weapon_guid_list = 10;
+    repeated ItemParam item_param_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 610;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message CalcWeaponUpgradeReturnItemsRsp {
+    int32 retcode = 5;
+    uint64 target_weapon_guid = 10;
+    repeated ItemParam item_param_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 666;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ForgeDataNotify {
+    repeated uint32 forge_id_list = 13;
+    uint32 max_queue_num = 15;
+    map<uint32, ForgeQueueData> forge_queue_map = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 648;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ForgeFormulaDataNotify {
+    uint32 forge_id = 11;
+    bool is_locked = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 673;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CombineDataNotify {
+    repeated uint32 combine_id_list = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 661;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CombineFormulaDataNotify {
+    uint32 combine_id = 6;
+    bool is_locked = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 688;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ClosedItemNotify {
+    repeated uint32 item_id_list = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 674;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CheckAddItemExceedLimitNotify {
+    bool is_drop = 1;
+    repeated uint32 exceeded_item_list = 8;
+    repeated uint32 exceeded_item_type_list = 3;
+    
+    ItemExceedLimitMsgType msg_type = 14;
+    enum ItemExceedLimitMsgType {
+        ITEM_EXCEED_LIMIT_MSG_DEFAULT = 0;
+        ITEM_EXCEED_LIMIT_MSG_TEXT = 1;
+        ITEM_EXCEED_LIMIT_MSG_DIALOG = 2;
+        ITEM_EXCEED_LIMIT_MSG_DIALOG_NONBLOCK = 3;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 653;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetIsAutoUnlockSpecificEquipReq {
+    bool is_auto_unlock_specific_equip = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 639;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetIsAutoUnlockSpecificEquipRsp {
+    int32 retcode = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 695;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ReliquaryDecomposeReq {
+    uint32 config_id = 1;
+    uint32 target_count = 4;
+    repeated uint64 guid_list = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 615;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ReliquaryDecomposeRsp {
+    int32 retcode = 9;
+    repeated uint64 guid_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 692;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+enum ForgeQueueManipulateType {
+    FORGE_QUEUE_MANIPULATE_TYPE_RECEIVE_OUTPUT = 0;
+    FORGE_QUEUE_MANIPULATE_TYPE_STOP_FORGE = 1;
+}
+
+enum MaterialDeleteReturnType {
+    MATERIAL_DELETE_RETURN_BAG = 0;
+    MATERIAL_DELETE_RETURN_SEED = 1;
+}

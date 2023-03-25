@@ -1,0 +1,691 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/redis_data.proto";
+import "cmd/cmd_social.proto";
+import "cmd/cmd_scene.proto";
+import "cmd/cmd_activity.proto";
+import "define.proto";
+
+message AddAskFriendNotify {
+    uint32 source_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10860;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetPlayerFriendListReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10833;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetPlayerFriendListRsp {
+    int32 retcode = 1;
+    repeated uint32 friend_uid_list = 2;
+    repeated uint32 ask_add_friend_uid_list = 3;
+    repeated uint32 blacklist_uid_list = 4;
+    repeated uint32 psn_friend_uid_list = 5;
+    repeated uint32 psn_blacklist_uid_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10810;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetSocialDetailReq {
+    uint32 target_uid = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10837;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetSocialDetailRsp {
+    int32 retcode = 1;
+    SocialDetail social_detail = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10893;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerAskAddFriendReq {
+    uint32 target_uid = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10844;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerAskAddFriendRsp {
+    int32 retcode = 1;
+    uint32 target_uid = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10845;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerDealAddFriendReq {
+    uint32 target_uid = 1;
+    DealAddFriendResultType deal_add_friend_result = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10875;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerDealAddFriendRsp {
+    int32 retcode = 1;
+    uint32 target_uid = 2;
+    DealAddFriendResultType deal_add_friend_result = 3;
+    uint32 target_friend_num = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10834;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerDeleteFriendReq {
+    uint32 target_uid = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10879;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerDeleteFriendRsp {
+    int32 retcode = 1;
+    uint32 target_uid = 2;
+    uint32 target_friend_num = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10891;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerSetSignatureReq {
+    string signature = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10828;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerSetSignatureRsp {
+    int32 retcode = 1;
+    string signature = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10855;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetPlayerFriendBriefReq {
+    repeated uint32 friend_uid_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10874;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetPlayerFriendBriefRsp {
+    int32 retcode = 1;
+    repeated FriendBrief friend_brief_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10856;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeverGetPS4FriendUidReq {
+    repeated string psn_id_list = 1;
+    PSRequstReason request_reason = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10883;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SeverGetPS4FriendUidRsp {
+    int32 retcode = 1;
+    repeated uint32 uid_id_list = 2;
+    PSRequstReason request_reason = 3;
+    repeated FriendBrief friend_brief_list = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10826;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SyncPlayerBriefNotify {
+    PlayerBasicBriefData basic_brief_data = 1;
+    PlayerMpBriefData mp_brief_data = 2;
+    PlayerSocialBriefData social_brief_data = 3;
+    PlayerHomeBriefData home_brief_data = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10862;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerAddBlacklistReq {
+    uint32 target_uid = 1;
+    bool is_friend = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10889;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerAddBlacklistRsp {
+    int32 retcode = 1;
+    FriendBrief target_friend_brief = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10809;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerRemoveBlacklistReq {
+    uint32 target_uid = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10865;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerRemoveBlacklistRsp {
+    int32 retcode = 1;
+    uint32 target_uid = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10803;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetRecentMpPlayerListReq {
+    repeated uint32 recent_player_uid_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10867;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetRecentMpPlayerListRsp {
+    int32 retcode = 1;
+    repeated FriendBrief recent_mp_player_brief_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10820;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetPlayerBlacklistReq {
+    repeated uint32 blacklist_uid_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10880;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetPlayerBlacklistRsp {
+    int32 retcode = 1;
+    repeated FriendBrief blacklist = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10864;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerPrivateChatReq {
+    ChatInfo chat_info = 1;
+    bool is_ps4_friend = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10801;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerPrivateChatRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10866;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerPullPrivateChatReq {
+    uint32 from_uid = 1;
+    uint32 to_uid = 2;
+    uint32 from_sequence = 3;
+    uint32 pull_num = 4;
+    bool is_ps4_friend = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10873;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerPullRecentChatReq {
+    uint32 from_sequence = 1;
+    uint32 pull_num = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10863;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerUpdateActivitySocialDataNotify {
+    repeated ActivitySocialData social_data_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10808;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerBlessingGetFriendPicListReq {
+    repeated uint32 friend_uid_list = 1;
+    uint32 schedule_id = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10817;
+    }
+}
+
+message ServerBlessingGetFriendPicListRsp {
+    int32 retcode = 1;
+    repeated BlessingFriendPicData friend_pic_data_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10881;
+    }
+}
+
+message ServerGetFriendBriefReq {
+    repeated uint32 uid_list = 1;
+    FriendBriefRequestReason reason = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10827;
+    }
+}
+
+message ServerGetFriendBriefRsp {
+    int32 retcode = 1;
+    repeated FriendBrief friend_brief_list = 2;
+    FriendBriefRequestReason reason = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10802;
+    }
+}
+
+message ServerUpdateShowAvatarInfoNotify {
+    repeated ShowAvatarInfo show_avatar_info_list = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10852;
+    }
+}
+
+message ServerGetFriendShowAvatarInfoReq {
+    uint32 uid = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10892;
+    }
+}
+
+message ServerGetFriendShowAvatarInfoRsp {
+    int32 retcode = 1;
+    uint32 uid = 2;
+    repeated ShowAvatarInfo show_avatar_info_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10858;
+    }
+}
+
+message ServerReadPrivateChatReq {
+    uint32 from_uid = 1;
+    uint32 target_uid = 2;
+    bool is_ps4_friend = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10823;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerGetFriendShowNameCardInfoReq {
+    uint32 uid = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10813;
+    }
+}
+
+message ServerGetFriendShowNameCardInfoRsp {
+    int32 retcode = 1;
+    uint32 uid = 2;
+    repeated uint32 show_name_card_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10836;
+    }
+}
+
+message ServerGetAskFriendBriefReq {
+    repeated uint32 ask_add_friend_uid_list = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10824;
+    }
+}
+
+message ServerGetAskFriendBriefRsp {
+    int32 retcode = 1;
+    repeated FriendBrief ask_add_friend_brief_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10861;
+    }
+}
+
+message ServerAddPsnFriendReq {
+    repeated uint32 force_add_psn_friend_uid_list = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10838;
+    }
+}
+
+message ServerAddPsnFriendRsp {
+    int32 retcode = 1;
+    repeated uint32 force_add_psn_friend_uid_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10830;
+    }
+}
+
+message ServerAddPsnBlackReq {
+    repeated uint32 force_add_psn_black_uid_list = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10847;
+    }
+}
+
+message ServerAddPsnBlackRsp {
+    int32 retcode = 1;
+    repeated uint32 force_add_psn_black_uid_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10832;
+    }
+}
+
+message ServerFriendInfoChangeNotify {
+    uint32 my_uid = 1;
+    string my_online_id = 2;
+    repeated uint32 notify_uid_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10851;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerPlantFlowerGetFriendFlowerDataReq {
+    uint32 schedule_id = 1;
+    uint32 friend_uid = 2;
+    map<uint32, uint32> give_flower_num_map = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10884;
+    }
+}
+
+message ServerPlantFlowerGetFriendFlowerDataRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 friend_uid = 3;
+    map<uint32, uint32> give_flower_num_map = 4;
+    map<uint32, uint32> have_flower_num_map = 5;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10812;
+    }
+}
+
+message ServerPlantFlowerGetFriendFlowerWishListReq {
+    uint32 schedule_id = 1;
+    repeated uint32 friend_uid_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10853;
+    }
+}
+
+message ServerPlantFlowerGetFriendFlowerWishListRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    repeated PlantFlowerFriendFlowerWishData friend_flower_wish_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10872;
+    }
+}
+
+message ServerWinterCampGetFriendItemDataReq {
+    uint32 schedule_id = 1;
+    uint32 friend_uid = 2;
+    repeated ItemParam give_item_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10870;
+    }
+}
+
+message ServerWinterCampGetFriendItemDataRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    uint32 friend_uid = 3;
+    repeated ItemParam give_item_list = 4;
+    repeated ItemParam friend_item_list = 5;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10854;
+    }
+}
+
+message ServerWinterCampGetFriendWishListReq {
+    uint32 schedule_id = 1;
+    repeated uint32 friend_uid_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10835;
+    }
+}
+
+message ServerWinterCampGetFriendWishListRsp {
+    int32 retcode = 1;
+    uint32 schedule_id = 2;
+    repeated WinterCampFriendWishData wish_data_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10857;
+    }
+}
+
+enum PSRequstReason {
+    PS_REASON_NONE = 0;
+    PS_REASON_FRIEND_LIST = 1;
+    PS_REASON_APPLY_ENTER_MP = 2;
+    PS_REASON_BLACK_LIST = 3;
+}
+
+enum FriendBriefRequestReason {
+    FRIEND_BRIEF_REASON_NONE = 0;
+    FRIEND_BRIEF_REASON_BLESSING_ACTIVITY = 1;
+    FRIEND_BRIEF_REASON_PLANT_FLOWER_ACTIVITY = 2;
+    FRIEND_BRIEF_REASON_WINTER_CAMP_ACTIVITY = 3;
+}

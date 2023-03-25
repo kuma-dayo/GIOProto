@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message UpdateMpStatusNotify {
+    uint32 uid = 1;
+    bool is_only_mp_with_ps_player = 2;
+    PlatformType platform_type = 3;
+    OnlinePlayerInfo online_player_info = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10460;
+    }
+}
+
+message DelMpStatusNotify {
+    uint32 uid = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10433;
+    }
+}
+
+message GetPlayerMpStatusListReq {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10410;
+    }
+}
+
+message GetPlayerMpStatusListRsp {
+    int32 retcode = 1;
+    repeated OnlinePlayerInfo player_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10415;
+    }
+}
+
+message GetPlayerMpStatusInfoReq {
+    bool is_online_id = 1;
+    
+    oneof player_id {
+        uint32 target_uid = 2;
+        string online_id = 3;
+        string psn_id = 4;
+    }
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10437;
+    }
+}
+
+message GetPlayerMpStatusInfoRsp {
+    int32 retcode = 1;
+    uint32 target_uid = 2;
+    OnlinePlayerInfo target_player_info = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10493;
+    }
+}

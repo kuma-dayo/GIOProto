@@ -1,0 +1,1332 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message GetPlayerTokenReq {
+    uint32 account_type = 3;
+    string account_uid = 12;
+    string account_token = 14;
+    string account_ext = 2;
+    uint32 uid = 8;
+    bool is_guest = 4;
+    uint32 platform_type = 7;
+    uint32 cloud_client_ip = 13;
+    string online_id = 9;
+    string psn_region = 15;
+    uint32 channel_id = 10;
+    uint32 sub_channel_id = 1;
+    string country_code = 11;
+    string psn_id = 5;
+    string client_ip_str = 6;
+    string birthday = 966;
+    uint32 minors_reg_min_age = 1883;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 109;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetPlayerTokenRsp {
+    int32 retcode = 7;
+    string msg = 10;
+    uint32 uid = 2;
+    string token = 1;
+    uint32 black_uid_end_time = 15;
+    uint32 account_type = 12;
+    string account_uid = 4;
+    bool is_proficient_player = 5;
+    string secret_key = 13;
+    uint32 gm_uid = 14;
+    uint64 secret_key_seed = 11;
+    bytes security_cmd_buffer = 6;
+    uint32 platform_type = 3;
+    bytes extra_bin_data = 8;
+    bool is_guest = 9;
+    uint32 channel_id = 1614;
+    uint32 sub_channel_id = 1911;
+    uint32 tag = 1855;
+    string country_code = 739;
+    bool is_login_white_list = 977;
+    string psn_id = 245;
+    string client_version_random_key = 1387;
+    uint32 reg_platform = 633;
+    string client_ip_str = 1238;
+    string birthday = 1109;
+    uint32 minors_reg_min_age = 1728;
+    bool is_watchdog_uid = 1679;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 131;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TrackingIOInfo {
+    string appid = 1;
+    string deviceid = 2;
+    string mac = 3;
+    string rydevicetype = 4;
+    string client_tz = 5;
+    string current_caid = 6;
+    string cached_caid = 7;
+}
+
+message AdjustTrackingInfo {
+    string idfa = 1;
+    string gps_adid = 2;
+    string fire_adid = 3;
+    string adid = 4;
+    string event_token = 5;
+    string app_token = 6;
+}
+
+message PlayerLoginReq {
+    string token = 5;
+    string client_version = 7;
+    string system_version = 12;
+    string device_name = 3;
+    string device_uuid = 14;
+    uint32 target_uid = 15;
+    uint64 login_rand = 11;
+    bool is_editor = 2;
+    uint32 language_type = 13;
+    uint32 account_type = 1;
+    string account_uid = 8;
+    string platform = 6;
+    string device_info = 4;
+    uint32 platform_type = 10;
+    bool is_guest = 9;
+    uint32 cloud_client_ip = 233;
+    uint32 gm_uid = 1423;
+    string checksum = 485;
+    string online_id = 1974;
+    uint32 client_token = 133;
+    bytes security_cmd_reply = 96;
+    bytes extra_bin_data = 814;
+    string cps = 467;
+    uint32 channel_id = 2028;
+    uint32 sub_channel_id = 1571;
+    string checksum_client_version = 1844;
+    uint32 tag = 843;
+    TrackingIOInfo tracking_io_info = 1882;
+    string country_code = 1060;
+    uint32 client_data_version = 1570;
+    bytes environment_error_code = 1303;
+    uint32 target_home_owner_uid = 1054;
+    string psn_id = 921;
+    string client_verison_hash = 1972;
+    bool is_transfer = 1918;
+    uint32 reg_platform = 167;
+    uint32 target_home_param = 1129;
+    AdjustTrackingInfo adjust_tracking_info = 280;
+    string birthday = 174;
+    string security_library_version = 135;
+    string security_library_md5 = 745;
+    uint32 client_port = 1881;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 141;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ShortAbilityHashPair {
+    sfixed32 ability_name_hash = 1;
+    sfixed32 ability_config_hash = 2;
+}
+
+message PlayerLoginRsp {
+    int32 retcode = 1;
+    bytes player_data = 6;
+    bool is_new_player = 11;
+    uint32 target_uid = 15;
+    uint64 login_rand = 12;
+    bool is_use_ability_hash = 3;
+    int32 ability_hash_code = 7;
+    map<string, int32> ability_hash_map = 13;
+    uint32 client_data_version = 14;
+    bool is_relogin = 2;
+    uint32 client_silence_data_version = 10;
+    string game_biz = 9;
+    uint32 player_data_version = 8;
+    string client_md5 = 1706;
+    string client_silence_md5 = 271;
+    ResVersionConfig res_version_config = 933;
+    map<uint32, BlockInfo> block_info_map = 1156;
+    string client_version_suffix = 1984;
+    string client_silence_version_suffix = 49;
+    repeated ShortAbilityHashPair short_ability_hash_map = 364;
+    bytes sc_info = 2014;
+    bool is_audit = 1545;
+    bool is_sc_open = 1974;
+    string register_cps = 715;
+    repeated FeatureBlockInfo feature_block_info_list = 408;
+    bool is_data_need_relogin = 110;
+    string country_code = 1306;
+    ResVersionConfig next_res_version_config = 749;
+    string next_resource_url = 1744;
+    uint32 target_home_owner_uid = 945;
+    bool is_enable_client_hash_debug = 713;
+    bool is_transfer = 138;
+    double total_tick_time = 1923;
+    string birthday = 1977;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 137;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerLogoutReq {
+    Reason reason = 10;
+    enum Reason {
+        DISCONNECT = 0;
+        CLIENT_REQ = 1;
+        TIMEOUT = 2;
+        ADMIN_REQ = 3;
+        SERVER_CLOSE = 4;
+        GM_CLEAR = 5;
+        PLAYER_TRANSFER = 6;
+        CLIENT_CHECKSUM_INVALID = 7;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 132;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerLogoutRsp {
+    int32 retcode = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 117;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerLogoutNotify {
+    int32 retcode = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 185;
+    }
+}
+
+message PlayerDataNotify {
+    string nick_name = 15;
+    uint64 server_time = 2;
+    bool is_first_login_today = 11;
+    uint32 region_id = 9;
+    map<uint32, PropValue> prop_map = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 135;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChangeGameTimeReq {
+    uint32 game_time = 9;
+    bool is_force_set = 7;
+    uint32 extra_days = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 149;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChangeGameTimeRsp {
+    int32 retcode = 7;
+    uint32 cur_game_time = 1;
+    uint32 extra_days = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 182;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerGameTimeNotify {
+    uint32 game_time = 7;
+    uint32 uid = 13;
+    bool is_home = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 155;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerPropNotify {
+    map<uint32, PropValue> prop_map = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 127;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ClientTriggerEventNotify {
+    EventTriggerType event_type = 10;
+    uint32 force_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 107;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetPlayerPropReq {
+    repeated PropValue prop_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 130;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetPlayerPropRsp {
+    int32 retcode = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 197;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetPlayerBornDataReq {
+    uint32 avatar_id = 3;
+    string nick_name = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 198;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetPlayerBornDataRsp {
+    int32 retcode = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 145;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DoSetPlayerBornDataNotify {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 190;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerPropChangeNotify {
+    uint32 prop_type = 12;
+    uint32 prop_delta = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 186;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetPlayerNameReq {
+    string nick_name = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 163;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetPlayerNameRsp {
+    int32 retcode = 12;
+    string nick_name = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 124;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SetOpenStateReq {
+    uint32 key = 12;
+    uint32 value = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 138;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SetOpenStateRsp {
+    int32 retcode = 2;
+    uint32 key = 15;
+    uint32 value = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 106;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message OpenStateUpdateNotify {
+    map<uint32, uint32> open_state_map = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 119;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message OpenStateChangeNotify {
+    map<uint32, uint32> open_state_map = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 112;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerCookReq {
+    uint32 recipe_id = 6;
+    uint32 qte_quality = 2;
+    uint32 assist_avatar = 11;
+    uint32 cook_count = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 158;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerCookRsp {
+    int32 retcode = 9;
+    CookRecipeData recipe_data = 14;
+    repeated ItemParam item_list = 13;
+    uint32 qte_quality = 11;
+    uint32 cook_count = 15;
+    repeated ItemParam extral_item_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 150;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerRandomCookReq {
+    repeated ItemParam material_list = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 120;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerRandomCookRsp {
+    int32 retcode = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 113;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CookRecipeData {
+    uint32 recipe_id = 1;
+    uint32 proficiency = 2;
+}
+
+message CookDataNotify {
+    uint32 grade = 8;
+    repeated CookRecipeData recipe_data_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 142;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CookRecipeDataNotify {
+    CookRecipeData recipe_data = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 101;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CookGradeDataNotify {
+    uint32 grade = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 111;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerCompoundMaterialReq {
+    uint32 compound_id = 9;
+    uint32 count = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 122;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message CompoundQueueData {
+    uint32 compound_id = 1;
+    uint32 output_count = 2;
+    uint32 wait_count = 3;
+    uint32 output_time = 4;
+}
+
+message PlayerCompoundMaterialRsp {
+    int32 retcode = 9;
+    CompoundQueueData compound_que_data = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 154;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakeCompoundOutputReq {
+    uint32 compound_id = 12;
+    uint32 compound_group_id = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 146;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeCompoundOutputRsp {
+    int32 retcode = 12;
+    repeated ItemParam item_list = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 133;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CompoundDataNotify {
+    repeated uint32 unlock_compound_list = 6;
+    repeated CompoundQueueData compound_que_data_list = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 136;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GetCompoundDataReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 128;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetCompoundDataRsp {
+    int32 retcode = 10;
+    repeated uint32 unlock_compound_list = 14;
+    repeated CompoundQueueData compound_que_data_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 176;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerTimeNotify {
+    bool is_paused = 8;
+    uint64 player_time = 4;
+    uint64 server_time = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 172;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerSetPauseReq {
+    bool is_paused = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 159;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerSetPauseRsp {
+    int32 retcode = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 184;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerSetLanguageReq {
+    uint32 language_type = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 170;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerSetLanguageRsp {
+    int32 retcode = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 129;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DataResVersionNotify {
+    uint32 client_data_version = 9;
+    uint32 client_silence_data_version = 15;
+    string client_md5 = 6;
+    string client_silence_md5 = 2;
+    ResVersionConfig res_version_config = 8;
+    string client_version_suffix = 4;
+    string client_silence_version_suffix = 3;
+    bool is_data_need_relogin = 10;
+    
+    DataResVersionOpType op_type = 7;
+    enum DataResVersionOpType {
+        OP_TYPE_NONE = 0;
+        OP_TYPE_RELOGIN = 1;
+        OP_TYPE_MP_RELOGIN = 2;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 125;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DailyTaskInfo {
+    uint32 daily_task_id = 1;
+    uint32 reward_id = 2;
+    uint32 progress = 3;
+    uint32 finish_progress = 4;
+    bool is_finished = 5;
+}
+
+message DailyTaskDataNotify {
+    uint32 score_reward_id = 4;
+    bool is_taken_score_reward = 15;
+    uint32 finished_num = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 183;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DailyTaskProgressNotify {
+    DailyTaskInfo info = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 103;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DailyTaskScoreRewardNotify {
+    uint32 reward_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 134;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorldOwnerDailyTaskNotify {
+    repeated DailyTaskInfo task_list = 8;
+    uint32 filter_city_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 102;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message AddRandTaskInfoNotify {
+    uint32 rand_task_id = 9;
+    Vector pos = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 116;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RemoveRandTaskInfoNotify {
+    uint32 rand_task_id = 7;
+    bool is_succ = 12;
+    
+    FinishReason reason = 2;
+    enum FinishReason {
+        DEFAULT = 0;
+        CLEAR = 1;
+        DISTANCE = 2;
+        FINISH = 3;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 193;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TakePlayerLevelRewardReq {
+    uint32 level = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 160;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakePlayerLevelRewardRsp {
+    int32 retcode = 14;
+    uint32 level = 13;
+    uint32 reward_id = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 177;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerLevelRewardUpdateNotify {
+    repeated uint32 level_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 143;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GivingRecord {
+    uint32 giving_id = 1;
+    bool is_finished = 2;
+    uint32 last_group_id = 3;
+}
+
+message GivingRecordNotify {
+    repeated GivingRecord giving_record_list = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 187;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GivingRecordChangeNotify {
+    GivingRecord giving_record = 10;
+    bool is_deactive = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 189;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ItemGivingReq {
+    uint32 giving_id = 14;
+    repeated ItemParam item_param_list = 10;
+    map<uint64, uint32> item_guid_count_map = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 178;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ItemGivingRsp {
+    int32 retcode = 13;
+    uint32 giving_id = 6;
+    uint32 giving_group_id = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 108;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerCookArgsReq {
+    uint32 recipe_id = 3;
+    uint32 assist_avatar = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 104;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerCookArgsRsp {
+    int32 retcode = 1;
+    float qte_range_ratio = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 105;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerLuaShellNotify {
+    uint32 id = 6;
+    bytes lua_shell = 12;
+    uint32 use_type = 10;
+    LuaShellType shell_type = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 110;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerDisconnectClientNotify {
+    uint32 data = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 166;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AntiAddictNotify {
+    int32 msg_type = 4;
+    string msg = 3;
+    string level = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 148;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerForceExitReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 173;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message PlayerForceExitRsp {
+    int32 retcode = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 161;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerInjectFixNotify {
+    uint32 id = 3;
+    bytes inject_fix = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 188;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message TaskVar {
+    uint32 key = 1;
+    repeated int32 value_list = 2;
+}
+
+message TaskVarNotify {
+    repeated TaskVar task_var_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 191;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ClientLockGameTimeNotify {
+    bool is_lock = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 174;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetNextResourceInfoReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 153;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetNextResourceInfoRsp {
+    int32 retcode = 7;
+    ResVersionConfig next_res_version_config = 1;
+    string next_resource_url = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 139;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AdjustWorldLevelReq {
+    uint32 cur_world_level = 8;
+    uint32 expect_world_level = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 195;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message AdjustWorldLevelRsp {
+    int32 retcode = 5;
+    uint32 after_world_level = 11;
+    uint32 cd_over_time = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 115;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DailyTaskFilterCityReq {
+    uint32 city_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 192;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message DailyTaskFilterCityRsp {
+    int32 retcode = 10;
+    uint32 city_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 118;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message DailyTaskUnlockedCitiesNotify {
+    repeated uint32 unlocked_city_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 121;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExclusiveRuleInfo {
+    uint32 rule_type = 1;
+    repeated uint32 object_id_list = 2;
+}
+
+message ExclusiveRuleNotify {
+    repeated ExclusiveRuleInfo rule_info_list = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 123;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CompoundUnlockNotify {
+    uint32 compound_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 181;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GameplayRecommendationSkillRequest {
+    uint32 skill_depot_id = 1;
+}
+
+message GameplayRecommendationReliquaryRequest {
+    uint32 equip_type = 1;
+}
+
+message GetGameplayRecommendationReq {
+    uint32 avatar_id = 14;
+    
+    oneof detail {
+        GameplayRecommendationSkillRequest skill_request = 347;
+        GameplayRecommendationReliquaryRequest reliquary_request = 1217;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 164;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GameplayRecommendationSkillResponse {
+    uint32 skill_depot_id = 1;
+    repeated uint32 skill_id_list = 2;
+}
+
+message GameplayRecommendationReliquaryMainPropData {
+    uint32 main_prop_id = 1;
+    uint32 permillage = 2;
+}
+
+message GameplayRecommendationReliquaryResponse {
+    uint32 equip_type = 1;
+    repeated GameplayRecommendationReliquaryMainPropData main_prop_data_list = 2;
+}
+
+message GetGameplayRecommendationRsp {
+    int32 retcode = 10;
+    uint32 avatar_id = 3;
+    
+    oneof detail {
+        GameplayRecommendationSkillResponse skill_response = 895;
+        GameplayRecommendationReliquaryResponse reliquary_response = 1346;
+    }
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 151;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerNicknameAuditDataNotify {
+    ContentAuditInfo info = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 126;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerNicknameNotify {
+    string nickname = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 162;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message NicknameAuditConfigNotify {
+    bool is_open = 1;
+    uint32 submit_limit = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 144;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ReadNicknameAuditReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 179;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ReadNicknameAuditRsp {
+    int32 retcode = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 169;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message RechargeReq {
+    ShopHcoinProduct hcoin_product = 1;
+    ShopCardProduct card_product = 2;
+    PlayProduct play_product = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4101;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RechargeRsp {
+    int32 retcode = 1;
+    string product_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4102;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message OrderFinishNotify {
+    string product_id = 1;
+    uint32 add_hcoin = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4103;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

@@ -1,0 +1,540 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message GadgetInteractReq {
+    uint32 gadget_entity_id = 9;
+    InterOpType op_type = 6;
+    uint32 gadget_id = 14;
+    bool is_use_condense_resin = 15;
+    ResinCostType resin_cost_type = 11;
+    uint32 ui_interact_id = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 809;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GadgetInteractRsp {
+    int32 retcode = 4;
+    uint32 gadget_entity_id = 6;
+    InteractType interact_type = 9;
+    InterOpType op_type = 1;
+    uint32 gadget_id = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 831;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetStateNotify {
+    uint32 gadget_entity_id = 2;
+    uint32 gadget_state = 11;
+    bool is_enable_interact = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 841;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorktopOptionNotify {
+    uint32 gadget_entity_id = 12;
+    repeated uint32 option_list = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 837;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SelectWorktopOptionReq {
+    uint32 gadget_entity_id = 2;
+    uint32 option_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 832;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SelectWorktopOptionRsp {
+    int32 retcode = 7;
+    uint32 gadget_entity_id = 12;
+    uint32 option_id = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 817;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BossChestActivateNotify {
+    uint32 entity_id = 9;
+    repeated uint32 qualify_uid_list = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 885;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message BlossomChestInfoNotify {
+    uint32 entity_id = 11;
+    BlossomChestInfo blossom_chest_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 835;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayStartNotify {
+    uint32 play_type = 4;
+    uint32 entity_id = 5;
+    uint32 start_time = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 849;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayUidInfo {
+    uint32 uid = 1;
+    uint32 score = 2;
+    uint32 icon = 3;
+    string nickname = 4;
+    string online_id = 5;
+    uint32 battle_watcher_id = 6;
+    ProfilePicture profile_picture = 7;
+}
+
+message GadgetPlayStopNotify {
+    uint32 play_type = 7;
+    uint32 entity_id = 15;
+    bool is_win = 10;
+    uint32 cost_time = 2;
+    repeated GadgetPlayUidInfo uid_info_list = 9;
+    uint32 score = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 882;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayDataNotify {
+    uint32 play_type = 14;
+    uint32 entity_id = 10;
+    uint32 progress = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 855;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetPlayUidOpNotify {
+    uint32 play_type = 8;
+    uint32 entity_id = 1;
+    repeated uint32 uid_list = 5;
+    uint32 op = 10;
+    string param_str = 13;
+    repeated uint32 param_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 827;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetGeneralRewardInfoNotify {
+    uint32 entity_id = 5;
+    GadgetGeneralRewardInfo general_reward_info = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 807;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetAutoPickDropInfoNotify {
+    repeated Item item_list = 15;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 830;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message UpdateAbilityCreatedMovingPlatformNotify {
+    OpType op_type = 15;
+    enum OpType {
+        OP_NONE = 0;
+        OP_ACTIVATE = 1;
+        OP_DEACTIVATE = 2;
+    }
+    
+    uint32 entity_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 897;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FoundationReq {
+    uint32 gadget_entity_id = 15;
+    FoundationOpType op_type = 10;
+    uint32 building_id = 9;
+    uint32 point_config_id = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 898;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FoundationRsp {
+    int32 retcode = 13;
+    uint32 gadget_entity_id = 2;
+    FoundationOpType op_type = 15;
+    uint32 building_id = 5;
+    uint32 point_config_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 845;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FoundationNotify {
+    uint32 gadget_entity_id = 10;
+    FoundationInfo info = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 890;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetTalkChangeNotify {
+    uint32 gadget_entity_id = 11;
+    uint32 cur_gadget_talk_state = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 886;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetChainLevelUpdateNotify {
+    map<uint32, uint32> gadget_chain_level_map = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 863;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetChainLevelChangeNotify {
+    map<uint32, uint32> gadget_chain_level_map = 11;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 824;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message VehicleInteractReq {
+    uint32 entity_id = 8;
+    VehicleInteractType interact_type = 3;
+    uint32 pos = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 838;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message VehicleInteractRsp {
+    int32 retcode = 15;
+    uint32 entity_id = 14;
+    VehicleInteractType interact_type = 3;
+    VehicleMember member = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 806;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CreateVehicleReq {
+    uint32 vehicle_id = 9;
+    uint32 scene_point_id = 15;
+    Vector pos = 1;
+    Vector rot = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 819;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message CreateVehicleRsp {
+    int32 retcode = 7;
+    uint32 vehicle_id = 8;
+    uint32 entity_id = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 812;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message RequestLiveInfoReq {
+    uint32 live_id = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 858;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RequestLiveInfoRsp {
+    int32 retcode = 11;
+    uint32 live_id = 2;
+    string live_url = 3;
+    string spare_live_url = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 850;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message LiveStartNotify {
+    uint32 live_id = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 820;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ProjectorOptionReq {
+    uint32 op_type = 8;
+    uint32 entity_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 813;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+    
+    enum ProjectorOpType {
+        PROJECTOR_OP_NONE = 0;
+        PROJECTOR_OP_CREATE = 1;
+        PROJECTOR_OP_DESTROY = 2;
+    }
+}
+
+message ProjectorOptionRsp {
+    int32 retcode = 15;
+    uint32 op_type = 3;
+    uint32 entity_id = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 842;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message LiveEndNotify {
+    uint32 live_id = 9;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 801;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message VehicleStaminaNotify {
+    uint32 entity_id = 8;
+    float cur_stamina = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 811;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetCustomTreeInfoNotify {
+    uint32 gadget_entity_id = 1;
+    CustomGadgetTreeInfo custom_gadget_tree_info = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 822;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum InteractType {
+    INTERACT_NONE = 0;
+    INTERACT_PICK_ITEM = 1;
+    INTERACT_GATHER = 2;
+    INTERACT_OPEN_CHEST = 3;
+    INTERACT_OPEN_STATUE = 4;
+    INTERACT_CONSUM = 5;
+    INTERACT_MP_PLAY_REWARD = 6;
+    INTERACT_VIEW = 7;
+    INTERACT_GENERAL_REWARD = 8;
+    INTERACT_MIRACLE_RING = 9;
+    INTERACT_FOUNDATION = 10;
+    INTERACT_ECHO_SHELL = 11;
+    INTERACT_HOME_GATHER = 12;
+    INTERACT_ENV_ANIMAL = 13;
+    INTERACT_QUEST_GADGET = 14;
+    INTERACT_UI_INTERACT = 15;
+}
+
+enum InterOpType {
+    INTER_OP_FINISH = 0;
+    INTER_OP_START = 1;
+}
+
+enum ResinCostType {
+    RESIN_COST_TYPE_NONE = 0;
+    RESIN_COST_TYPE_NORMAL = 1;
+    RESIN_COST_TYPE_CONDENSE = 2;
+    RESIN_COST_TYPE_REUNION_PRIVILEGE = 3;
+    RESIN_COST_TYPE_OP_ACTIVITY = 4;
+    RESIN_COST_TYPE_MATERIAL = 5;
+}
+
+enum FoundationOpType {
+    FOUNDATION_OP_NONE = 0;
+    FOUNDATION_OP_BUILD = 1;
+    FOUNDATION_OP_DEMOLITION = 2;
+    FOUNDATION_OP_REBUILD = 3;
+    FOUNDATION_OP_ROTATE = 4;
+    FOUNDATION_OP_LOCK = 5;
+    FOUNDATION_OP_UNLOCK = 6;
+}
+
+enum VehicleInteractType {
+    VEHICLE_INTERACT_NONE = 0;
+    VEHICLE_INTERACT_IN = 1;
+    VEHICLE_INTERACT_OUT = 2;
+}

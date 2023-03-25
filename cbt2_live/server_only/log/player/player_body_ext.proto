@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package proto_log;
+
+message PlayerLogBodyExtRegister {
+    
+}
+
+message PlayerLogBodyExtLogin {
+    
+}
+
+message PlayerLogBodyExtLogout {
+    
+}
+
+message PlayerLogBodyExtGadget {
+    uint32 group_id = 1;
+    uint32 config_id = 2;
+    uint32 entity_id = 3;
+    int32 x_coordinate = 4;
+    int32 y_coordinate = 5;
+    int32 z_coordinate = 6;
+}
+
+message PlayerLogBodyExtMissionType {
+    uint32 quest_type = 1;
+}
+
+message PlayerLogBodyExtAddMaterial {
+    uint32 reason_type = 1;
+}
+
+message PlayerLogBodyExtAddCoin {
+    uint32 reason_type = 1;
+}

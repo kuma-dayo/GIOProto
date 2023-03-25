@@ -1,0 +1,1301 @@
+syntax = "proto3";
+
+package proto_log;
+
+message PlayerLogBodyUserLocation {
+    
+}
+
+message PlayerLogBodyPlayerDisconnect {
+    string account_uid = 1;
+    string nickname = 2;
+}
+
+message ClientStatData {
+    int32 x = 1;
+    int32 y = 2;
+    int32 z = 3;
+    uint32 fps = 4;
+    uint32 memory = 5;
+}
+
+message PlayerLogBodyClientFpsStatus {
+    uint32 is_low_fps = 1;
+    repeated float fps = 2;
+    repeated ClientStatData stat_list = 3;
+    uint32 target_frame_rate = 4;
+    uint32 graphic_quality_level = 5;
+}
+
+message TeamAvatarLog {
+    uint32 avatar_type = 1;
+    uint32 avatar_id = 2;
+}
+
+message PlayerLogBodyChangeSceneTeam {
+    repeated TeamAvatarLog removed_avatar_list = 1;
+    repeated TeamAvatarLog added_avatar_list = 2;
+    repeated TeamAvatarLog cur_avatar_list = 3;
+    uint32 level1_area_id = 4;
+    uint32 level2_area_id = 5;
+    bool is_in_mp = 6;
+    uint32 change_reason = 7;
+}
+
+message PlayerLogBodySetUpAvatarTeam {
+    uint32 team_id = 1;
+    repeated uint64 before_avatar_id_list = 2;
+    repeated uint64 cur_avatar_id_list = 3;
+}
+
+message PlayerLogBodyChooseCurAvatarTeam {
+    uint32 before_team_id = 1;
+    repeated uint64 before_avatar_id_list = 2;
+    uint32 cur_team_id = 3;
+    repeated uint64 cur_avatar_id_list = 4;
+}
+
+message PlayerLogBodyMissionRemove {
+    uint32 mission_remove_type = 1;
+    uint32 mission_type = 2;
+    uint32 mission_id = 3;
+    uint32 start_time = 4;
+}
+
+message PlayerLogBodyAvatarHpChange {
+    uint32 avatar_level = 1;
+    uint64 hp_total = 2;
+    int64 hp_add = 3;
+    uint64 hp_left = 4;
+    uint32 reason = 5;
+    uint32 avatar_id = 6;
+    uint32 is_auto_use_spring = 7;
+    string ability_name = 8;
+}
+
+message ItemLog {
+    uint32 item_id = 1;
+    uint32 count = 2;
+}
+
+message AffixLog {
+    uint32 affix_id = 1;
+    uint32 affix_level = 2;
+}
+
+message WeaponLog {
+    uint64 guid = 1;
+    uint32 weapon_id = 2;
+    uint32 speciality = 3;
+    uint32 level = 5;
+    uint32 promote_level = 6;
+    repeated AffixLog affix_list = 7;
+}
+
+message RelicLog {
+    uint64 guid = 1;
+    uint32 relic_id = 2;
+    uint32 part = 3;
+    uint32 rank_level = 5;
+    uint32 level = 6;
+    uint32 promote_level = 7;
+    uint32 main_prop_id = 8;
+    repeated uint32 append_prop_id_list = 9;
+}
+
+message AvatarLog {
+    uint32 avatar_id = 1;
+    uint32 level = 2;
+    uint32 promote_level = 3;
+    WeaponLog weapon = 4;
+    RelicLog relic_bracer = 5;
+    RelicLog relic_dress = 6;
+    RelicLog relic_shoes = 7;
+    RelicLog relic_ring = 8;
+    RelicLog relic_necklace = 9;
+    repeated AffixLog relic_set_affix_list = 10;
+    uint32 life_state = 11;
+    uint32 hp_percent = 12;
+    uint32 avatar_combat_force = 13;
+    uint32 skill_depot_id = 14;
+    uint32 owner_uid = 15;
+    bool is_trial = 16;
+}
+
+message PlayerLogBodyAvatarDeathRevival {
+    AvatarLog avatar = 1;
+    uint32 reason = 2;
+    string combat_transaction = 3;
+    string dungeon_transaction = 4;
+}
+
+message EntityLog {
+    uint32 entity_type = 1;
+    uint32 id = 2;
+    uint32 group_id = 3;
+    uint32 config_id = 4;
+    int32 x_coordinate = 5;
+    int32 y_coordinate = 6;
+    int32 z_coordinate = 7;
+    repeated uint32 level = 8;
+}
+
+message AttackEntityLog {
+    uint32 entity_type = 1;
+    uint32 id = 2;
+    uint32 group_id = 3;
+    uint32 config_id = 4;
+    repeated uint32 level = 5;
+}
+
+message PlayerLogBodyAttack {
+    string combat_transaction = 1;
+    AttackEntityLog attacker = 2;
+    AttackEntityLog attacker_owner_avatar = 3;
+    AttackEntityLog defenser = 4;
+    string ability_name = 5;
+    string modifier_name = 6;
+    string attack_tag = 7;
+    string anim_event_id = 8;
+    uint32 old_hp = 9;
+    uint32 cur_hp = 10;
+    uint32 attack_count = 11;
+    uint64 total_damage = 12;
+    uint64 total_reduce_hp = 13;
+}
+
+message PlayerLogBodyCombatStart {
+    string combat_transaction = 1;
+    repeated AvatarLog avatar_list = 2;
+    EntityLog monster_log = 3;
+    uint32 player_combat_force = 4;
+}
+
+message PlayerLogBodyCombatEnd {
+    string combat_transaction = 1;
+    uint32 is_changed_equip = 2;
+    uint32 combat_end_reason = 3;
+    
+    enum CombatEndReason {
+        COMBAT_END_NONE = 0;
+        COMBAT_END_MONSTER_DIE = 1;
+        COMBAT_END_MONSTER_ALERT_CHANGE = 2;
+        COMBAT_END_AVATAR_DISAPPEAR = 3;
+        COMBAT_END_ALL_AVATAR_DEAD = 4;
+    }
+}
+
+message PlayerLogBodyAttackShield {
+    string combat_transaction = 1;
+    EntityLog source_entity = 2;
+    EntityLog target_entity = 3;
+    string ability_name = 4;
+    string modifier_name = 5;
+    string action_name = 6;
+    string mixin_name = 7;
+    uint32 shield_type = 8;
+    uint32 sub_shield = 9;
+    uint32 absorb_type = 10;
+}
+
+message PlayerLogBodyDungeonEnter {
+    string transaction = 1;
+    uint32 dungeon_id = 2;
+    uint32 dungeon_type = 3;
+    uint32 dungeon_mp = 4;
+    repeated AvatarLog avatar_list = 5;
+    repeated uint32 level_config_id_list = 6;
+}
+
+message PlayerLogBodyDungeonQuit {
+    string transaction = 1;
+    uint32 dungeon_id = 2;
+    uint32 dungeon_type = 3;
+    uint32 dungeon_mp = 4;
+    repeated AvatarLog avatar_list = 5;
+    uint32 reason = 6;
+}
+
+message PlayerLogBodyDungeonSettle {
+    string transaction = 1;
+    uint32 dungeon_id = 2;
+    uint32 dungeon_type = 3;
+    uint32 dungeon_mp = 4;
+    repeated AvatarLog avatar_list = 5;
+    uint32 use_time = 6;
+    uint32 dungeon_settle_type = 7;
+}
+
+message PlayerLogBodyDungeonDieOption {
+    string transaction = 1;
+    uint32 dungeon_id = 2;
+    uint32 die_option = 3;
+}
+
+message PlayerLogBodyCollectGather {
+    uint32 gadget_id = 1;
+    repeated ItemLog item_vec = 2;
+}
+
+message PlayerLogBodyOpenChest {
+    uint32 gadget_id = 1;
+    repeated ItemLog item_vec = 2;
+    uint32 state = 3;
+    EntityLog entity_log = 4;
+}
+
+message PlayerLogBodyOpenBossChest {
+    uint32 gadget_id = 1;
+    repeated ItemLog item_vec = 2;
+    uint32 state = 3;
+    EntityLog entity_log = 4;
+    uint32 resin = 5;
+    uint32 dungeon_id = 6;
+}
+
+message PlayerLogBodyOpenBlossomChest {
+    uint32 gadget_id = 1;
+    repeated ItemLog item_vec = 2;
+    uint32 state = 3;
+    EntityLog entity_log = 4;
+    uint32 resin = 5;
+    uint32 blossom_chest_id = 6;
+}
+
+message ScenePointLog {
+    uint32 scene_id = 1;
+    uint32 point_id = 2;
+    uint32 type = 3;
+    string dollar_type = 4;
+    int32 x_coordinate = 5;
+    int32 y_coordinate = 6;
+    int32 z_coordinate = 7;
+}
+
+message PlayerLogBodyTransport {
+    ScenePointLog to_point_log = 1;
+}
+
+message PlayerLogBodyUnlockPoint {
+    ScenePointLog point_log = 1;
+}
+
+message PlayerLogBodyGadgetDie {
+    uint32 gadget_id = 1;
+    uint32 change_hp_reason = 2;
+    uint32 attacker_entity_type = 3;
+}
+
+message PlayerLogBodyUnlockArea {
+    uint32 scene_id = 1;
+    uint32 area_id = 2;
+    uint32 level1_area_id = 3;
+    uint32 level2_area_id = 4;
+}
+
+message PlayerLogBodyLevelupCity {
+    uint32 scene_id = 1;
+    uint32 city_id = 2;
+    uint32 level1_area_id = 3;
+    uint32 level2_area_id = 4;
+    uint32 old_level = 5;
+    uint32 cur_level = 6;
+}
+
+message PlayerLogBodyMonsterDie {
+    uint32 scene_id = 1;
+    EntityLog monster_log = 2;
+    uint32 reason = 3;
+    string combat_transaction = 4;
+}
+
+message PlayerLogBodyAreaExploration {
+    uint32 level1_area_id = 1;
+    uint32 level2_area_id = 2;
+    uint32 type = 3;
+    uint32 add_weight = 4;
+    uint32 cur_weight = 5;
+    uint32 total_weight = 6;
+}
+
+message PlayerLogBodyEnterElementView {
+    uint32 avatar_id = 1;
+    uint32 is_triggerd = 2;
+}
+
+message PlayerLogBodyMarkPlayerAction {
+    uint32 group_id = 1;
+    uint32 param1 = 2;
+    uint32 param2 = 3;
+    uint32 param3 = 4;
+}
+
+message PlayerLogBodyEnterWorld {
+    uint32 owner_uid = 1;
+    uint32 dest_scene_id = 2;
+    string transaction = 3;
+}
+
+message PlayerLogBodyLeaveWorld {
+    uint32 owner_uid = 1;
+    uint32 scene_id = 2;
+    uint32 dest_owner_uid = 3;
+    uint32 dest_scene_id = 4;
+    string transaction = 5;
+}
+
+message PlayerLogBodyAddAvatar {
+    uint32 avatar_id = 1;
+    uint32 avatar_quality = 2;
+    uint32 add_avatar_reason = 3;
+    uint32 action_reason = 4;
+}
+
+message PlayerLogBodyAvatarLevelup {
+    uint32 avatar_id = 1;
+    uint32 avatar_quality = 2;
+    uint32 promote_level_before = 3;
+    uint32 promote_level_after = 4;
+}
+
+message PlayerLogBodyAvatarAddExp {
+    uint32 avatar_id = 1;
+    uint32 avatar_quality = 2;
+    uint32 level_before = 3;
+    uint32 level_after = 4;
+    uint32 exp_add = 5;
+    uint32 exp_value = 6;
+    uint32 exp_percent = 7;
+    uint32 use_material_id = 8;
+    uint32 use_material_num = 9;
+    uint32 reason = 10;
+}
+
+message PlayerLogBodyAvatarUpgrade {
+    uint32 avatar_id = 1;
+    uint32 avatar_quality = 2;
+    uint32 level_before = 3;
+    uint32 level_after = 4;
+    AvatarLog avatar_log = 5;
+}
+
+message PlayerLogBodyAvatarUpgradeProudSkill {
+    uint32 avatar_id = 1;
+    uint32 avatar_level = 2;
+    uint32 element_type = 3;
+    uint32 proud_skill_type = 4;
+    uint32 proud_skill_group_id = 5;
+    uint32 proud_skill_level = 6;
+}
+
+message PlayerLogBodyAvatarUpgradeActiveSkill {
+    uint32 avatar_id = 1;
+    uint32 avatar_level = 2;
+    uint32 element_type = 3;
+    uint32 skill_id = 4;
+    uint32 skill_level = 5;
+}
+
+message PlayerLogBodyAvatarActiveTalent {
+    uint32 avatar_id = 1;
+    uint32 avatar_level = 2;
+    uint32 element_type = 3;
+    uint32 talent_id = 4;
+    uint32 cost_item_id = 5;
+    uint32 cost_item_count = 6;
+}
+
+message PlayerLogBodySatiationChange {
+    uint32 avatar_type = 1;
+    uint32 avatar_id = 2;
+    int32 satiation_change = 3;
+    uint32 satiation_val = 4;
+    uint32 is_overeat = 5;
+    uint32 item_id = 6;
+    uint32 item_count = 7;
+}
+
+message PlayerLogBodyWeaponAdd {
+    WeaponLog weapon = 1;
+    int32 weapon_add = 2;
+    uint32 weapon_num = 3;
+    uint32 reason_type = 4;
+    uint32 item_limit_type = 5;
+}
+
+message PlayerLogBodyWeaponLevelup {
+    WeaponLog weapon = 1;
+    uint32 weapon_level_before = 2;
+    uint32 promote_level_before = 3;
+    uint32 op = 4;
+}
+
+message PlayerLogBodyRelicAdd {
+    RelicLog relic = 1;
+    int32 relic_add = 2;
+    uint32 relic_num = 3;
+    uint32 reason_type = 4;
+    uint32 item_limit_type = 5;
+}
+
+message PlayerLogBodyRelicLevelup {
+    RelicLog relic = 1;
+    uint32 relic_level_before = 2;
+    uint32 promote_level_before = 3;
+    uint32 op = 4;
+}
+
+message PlayerLogBodyWearWeapon {
+    uint32 op = 1;
+    uint32 avatar_id = 2;
+    WeaponLog weapon_log = 3;
+}
+
+message PlayerLogBodyWearRelic {
+    uint32 op = 1;
+    uint32 avatar_id = 2;
+    RelicLog relic_log = 3;
+}
+
+message PlayerLogBodyWeaponAwaken {
+    WeaponLog weapon_log = 1;
+    repeated AffixLog cur_affix_list = 2;
+}
+
+message PlayerLogBodyTeam {
+    uint32 target_uid = 1;
+    uint32 op = 2;
+    uint32 dungeon_id = 3;
+    uint32 duration = 4;
+}
+
+message PlayerLogBodyTeamSwitch {
+    uint32 before_op = 1;
+    uint32 op = 2;
+}
+
+message PlayerLogBodyApplyResult {
+    uint32 target_uid = 1;
+    uint32 is_agreed = 2;
+    uint32 reason = 3;
+    uint32 request_source = 4;
+    
+    enum SOURCE {
+        SOURCE_NORMAL = 0;
+        SOURCE_FRIEND = 1;
+        SOURCE_MATCH = 2;
+    }
+}
+
+message PlayerLogBodyDealWithApply {
+    uint32 source_uid = 1;
+    uint32 is_agreed = 2;
+    uint32 reason = 3;
+}
+
+message PlayerLogBodyHostEnterMp {
+    string transaction = 1;
+}
+
+message PlayerLogBodyHostLeaveMp {
+    string transaction = 1;
+}
+
+message PlayerLogBodyChat {
+    uint32 host_uid = 1;
+    uint32 scene_id = 2;
+    string content = 3;
+}
+
+message PlayerLogBodyCook {
+    uint32 recipe_id = 1;
+    repeated ItemLog item_list = 2;
+    uint32 type = 3;
+    repeated ItemLog food_list = 4;
+    uint32 help_avatar_id = 5;
+    uint32 help_addition = 6;
+    uint32 add_point = 7;
+    uint32 recipe_point_after = 8;
+    uint32 can_auto_qte = 9;
+    uint32 is_auto_qte = 10;
+    repeated uint32 proud_skill_id_list = 11;
+    uint32 cook_count = 12;
+}
+
+message PlayerLogBodyProcessIngredients {
+    repeated ItemLog material_input = 1;
+    repeated ItemLog material_output = 2;
+    uint32 cost_time = 3;
+    uint32 compound_id = 4;
+    uint32 count = 5;
+}
+
+message PlayerLogBodyUnlockRecipe {
+    uint32 recipe_id = 1;
+}
+
+message ComposeExtraItemLog {
+    uint32 item_id = 1;
+    uint32 count = 2;
+    uint32 reason = 3;
+}
+
+message PlayerLogBodyComposeStart {
+    uint32 avatar_id = 1;
+    repeated uint32 proud_skill_id_list = 2;
+    uint32 compo_id = 3;
+    uint32 compo_preset_num = 4;
+    uint32 target_item_type = 5;
+    repeated ItemLog input_item = 6;
+    repeated ItemLog main_output_item = 7;
+    repeated ComposeExtraItemLog sub_output_item = 8;
+    uint32 currency_cost = 9;
+}
+
+message PlayerLogBodyForgeStart {
+    uint32 avatar_id = 1;
+    repeated uint32 proud_skill_id_list = 2;
+    uint32 forge_id = 3;
+    repeated ItemLog input_item = 4;
+    repeated ItemLog output_item = 5;
+    uint32 target_type = 6;
+    uint32 target_time = 7;
+    uint32 transaction_no = 8;
+    repeated ItemLog target_item = 9;
+}
+
+message ForgeOutputItem {
+    uint32 item_id = 1;
+    uint32 item_get_num = 2;
+    uint32 item_left_num = 3;
+}
+
+message PlayerLogBodyForgeGetOutput {
+    uint32 transaction_no = 1;
+    uint32 currency_cost = 2;
+    repeated ForgeOutputItem main_output_item = 3;
+    repeated ItemLog sub_output_item = 4;
+    repeated ItemLog random_output_item = 5;
+}
+
+message PlayerLogBodyForgeFinish {
+    uint32 transaction_no = 1;
+    uint32 reason = 2;
+    uint32 use_time = 3;
+    uint32 finish_time = 4;
+    uint32 left_num = 5;
+    repeated ItemLog sub_output_item = 6;
+}
+
+message PlayerLogBodyChallengeBegin {
+    uint32 group_id = 1;
+    string trigger_name = 2;
+    string tlog_tag = 3;
+    string tag = 4;
+    uint32 challenge_id = 5;
+    uint32 challenge_type = 6;
+    uint32 challenge_index = 7;
+    repeated uint32 param_list = 8;
+}
+
+message ChallengeCondLog {
+    uint32 condition_type = 1;
+    uint32 progress = 2;
+}
+
+message PlayerLogBodyChallengeFinish {
+    uint32 group_id = 1;
+    string trigger_name = 2;
+    string tlog_tag = 3;
+    string tag = 4;
+    uint32 challenge_id = 5;
+    uint32 challenge_type = 6;
+    uint32 challenge_index = 7;
+    uint32 use_time = 9;
+    uint32 is_success = 10;
+    repeated ChallengeCondLog cond_list = 11;
+}
+
+message PlayerLogBodyDailyTaskGen {
+    uint32 city_id = 1;
+    uint32 pool_id = 2;
+    uint32 daily_task_id = 3;
+    uint32 type = 4;
+    uint32 rarity = 5;
+    uint32 finish_type = 6;
+}
+
+message PlayerLogBodyDailyTaskProgress {
+    uint32 daily_task_id = 1;
+    uint32 progress = 2;
+    bool is_finished = 3;
+}
+
+message PlayerLogBodyDailyTaskScoreReward {
+    uint32 drop_id = 1;
+}
+
+message PlayerLogBodyDailyTaskReward {
+    uint32 owner_uid = 1;
+    uint32 daily_task_id = 2;
+    uint32 drop_id = 3;
+}
+
+message PlayerLogBodyRandTaskGen {
+    uint32 rand_task_id = 1;
+    uint32 parent_quest_id = 2;
+    uint32 quest_template_id = 3;
+    uint32 task_content_type = 4;
+    uint32 enter_uid = 5;
+}
+
+message PlayerLogBodyRandTaskFinish {
+    uint32 rand_task_id = 1;
+    uint32 quest_template_id = 2;
+    uint32 pattern_id = 3;
+    bool is_succ = 4;
+    uint32 reason = 5;
+    uint32 enter_uid = 6;
+}
+
+message PlayerLogBodyRandTaskReward {
+    uint32 owner_uid = 1;
+    uint32 rand_task_id = 2;
+    uint32 drop_id = 3;
+    uint32 zone_level = 4;
+    uint32 quest_template_id = 5;
+}
+
+message PlayerLogBodyWorldLevelAdd {
+    uint32 world_level_before = 1;
+    uint32 world_level_after = 2;
+    uint32 level = 3;
+    uint32 exp = 4;
+}
+
+message EquipLog {
+    uint32 item_id = 1;
+    uint32 item_num = 2;
+    uint32 item_level = 3;
+    uint32 promote_level = 4;
+}
+
+message RewardLog {
+    uint32 reward_id = 1;
+    repeated EquipLog add_equip_list = 2;
+}
+
+message PlayerLogBodyTakePlayerLevelReward {
+    uint32 take_level = 1;
+    uint32 cur_level = 2;
+    uint32 cur_exp = 3;
+    RewardLog reward_log = 4;
+}
+
+message PlayerLogBodyMaterialDeleteReturn {
+    repeated LogItemParam delete_material_list = 1;
+    repeated LogItemParam return_item_list = 2;
+}
+
+message PlayerLogBodyMarkMap {
+    string mark_name = 1;
+    int32 mark_op = 2;
+    int32 point_type = 3;
+    int32 mark_x = 4;
+    int32 mark_y = 5;
+    uint32 scene_id = 6;
+    uint32 from_type = 7;
+    uint32 monster_id = 8;
+    uint32 quest_id = 9;
+    int32 mark_z = 10;
+}
+
+message GachaGuaranteeData {
+    uint32 guarantee_rule_id = 1;
+    uint32 last_gacha_guarantee_times = 2;
+}
+
+message GachaItemLog {
+    ItemLog award_item = 1;
+    repeated ItemLog transfer_item = 2;
+    repeated ItemLog token_item_list = 3;
+}
+
+message GachaItemTypeTimes {
+    uint32 gacha_item_type = 1;
+    uint32 last_gacha_times = 2;
+}
+
+message GachaItemTypeWeight {
+    uint32 gacha_item_type = 1;
+    uint32 weight = 2;
+}
+
+message GachaItemParentTypeTimes {
+    uint32 gacha_item_parent_type = 1;
+    uint32 last_gacha_times = 2;
+}
+
+message GachaItemParentTypeWeight {
+    uint32 gacha_item_parent_type = 1;
+    uint32 weight = 2;
+}
+
+message PlayerLogBodyDoGacha {
+    uint32 gacha_type = 1;
+    uint32 schedule_id = 2;
+    uint32 gacha_times = 3;
+    ItemLog cost_item = 4;
+    uint32 total_gacha_times = 5;
+    uint32 cur_schedule_total_gacha_times = 6;
+    uint32 guarantee_rule_id = 7;
+    repeated GachaGuaranteeData guarantee_data_list = 8;
+    GachaItemLog gacha_award = 9;
+    bool is_item_up = 10;
+    bool is_flash_card = 11;
+    uint32 gacha_item_type = 12;
+    uint32 gacha_item_parent_type = 13;
+    repeated GachaItemParentTypeWeight gacha_item_parent_type_weight_list = 14;
+    repeated GachaItemParentTypeTimes gacha_item_parent_type_times_list = 15;
+    bool is_gacha_up_triggered = 16;
+    uint32 gacha_up_prob = 17;
+    uint32 gacha_no_up_times = 18;
+    repeated GachaItemTypeWeight gacha_item_type_weight_list = 19;
+    repeated GachaItemTypeTimes gacha_item_type_times_list = 20;
+}
+
+message PlayerLogBodyAvatarFetterChangeExp {
+    uint32 avatar_id = 1;
+    uint32 change_point = 2;
+    uint32 level_before = 3;
+    uint32 level_after = 4;
+    uint32 reason = 5;
+    uint32 all_point = 6;
+    uint32 level_point = 7;
+}
+
+message AvatarExpeditionReward {
+    uint32 item_id = 1;
+    uint32 item_count = 2;
+}
+
+message PlayerLogBodyAvatarExpeditionStart {
+    uint32 avatar_id = 1;
+    uint32 is_leave_team = 2;
+    uint32 city_id = 3;
+    uint32 config_id = 4;
+    uint32 expedition_limit_count = 5;
+    uint32 expedition_hour_time = 6;
+    uint64 expedition_no = 7;
+}
+
+message PlayerLogBodyAvatarExpeditionTakeReward {
+    uint64 expedition_no = 1;
+    uint32 scoin_count = 2;
+    repeated AvatarExpeditionReward reward = 3;
+}
+
+message PlayerLogBodyAvatarExpeditionFinish {
+    uint64 expedition_no = 1;
+    uint32 left_time_sec = 2;
+    uint32 reason = 3;
+    string normal_finish_time = 4;
+}
+
+message PlayerLogBodyTakeInvestigationReward {
+    uint32 city_id = 1;
+    uint32 investigation_id = 2;
+    RewardLog reward_log = 3;
+}
+
+message PlayerLogBodyTakeInvestigationTargetReward {
+    uint32 city_id = 1;
+    uint32 investigation_id = 2;
+    uint32 investigation_target_id = 3;
+    uint32 after_progress = 4;
+    uint32 total_progress = 5;
+    RewardLog reward_log = 6;
+}
+
+message PlayerLogBodyMuipOfflineMsgResult {
+    string ticket = 1;
+    uint32 msg_type = 2;
+    int32 result = 3;
+    string msg_str = 4;
+}
+
+message PlayerLogBodyClientReport {
+    string report_type = 1;
+    string report_value = 2;
+}
+
+message LogItemParam {
+    uint32 item_id = 1;
+    uint32 count = 2;
+}
+
+message PlayerLogBodySeaLampContributeItem {
+    repeated LogItemParam item_list = 1;
+    uint32 add_contribution = 2;
+    uint32 contribution = 3;
+}
+
+message PlayerLogBodySeaLampTakeContributionReward {
+    uint32 config_id = 1;
+    uint32 reward_id = 2;
+}
+
+message PlayerLogBodySeaLampTakePhaseReward {
+    uint32 phase_id = 1;
+    uint32 reward_id = 2;
+}
+
+message PlayerLogBodySeaLampFlyLamp {
+    uint32 add_contribution = 1;
+    uint32 contribution = 2;
+    uint32 item_num = 3;
+}
+
+message PlayerLogBodyPushTipsChange {
+    uint32 id = 1;
+    uint32 guide_id = 2;
+    uint32 op = 3;
+    
+    enum PushTipsOpType {
+        NONE = 0;
+        ACTIVE = 1;
+        READ = 2;
+        FINISH = 3;
+    }
+}
+
+message PlayerLogBodyTowerEnterLevel {
+    string tower_level_transaction = 1;
+    uint32 schedule_id = 2;
+    uint32 floor_index = 3;
+    uint32 level_index = 4;
+    repeated AvatarLog first_avatar_list = 5;
+    repeated AvatarLog second_avatar_list = 6;
+    uint32 path = 7;
+}
+
+message PlayerLogBodyTowerSettle {
+    string tower_level_transaction = 1;
+    uint32 schedule_id = 2;
+    uint32 floor_index = 3;
+    uint32 level_index = 4;
+    uint32 path = 5;
+    uint32 result = 6;
+    uint32 floor_star_num = 7;
+    uint32 schedule_star_num = 8;
+    repeated uint32 satisfied_star_condition_list = 9;
+    uint32 cur_tower_buff_id = 10;
+    repeated uint32 tower_buff_list = 11;
+    
+    enum TowerResultType {
+        SUCC = 0;
+        FAIL = 1;
+    }
+}
+
+message PlayerLogBodyTowerUnlockFloor {
+    uint32 schedule_id = 1;
+    uint32 floor_index = 2;
+}
+
+message PlayerLogBodyTowerFirstPassReward {
+    uint32 reason = 1;
+    RewardLog reward_log = 2;
+    uint32 schedule_id = 3;
+    uint32 floor_index = 4;
+    uint32 level_index = 5;
+}
+
+message PlayerLogBodyTowerDailyReward {
+    uint32 reason = 1;
+    RewardLog reward_log = 2;
+    uint32 schedule_id = 3;
+    uint32 best_floor_index = 4;
+    uint32 best_level_index = 5;
+}
+
+message PlayerLogBodyTowerFloorStarReward {
+    uint32 reason = 1;
+    repeated RewardLog reward_log_list = 2;
+    uint32 schedule_id = 3;
+    uint32 floor_index = 4;
+    uint32 floor_star_num = 5;
+}
+
+message PlayerLogBodyTowerScheduleReward {
+    uint32 reason = 1;
+    RewardLog reward_log = 2;
+    uint32 schedule_id = 3;
+    uint32 schedule_star_num = 4;
+    uint32 last_floor_index = 5;
+    uint32 last_level_index = 6;
+}
+
+message TowerFightStatPair {
+    uint32 avatar_id = 1;
+    uint32 data = 2;
+}
+
+message PlayerLogBodyTowerMonthlySummary {
+    uint32 schedule_id = 1;
+    uint32 best_floor_index = 2;
+    uint32 best_level_index = 3;
+    uint32 cur_schedule_start_floor_index = 4;
+    uint32 total_start_num = 5;
+    repeated TowerFightStatPair most_revealed_avatar_pair_list = 6;
+    TowerFightStatPair most_kill_avatar_pair = 7;
+    TowerFightStatPair highest_dps_avatar_pair = 8;
+    TowerFightStatPair most_take_damage_avatar_pair = 9;
+    TowerFightStatPair most_cast_normal_skill_avatar_pair = 10;
+    TowerFightStatPair most_cast_energy_skill_avatar_pair = 11;
+    uint32 monthly_level_config_id = 12;
+}
+
+message PlayerLogBodyResinChange {
+    int32 original_delta = 1;
+    int32 real_delta = 2;
+    uint32 cur_value = 3;
+    uint32 reason = 4;
+}
+
+message DropLog {
+    uint32 drop_id = 1;
+    uint32 drop_num = 2;
+    uint32 item_limit_type = 3;
+    uint32 daily_num = 4;
+    uint32 history_num = 5;
+    string daily_num_limit = 6;
+    string history_num_limit = 7;
+}
+
+message PlayerLogBodyAddDrop {
+    repeated DropLog drop_log_list = 1;
+}
+
+message PlayerRewardLog {
+    uint32 reward_id = 1;
+    uint32 reward_num = 2;
+    uint32 item_limit_type = 3;
+    uint32 daily_num = 4;
+    uint32 history_num = 5;
+    string daily_num_limit = 6;
+    string history_num_limit = 7;
+}
+
+message PlayerLogBodyAddReward {
+    repeated PlayerRewardLog reward_log_list = 2;
+}
+
+message PlayerLogBodyItemLimitTypeLimit {
+    uint32 item_limit_type = 1;
+    uint32 daily_num = 2;
+    uint32 history_num = 3;
+    string daily_num_limit = 4;
+    string history_num_limit = 5;
+}
+
+message PlayerLogBodyOperateFriend {
+    uint32 target_uid = 1;
+    uint32 friend_action = 2;
+    uint32 self_friend_num = 3;
+    uint32 target_friend_num = 4;
+    
+    enum FriendActionType {
+        ADD = 0;
+        DELETE = 1;
+    }
+}
+
+message PlayerLogBodyBlossomCircleCampRefresh {
+    uint32 refresh_id = 1;
+    uint32 circle_camp_id = 2;
+    uint32 city_id = 3;
+    uint32 section_id = 4;
+    repeated uint32 new_group_id_list = 5;
+    repeated uint32 decorate_group_id_list = 6;
+    uint32 refresh_type = 7;
+}
+
+message PlayerLogBodyBlossomProgressBegin {
+    uint32 refresh_id = 1;
+    uint32 circle_camp_id = 2;
+    uint32 city_id = 3;
+    uint32 section_id = 4;
+    uint32 refresh_type = 5;
+    uint32 monster_level = 6;
+    uint32 round_max_count = 7;
+    uint32 round = 8;
+}
+
+message PlayerLogBodyBlossomProgressFinish {
+    uint32 refresh_id = 1;
+    uint32 circle_camp_id = 2;
+    uint32 city_id = 3;
+    uint32 section_id = 4;
+    uint32 refresh_type = 5;
+    uint32 monster_level = 6;
+}
+
+message PlayerLogBodyGetSignInReward {
+    uint32 schedule_id = 1;
+    uint32 config_id = 2;
+    uint32 reward_day = 4;
+    repeated ItemLog reward_item_list = 5;
+}
+
+message PlayerLogBodyClientOpActivityPage {
+    uint32 page_id = 1;
+}
+
+message PlayerLogBodyBattlePassBuy {
+    uint32 schedule_id = 1;
+    uint32 buy_play_type = 2;
+    uint32 cur_level = 3;
+    uint32 pass_days = 4;
+}
+
+message PlayerLogBodyBattlePassTakeLevelReward {
+    uint32 schedule_id = 1;
+    uint32 level = 2;
+    uint32 unlock_status = 3;
+    uint32 reward_id = 4;
+    uint32 option_idx = 5;
+    repeated ItemLog item_vec = 6;
+}
+
+message PlayerLogBodyBattlePassAddPoint {
+    uint32 schedule_id = 1;
+    uint32 add_point = 2;
+    uint32 cur_point = 3;
+    uint32 cur_level = 4;
+    uint32 total_need_point = 5;
+    uint32 reason = 6;
+    uint32 mission_id = 7;
+    
+    enum Reason {
+        BUY = 0;
+        MISSION = 1;
+        GM = 2;
+    }
+}
+
+message PlayerLogBodyBattlePassLevelUp {
+    uint32 schedule_id = 1;
+    uint32 cur_level = 2;
+    uint32 cur_point = 3;
+    uint32 unlock_status = 4;
+}
+
+message PlayerLogBodyBattlePassMissionUpdate {
+    uint32 schedule_id = 1;
+    uint32 mission_id = 2;
+    bool is_delete = 3;
+    uint32 mission_status = 4;
+}
+
+message PlayerLogBodyBattlePassOpenPage {
+    uint32 first_level_page_id = 1;
+    uint32 second_level_page_id = 2;
+}
+
+message PlayerLogBodyBattlePassAddPointSplit {
+    uint32 schedule_id = 1;
+    uint32 add_point = 2;
+    uint32 cur_level = 3;
+    uint32 reason = 4;
+    uint32 mission_id = 5;
+}
+
+message PlayerLogBodyClientOpenShopmall {
+    uint32 first_page_id = 1;
+    uint32 second_page_id = 2;
+}
+
+message PlayerLogBodyMatchStart {
+    uint32 match_type = 1;
+    uint32 target_id = 2;
+    uint32 player_count = 3;
+    repeated uint32 player_uid_list = 4;
+}
+
+message PlayerLogBodyMatchStop {
+    uint32 match_type = 1;
+    uint32 target_id = 2;
+    uint32 reason = 3;
+    uint32 cost_time = 4;
+}
+
+message PlayerLogBodyActivityTakeWatcher {
+    uint32 activity_id = 1;
+    uint32 schedule_id = 2;
+    uint32 watcher_id = 3;
+    uint32 reward_id = 4;
+}
+
+message PlayerLogBodyMpPlayJoin {
+    uint32 mp_play_id = 1;
+    string transaction_no = 2;
+    bool is_halfway = 3;
+}
+
+message PlayerLogBodyMpPlayBattleStop {
+    uint32 mp_play_id = 1;
+    string transaction_no = 2;
+    uint32 cost_time = 3;
+    uint32 team_score = 4;
+    bool is_win = 5;
+}
+
+message PlayerLogBodyMpPlayBattleReward {
+    uint32 mp_play_id = 1;
+    string transaction_no = 2;
+    uint32 cost_resion = 3;
+    uint32 drop_id = 4;
+}
+
+enum EnterReason {
+    ENTER_REASON_NONE = 0;
+    ENTER_REASON_LOGIN = 1;
+    ENTER_REASON_DUNGEON_REPLAY = 11;
+    ENTER_REASON_DUNGEON_REVIVE_ON_WAYPOINT = 12;
+    ENTER_REASON_DUNGEON_ENTER = 13;
+    ENTER_REASON_DUNGEON_QUIT = 14;
+    ENTER_REASON_GM = 21;
+    ENTER_REASON_QUEST_ROLLBACK = 31;
+    ENTER_REASON_REVIVAL = 32;
+    ENTER_REASON_PERSONAL_SCENE = 41;
+    ENTER_REASON_TRANS_POINT = 42;
+    ENTER_REASON_CLIENT_TRANSMIT = 43;
+    ENTER_REASON_TEAM_KICK = 51;
+    ENTER_REASON_TEAM_JOIN = 52;
+    ENTER_REASON_TEAM_BACK = 53;
+    ENTER_REASON_MUIP = 54;
+    ENTER_REASON_DUNGEON_INVITE_ACCEPT = 55;
+    ENTER_REASON_LUA = 56;
+    ENTER_REASON_ACTIVITY_LOAD_TERRAIN = 57;
+    ENTER_REASON_HOST_FROM_SINGLE_TO_MP = 58;
+    ENTER_REASON_MP_PLAY = 59;
+}
+
+enum ChangeSceneTeamReason {
+    CHANGE_SCENE_TEAM_REASON_NONE = 0;
+    CHANGE_SCENE_TEAM_REASON_ENTER_SCENE = 1;
+    CHANGE_SCENE_TEAM_REASON_SET_UP_AVATAR_TEAM = 2;
+    CHANGE_SCENE_TEAM_REASON_CHOOSE_CUR_TEAM = 3;
+    CHANGE_SCENE_TEAM_REASON_SCENE_SPECIFIC = 4;
+    CHANGE_SCENE_TEAM_REASON_MP_CHANGE = 5;
+    CHANGE_SCENE_TEAM_REASON_TEMP_TEAM_CHANGE = 6;
+    CHANGE_SCENE_TEAM_REASON_MP_PLAYER_LEAVE = 7;
+    CHANGE_SCENE_TEAM_REASON_ENTER_SINGLE_DUNGEON = 8;
+    CHANGE_SCENE_TEAM_REASON_ENTER_MULTIPLE_DUNGEON = 9;
+    CHANGE_SCENE_TEAM_REASON_GM = 10;
+    CHANGE_SCENE_TEAM_REASON_QUEST = 11;
+    CHANGE_SCENE_TEAM_REASON_TOWER = 12;
+    CHANGE_SCENE_TEAM_REASON_DEL_AVATAR = 13;
+}
+
+enum MotionType {
+    MOTION_TYPE_NONE = 0;
+    MOTION_TYPE_CLIMB = 1;
+    MOTION_TYPE_SWIM = 2;
+    MOTION_TYPE_FLY = 3;
+}
+
+enum PlayerLogMissionType {
+    PLAYER_LOG_MISSION_NONE = 0;
+    PLAYER_LOG_MISSION_MAIN_QUEST = 1;
+    PLAYER_LOG_MISSION_QUEST = 2;
+    PLAYER_LOG_MISSION_RANDOM_QUEST = 3;
+}
+
+enum PlayerLogMissionRemoveType {
+    PLAYER_LOG_MISSION_REMOVE_NONE = 0;
+    PLAYER_LOG_MISSION_REMOVE_FINISH_PARENT = 1;
+    PLAYER_LOG_MISSION_REMOVE_ROLLBACK = 2;
+    PLAYER_LOG_MISSION_REMOVE_GM = 3;
+    PLAYER_LOG_MISSION_REMOVE_RESET_PARENT = 4;
+    PLAYER_LOG_MISSION_REMOVE_NPC_CONFLICT = 5;
+    PLAYER_LOG_MISSION_REMOVE_FAIL_PARENT = 6;
+    PLAYER_LOG_MISSION_REMOVE_CANCEL_PARENT = 7;
+}
+
+enum AvatarDeathRevivalType {
+    AVATAR_DEATH_REVIVAL_NONE = 0;
+    PLAYER_DIE_KILL_BY_MONSTER = 1;
+    PLAYER_DIE_KILL_BY_GEAR = 2;
+    PLAYER_DIE_FALL = 3;
+    PLAYER_DIE_DRAWN = 4;
+    PLAYER_DIE_ABYSS = 5;
+    PLAYER_DIE_GM = 6;
+    REVIVAL_PENALTY = 101;
+    REVIVAL_ALL_DIE = 102;
+    REVIVAL_ITEM = 103;
+    REVIVAL_CAN_REVIVE = 104;
+    REVIVAL_REPLACE_REBORN = 105;
+    REVIVAL_REFRESH = 106;
+    REVIVAL_TRANS_POINT = 107;
+    REVIVAL_SETUP_TRIAL = 108;
+    REVIVAL_TO_SCENE = 109;
+    REVIVAL_GM = 110;
+}
+
+enum DungeonQuitReason {
+    DUNGEON_QUIT_NONE = 0;
+    DUNGEON_QUIT_REASON_TRANSFER = 1;
+    DUNGEON_QUIT_REASON_SUCC_POINT = 2;
+    DUNGEON_QUIT_REASON_SUCC_TRANSFER = 3;
+    DUNGEON_QUIT_REASON_SUCC_TIMEOUT = 4;
+    DUNGEON_QUIT_REASON_LOGOUT = 5;
+    DUNGEON_QUIT_REASON_DIE_OPTION = 6;
+    DUNGEON_QUIT_REASON_GM = 7;
+    DUNGEON_QUIT_REASON_TIMEOUT = 8;
+    DUNGEON_QUIT_REASON_ALL_DIED = 9;
+    DUNGEON_QUIT_REASON_CLIENT_TRANSMIT = 10;
+    DUNGEON_QUIT_REASON_PLAYER_EXIT = 11;
+    DUNGEON_QUIT_REASON_PLAYER_EXIT_SUCC = 12;
+    DUNGEON_QUIT_REASON_PLAYER_EXIT_FAIL = 13;
+}
+
+enum AddAvatarReason {
+    ADD_AVATAR_REASON_NONE = 0;
+    ADD_AVATAR_REASON_BORN = 1;
+    ADD_AVATAR_REASON_TRIAL = 2;
+    ADD_AVATAR_REASON_GM = 3;
+    ADD_AVATAR_REASON_ITEM = 4;
+}
+
+enum PlayerWearEquipOpType {
+    PLAYER_WEAR_EQUIP_OP_NONE = 0;
+    PLAYER_WEAR_EQUIP_OP_WEAR = 1;
+    PLAYER_WEAR_EQUIP_OP_UNLOAD = 2;
+    PLAYER_WEAR_EQUIP_OP_CHANGE = 3;
+}
+
+enum PlayerTeamOpType {
+    PLAYER_TEAM_OP_NONE = 0;
+    PLAYER_TEAM_OP_ENTER = 1;
+    PLAYER_TEAM_OP_EXIT = 2;
+    PLAYER_TEAM_OP_KICK = 3;
+    PLAYER_TEAM_OP_SYSTEM_KICK = 4;
+}
+
+enum ExpeditionFinishReason {
+    EXPDITION_FINISH_REASON_NONE = 0;
+    EXPDITION_FINISH_REASON_INTERRUPT = 1;
+    EXPDITION_FINISH_REASON_NORMAL = 2;
+}
+
+enum UserTextType {
+    USER_TEXT_INVALID = 0;
+    USER_TEXT_NICKNAME = 1;
+    USER_TEXT_TEAMNAME = 2;
+    USER_TEXT_MARKNAME = 3;
+    USER_TEXT_MP_CHAT = 4;
+    USER_TEXT_SEA_LAMP_FLY_LAMP = 5;
+    USER_TEXT_SIGNATURE = 6;
+}

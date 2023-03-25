@@ -1,0 +1,160 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message RechargeReq {
+    ShopMcoinProduct mcoin_product = 10;
+    ShopCardProduct card_product = 5;
+    PlayProduct play_product = 6;
+    ShopConcertProduct concert_product = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4118;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message RechargeRsp {
+    int32 retcode = 1;
+    string product_id = 11;
+    bool is_show_minors_hint = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4109;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message OrderFinishNotify {
+    string product_id = 5;
+    uint32 add_mcoin = 4;
+    uint32 card_product_remain_days = 2;
+    uint32 order_id = 8;
+    repeated ItemParam item_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4143;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message CardProductRewardNotify {
+    string product_id = 6;
+    uint32 hcoin = 11;
+    uint32 remain_days = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4104;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ProductPriceTier {
+    string product_id = 1;
+    string price_tier = 2;
+}
+
+message ResinCardData {
+    uint32 config_id = 1;
+    uint32 remain_reward_days = 2;
+    uint32 last_daily_reward_time = 3;
+    uint32 expire_time = 4;
+}
+
+message PlayerRechargeDataNotify {
+    uint32 card_product_remain_days = 14;
+    repeated ProductPriceTier product_price_tier_list = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4128;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message OrderDisplayNotify {
+    uint32 order_id = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4103;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ReportTrackingIOInfoNotify {
+    string appid = 2;
+    string deviceid = 15;
+    string mac = 9;
+    string rydevicetype = 3;
+    string client_tz = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4126;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeResinCardDailyRewardReq {
+    uint32 product_config_id = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4147;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message TakeResinCardDailyRewardRsp {
+    int32 retcode = 1;
+    uint32 product_config_id = 11;
+    repeated ItemParam item_vec = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4116;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ResinCardDataUpdateNotify {
+    repeated ResinCardData card_data_list = 6;
+    uint32 today_start_time = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4101;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

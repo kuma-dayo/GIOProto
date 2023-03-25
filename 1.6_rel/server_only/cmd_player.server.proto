@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin.server.proto";
+import "define.proto";
+
+message SavePlayerDataReq {
+    PlayerData player_data = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10118;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SavePlayerDataRsp {
+    int32 retcode = 1;
+    uint32 data_version = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10189;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerOnlineStatusInfo {
+    uint32 uid = 1;
+    uint32 platform_type = 2;
+    
+    StatusType online_status = 3;
+    enum StatusType {
+        ONLINE = 0;
+        OFFLINE = 1;
+    }
+    
+    bool is_sub_account = 4;
+    string country_code = 5;
+}
+
+message PlayerOnlineStatusNotify {
+    repeated PlayerOnlineStatusInfo player_info_list = 1;
+    
+    enum Enum {
+        NONE = 0;
+        CMD_ID = 10184;
+    }
+}
+
+message ServiceDisconnectNotify {
+    ServiceType type = 1;
+    uint32 ip = 2;
+    
+    enum Enum {
+        NONE = 0;
+        CMD_ID = 10194;
+    }
+}
+
+message PlayerDisconnectNotify {
+    uint32 data = 1;
+    
+    enum Enum {
+        NONE = 0;
+        CMD_ID = 10142;
+    }
+}
+
+message DisconnectClientNotify {
+    uint32 data = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10161;
+    }
+}
+
+message SysCreateGroupReq {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10179;
+    }
+}
+
+message SaveBlockDataReq {
+    map<uint32, BlockInfo> block_info_map = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10112;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SaveBlockDataRsp {
+    int32 retcode = 1;
+    map<uint32, uint32> block_succ_save_map = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 10126;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SavePlayerExtraBinDataNotify {
+    uint32 uid = 1;
+    bytes player_extra_bin_data = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10124;
+    }
+}

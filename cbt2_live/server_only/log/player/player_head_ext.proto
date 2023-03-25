@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package proto_log;
+
+message PlayerLogHeadExt {
+    uint32 avatar_id = 1;
+    uint32 scene_id = 2;
+    uint32 world_owner_uid = 3;
+    int32 x_coordinate = 4;
+    int32 y_coordinate = 5;
+    int32 z_coordinate = 6;
+    uint32 player_time = 7;
+    uint32 login_time = 8;
+    uint32 platform_type = 9;
+    uint32 weather = 10;
+    repeated string sub_action_list = 11;
+    uint32 unpaused_time = 12;
+}

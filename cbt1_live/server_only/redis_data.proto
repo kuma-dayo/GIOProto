@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message PlayerStatusRedisData {
+    PlayerStatusType status = 1;
+    uint32 gameserver_ip = 2;
+    uint64 login_rand = 3;
+    uint32 login_time = 4;
+}
+
+message MailTicket {
+    uint32 timestamp = 1;
+    string ticket = 2;
+}
+
+message MailBoxRedisData {
+    uint32 uid = 1;
+    uint32 mail_index = 3;
+    repeated MailTicket mail_ticket_list = 4;
+    repeated MailData mail_data_list = 5;
+    
+    reserved 2;
+}
+
+message DelItemOp {
+    uint32 item_id = 1;
+    uint32 item_num = 2;
+}
+
+message PlayerGotoOp {
+    uint32 scene_id = 1;
+    Vector pos = 2;
+}
+
+message ResetParentQuestOp {
+    uint32 parent_quest_id = 3;
+}
+
+message RefreshGroupOp {
+    uint32 group_id = 1;
+    uint32 suite_id = 2;
+}
+
+message SetScenePointLockStatusOp {
+    uint32 scene_id = 1;
+    uint32 point_id = 2;
+    bool is_locked = 3;
+}
+
+message OfflineMsg {
+    uint32 enque_time = 1;
+    string ticket = 2;
+    uint32 index = 3;
+    
+    oneof detail {
+        DelItemOp del_item_op = 4;
+        PlayerGotoOp goto_op = 5;
+        ResetParentQuestOp reset_parent_quest_op = 6;
+        RefreshGroupOp refresh_group_op = 7;
+        SetScenePointLockStatusOp set_scene_point_lock_status_op = 8;
+    }
+}
+
+message TicketTimeData {
+    uint32 enque_time = 1;
+    string ticket = 2;
+}
+
+message OfflineMsgRedisData {
+    uint32 last_index = 2;
+    repeated OfflineMsg offline_msg_list = 3;
+    repeated TicketTimeData recent_ticket_list = 4;
+    
+    reserved 1;
+}
+
+enum RedisKeyType {
+    REDIS_KEY_NONE = 0;
+    REDIS_KEY_PLAYER_STATUS = 1;
+    REDIS_KEY_MAIL_BOX = 2;
+    REDIS_KEY_OFFLINE_MSG = 3;
+}
+
+enum PlayerStatusType {
+    PLAYER_STATUS_OFFLINE = 0;
+    PLAYER_STATUS_ONLINE = 1;
+}

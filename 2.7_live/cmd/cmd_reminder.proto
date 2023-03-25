@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message NormalUidOpNotify {
+    uint32 param_index = 7;
+    repeated uint32 param_list = 12;
+    repeated uint32 param_uid_list = 8;
+    uint32 duration = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5718;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ServerMessageNotify {
+    uint32 index = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5709;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

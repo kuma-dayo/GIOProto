@@ -1,0 +1,209 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message EntityPropNotify {
+    uint32 entity_id = 5;
+    map<uint32, PropValue> prop_map = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1209;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message LifeStateChangeNotify {
+    uint32 entity_id = 4;
+    uint32 life_state = 6;
+    uint32 source_entity_id = 5;
+    string attack_tag = 1;
+    PlayerDieType die_type = 13;
+    uint32 move_reliable_seq = 9;
+    repeated ServerBuff server_buff_list = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1231;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EntityFightPropNotify {
+    uint32 entity_id = 5;
+    map<uint32, float> fight_prop_map = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1241;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EntityFightPropUpdateNotify {
+    uint32 entity_id = 1;
+    map<uint32, float> fight_prop_map = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1237;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarFightPropNotify {
+    uint64 avatar_guid = 3;
+    map<uint32, float> fight_prop_map = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1232;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarFightPropUpdateNotify {
+    uint64 avatar_guid = 1;
+    map<uint32, float> fight_prop_map = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1217;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message EntityFightPropChangeReasonNotify {
+    uint32 entity_id = 11;
+    uint32 prop_type = 6;
+    float prop_delta = 9;
+    PropChangeReason reason = 5;
+    repeated uint32 param_list = 10;
+    ChangHpReason change_hp_reason = 12;
+    ChangeEnergyReason change_energy_reson = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1285;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarLifeStateChangeNotify {
+    uint64 avatar_guid = 8;
+    uint32 life_state = 15;
+    uint32 source_entity_id = 1;
+    string attack_tag = 10;
+    PlayerDieType die_type = 11;
+    uint32 move_reliable_seq = 7;
+    repeated ServerBuff server_buff_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1235;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarPropChangeReasonNotify {
+    uint64 avatar_guid = 2;
+    uint32 prop_type = 9;
+    float old_value = 8;
+    float cur_value = 15;
+    PropChangeReason reason = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1249;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerPropChangeReasonNotify {
+    uint32 prop_type = 13;
+    float old_value = 5;
+    float cur_value = 9;
+    PropChangeReason reason = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1282;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AvatarPropNotify {
+    uint64 avatar_guid = 4;
+    map<uint32, int64> prop_map = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1255;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message MarkNewNotify {
+    uint32 mark_new_type = 10;
+    repeated uint32 id_list = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 1227;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum PropChangeReason {
+    PROP_CHANGE_NONE = 0;
+    PROP_CHANGE_STATUE_RECOVER = 1;
+    PROP_CHANGE_ENERGY_BALL = 2;
+    PROP_CHANGE_ABILITY = 3;
+    PROP_CHANGE_LEVELUP = 4;
+    PROP_CHANGE_ITEM = 5;
+    PROP_CHANGE_AVATAR_CARD = 6;
+    PROP_CHANGE_CITY_LEVELUP = 7;
+    PROP_CHANGE_AVATAR_UPGRADE = 8;
+    PROP_CHANGE_AVATAR_PROMOTE = 9;
+    PROP_CHANGE_PLAYER_ADD_EXP = 10;
+    PROP_CHANGE_FINISH_QUEST = 11;
+    PROP_CHANGE_GM = 12;
+    PROP_CHANGE_MANUAL_ADJUST_WORLD_LEVEL = 13;
+}
+
+enum ChangeEnergyReason {
+    CHANGE_ENERGY_NONE = 0;
+    CHANGE_ENERGY_SKILL_START = 1;
+}
+
+enum MarkNewType {
+    MARK_NEW_TYPE_NONE = 0;
+    MARK_NEW_TYPE_COMBINE = 1;
+    MARK_NEW_TYPE_FORGE = 2;
+}

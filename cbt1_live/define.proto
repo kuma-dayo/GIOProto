@@ -1,0 +1,710 @@
+syntax = "proto3";
+
+package proto;
+
+message ParamList {
+    repeated uint32 param_list = 1;
+}
+
+message PropValue {
+    uint32 type = 1;
+    int64 val = 4;
+    
+    oneof value {
+        int64 ival = 2;
+        float fval = 3;
+    }
+}
+
+message RegionSimpleInfo {
+    string name = 1;
+    string title = 2;
+    string type = 3;
+    string dispatch_url = 4;
+}
+
+message QueryRegionListHttpRsp {
+    int32 retcode = 1;
+    repeated RegionSimpleInfo region_list = 2;
+    string client_custom_config = 3;
+}
+
+message ForceUpdateInfo {
+    string force_update_url = 1;
+    string client_custom_config = 2;
+}
+
+message StopServerInfo {
+    uint32 stop_begin_time = 1;
+    uint32 stop_end_time = 2;
+}
+
+message RegionInfo {
+    string gateserver_ip = 1;
+    uint32 gateserver_port = 2;
+    string client_custom_config = 3;
+    string region_custom_config = 4;
+    string account_url = 5;
+    string account_url_bak = 6;
+    string pay_callback_url = 7;
+    string resource_url = 8;
+    string data_url = 9;
+    string feedback_url = 10;
+    string bulletin_url = 11;
+    string resource_url_bak = 12;
+    string data_url_bak = 13;
+    uint32 data_version = 14;
+    uint32 res_version = 15;
+    string handbook_url = 16;
+}
+
+message QueryCurrRegionHttpRsp {
+    int32 retcode = 1;
+    string msg = 2;
+    
+    oneof detail {
+        ForceUpdateInfo force_udpate = 3;
+        StopServerInfo stop_server = 4;
+        RegionInfo region_info = 5;
+    }
+}
+
+message Reliquary {
+    uint32 level = 1;
+    uint32 exp = 2;
+    uint32 promote_level = 3;
+    uint32 main_prop_id = 4;
+    repeated uint32 append_prop_id_list = 5;
+}
+
+message Weapon {
+    uint32 level = 1;
+    uint32 exp = 2;
+    uint32 promote_level = 3;
+    map<uint32, uint32> affix_map = 4;
+}
+
+message Material {
+    uint32 count = 1;
+}
+
+message Equip {
+    oneof detail {
+        Reliquary reliquary = 1;
+        Weapon weapon = 2;
+    }
+}
+
+message Item {
+    uint32 item_id = 1;
+    uint64 guid = 2;
+    
+    oneof detail {
+        Material material = 5;
+        Equip equip = 6;
+    }
+}
+
+message ItemParam {
+    uint32 item_id = 1;
+    uint32 count = 2;
+}
+
+message EquipParam {
+    uint32 item_id = 1;
+    uint32 item_num = 2;
+    uint32 item_level = 3;
+    uint32 promote_level = 4;
+}
+
+message EquipParamList {
+    repeated EquipParam item_list = 1;
+}
+
+message Reward {
+    uint32 reward_id = 1;
+    repeated ItemParam item_list = 2;
+}
+
+message AbilityString {
+    oneof type {
+        string str = 1;
+        uint32 hash = 2;
+    }
+}
+
+message AbilityFloatValue {
+    float value = 1;
+}
+
+message AbilityScalarValueEntry {
+    AbilityString key = 1;
+    AbilityScalarType value_type = 2;
+    
+    oneof value {
+        float float_value = 3;
+        string string_value = 4;
+        int32 int_value = 5;
+        uint32 uint_value = 6;
+    }
+}
+
+message AbilityAppliedAbility {
+    AbilityString ability_name = 1;
+    AbilityString ability_override = 2;
+    repeated AbilityScalarValueEntry override_map = 3;
+    uint32 instanced_ability_id = 4;
+}
+
+message AbilityAttachedModifier {
+    bool is_invalid = 1;
+    uint32 owner_entity_id = 2;
+    uint32 instanced_modifier_id = 3;
+}
+
+message AbilityAppliedModifier {
+    int32 modifier_local_id = 1;
+    uint32 parent_ability_entity_id = 2;
+    AbilityString parent_ability_name = 3;
+    AbilityString parent_ability_override = 4;
+    uint32 instanced_ability_id = 5;
+    uint32 instanced_modifier_id = 6;
+    float exist_duration = 7;
+    AbilityAttachedModifier attached_instanced_modifier = 8;
+    uint32 apply_entity_id = 9;
+}
+
+message AbilitySyncStateInfo {
+    bool is_inited = 1;
+    repeated AbilityScalarValueEntry dynamic_value_map = 2;
+    repeated AbilityAppliedAbility applied_abilities = 3;
+    repeated AbilityAppliedModifier applied_modifiers = 4;
+}
+
+message Vector {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+message MotionInfo {
+    Vector pos = 1;
+    Vector rot = 2;
+    Vector speed = 3;
+    MotionState state = 4;
+    repeated Vector params = 5;
+}
+
+message PlaceInfo {
+    Vector pos = 1;
+    Vector rot = 2;
+}
+
+message NpcTalkInfo {
+    uint32 entity_id = 1;
+    repeated uint32 talk_id_list = 2;
+}
+
+message SceneWeaponInfo {
+    uint32 entity_id = 1;
+    uint32 gadget_id = 2;
+    uint32 item_id = 3;
+    uint64 guid = 4;
+    uint32 level = 5;
+    uint32 promote_level = 6;
+    AbilitySyncStateInfo ability_info = 7;
+    map<uint32, uint32> affix_map = 8;
+}
+
+message SceneReliquaryInfo {
+    uint32 item_id = 1;
+    uint64 guid = 2;
+    uint32 level = 3;
+    uint32 promote_level = 4;
+}
+
+message SceneAvatarInfo {
+    uint32 uid = 1;
+    uint32 avatar_id = 2;
+    uint64 guid = 3;
+    uint32 peer_id = 4;
+    repeated uint32 equip_id_list = 5;
+    uint32 skill_depot_id = 6;
+    repeated uint32 talent_id_list = 7;
+    SceneWeaponInfo weapon = 8;
+    repeated SceneReliquaryInfo reliquary_list = 9;
+    repeated uint32 buff_id_list = 10;
+}
+
+message SceneMonsterInfo {
+    uint32 monster_id = 1;
+    uint32 group_id = 2;
+    uint32 config_id = 3;
+    repeated SceneWeaponInfo weapon_list = 4;
+    uint32 authority_peer_id = 5;
+    repeated uint32 affix_list = 6;
+    bool is_elite = 7;
+    uint32 owner_entity_id = 8;
+    uint32 summoned_tag = 9;
+    map<uint32, uint32> summon_tag_map = 10;
+    uint32 pose_id = 11;
+    MonsterBornType born_type = 12;
+}
+
+message SceneNpcInfo {
+    uint32 npc_id = 1;
+    uint32 room_id = 2;
+}
+
+message WorktopInfo {
+    repeated uint32 option_list = 1;
+}
+
+message PlatformInfo {
+    uint32 route_id = 1;
+    int32 start_index = 2;
+    uint32 start_route_time = 3;
+    uint32 start_scene_time = 4;
+    uint32 temp_route_time = 5;
+    uint32 temp_start_route_time = 6;
+    Vector start_pos = 7;
+    bool is_started = 8;
+}
+
+message WeatherInfo {
+    uint32 weather_area_id = 1;
+}
+
+message ClientGadgetInfo {
+    uint32 camp_id = 1;
+    uint32 camp_type = 2;
+    uint64 guid = 3;
+    uint32 owner_entity_id = 4;
+    uint32 target_entity_id = 5;
+    bool async_load = 6;
+}
+
+message AbilityGadgetInfo {
+    uint32 camp_id = 1;
+    uint32 camp_target_type = 2;
+    uint32 target_entity_id = 3;
+}
+
+message SceneGadgetInfo {
+    uint32 gadget_id = 1;
+    uint32 group_id = 2;
+    uint32 config_id = 3;
+    uint32 owner_entity_id = 4;
+    GadgetBornType born_type = 5;
+    uint32 gadget_state = 6;
+    uint32 gadget_type = 7;
+    bool is_show_cutscene = 8;
+    uint32 authority_peer_id = 9;
+    bool is_enable_interact = 10;
+    
+    oneof content {
+        Item trifle_item = 11;
+        uint32 item_id = 12;
+        WorktopInfo worktop = 13;
+        ClientGadgetInfo client_gadget = 14;
+        PlatformInfo platform = 15;
+        WeatherInfo weather = 16;
+        AbilityGadgetInfo ability_gadget = 17;
+    }
+}
+
+message AnimatorParameterValueInfo {
+    uint32 para_type = 1;
+    
+    oneof paraVal {
+        int32 int_val = 2;
+        float float_val = 3;
+        bool bool_val = 4;
+    }
+}
+
+message SceneEntityAiInfo {
+    bool is_ai_open = 1;
+    Vector born_pos = 2;
+    map<uint32, uint32> skill_cd_map = 3;
+}
+
+message EntityRendererChangedInfo {
+    map<string, bool> changed_renderers = 1;
+}
+
+message SceneEntityInfo {
+    ProtEntityType entity_type = 1;
+    uint32 entity_id = 2;
+    string name = 3;
+    MotionInfo motion_info = 4;
+    map<uint32, PropValue> prop_map = 5;
+    map<uint32, float> fight_prop_map = 6;
+    uint32 life_state = 7;
+    AbilitySyncStateInfo ability_info = 8;
+    map<int32, AnimatorParameterValueInfo> animator_para_map = 9;
+    EntityRendererChangedInfo renderer_changed_info = 14;
+    SceneEntityAiInfo ai_info = 15;
+    
+    oneof entity {
+        SceneAvatarInfo avatar = 10;
+        SceneMonsterInfo monster = 11;
+        SceneNpcInfo npc = 12;
+        SceneGadgetInfo gadget = 13;
+    }
+}
+
+message CreateGadgetInfo {
+    GadgetBornType born_type = 1;
+    
+    Chest chest = 2;
+    message Chest {
+        uint32 chest_drop_id = 1;
+        bool is_show_cutscene = 2;
+    }
+}
+
+message CreateEntityInfo {
+    uint32 level = 5;
+    Vector pos = 6;
+    Vector rot = 7;
+    uint32 drop_id = 8;
+    uint32 scene_id = 10;
+    uint32 room_id = 11;
+    uint32 client_unique_id = 12;
+    
+    oneof entity {
+        uint32 monster_id = 1;
+        uint32 npc_id = 2;
+        uint32 gadget_id = 3;
+        uint32 item_id = 4;
+    }
+    
+    oneof entity_create_info {
+        CreateGadgetInfo gadget = 13;
+    }
+}
+
+message TrialAvatarInfo {
+    uint32 trial_avatar_id = 1;
+    repeated Item trial_equip_list = 2;
+}
+
+message AvatarSkillInfo {
+    uint32 pass_cd_time = 1;
+    repeated uint32 full_cd_time_list = 2;
+    uint32 max_charge_count = 3;
+}
+
+message AvatarInfo {
+    uint32 avatar_id = 1;
+    uint64 guid = 2;
+    map<uint32, PropValue> prop_map = 3;
+    uint32 life_state = 4;
+    repeated uint64 equip_guid_list = 5;
+    repeated uint32 talent_id_list = 6;
+    map<uint32, float> fight_prop_map = 7;
+    bool is_trial_avatar = 8;
+    TrialAvatarInfo trial_avatar_info = 9;
+    map<uint32, AvatarSkillInfo> skill_map = 10;
+    uint32 skill_depot_id = 11;
+}
+
+message Quest {
+    uint32 quest_id = 1;
+    uint32 state = 2;
+    uint32 start_time = 4;
+    bool is_random = 5;
+    uint32 parent_quest_id = 6;
+    uint32 quest_config_id = 7;
+    uint32 start_game_time = 8;
+}
+
+message NpcPostionInfo {
+    uint32 npc_id = 1;
+    Vector pos = 2;
+}
+
+message MailTextContent {
+    string title = 1;
+    string content = 2;
+    string sender = 3;
+}
+
+message MailData {
+    uint32 mail_id = 1;
+    uint32 index = 2;
+    uint32 text_id = 3;
+    MailTextContent mail_text_content = 4;
+    repeated EquipParam item_list = 7;
+    uint32 send_time = 8;
+    uint32 expire_time = 9;
+    uint32 importance = 10;
+    bool is_read = 11;
+    bool is_attachment_got = 12;
+    
+    reserved 5, 6;
+}
+
+message OnlinePlayerInfo {
+    uint32 uid = 1;
+    string nickname = 2;
+    OnlinePlayerState state = 3;
+}
+
+enum ENetReason {
+    ENET_TIMEOUT = 0;
+    ENET_CLIENT_CLOSE = 1;
+    ENET_CLIENT_REBIND_FAIL = 2;
+    ENET_CLIENT_SHUTDOWN = 3;
+    ENET_SERVER_RELOGIN = 4;
+    ENET_SERVER_KICK = 5;
+    ENET_SERVER_SHUTDOWN = 6;
+    ENET_NOT_FOUND_SESSION = 7;
+    ENET_LOGIN_UNFINISHED = 8;
+    ENET_PACKET_FREQ_TOO_HIGH = 9;
+    ENET_PING_TIMEOUT = 10;
+    ENET_TRANFER_FAILED = 11;
+    ENET_CLIENT_CONNECT_KEY = 1234567890;
+    ENET_CLIENT_EDITOR_CONNECT_KEY = 987654321;
+}
+
+enum AccountType {
+    ACCOUNT_NONE = 0;
+    ACCOUNT_MIHOYO = 1;
+    ACCOUNT_BILIBILI = 2;
+    ACCOUNT_UC = 3;
+    ACCOUNT_360 = 4;
+    ACCOUNT_YYB = 5;
+    ACCOUNT_XIAOMI = 6;
+    ACCOUNT_HUAWEI = 7;
+    ACCOUNT_OPPO = 8;
+    ACCOUNT_VIVO = 9;
+    ACCOUNT_MEIZU = 10;
+    ACCOUNT_COOLPAD = 11;
+    ACCOUNT_LENOVO = 12;
+    ACCOUNT_GIONEE = 13;
+    ACCOUNT_BAIDU = 14;
+    ACCOUNT_WANDOUJIA = 15;
+    ACCOUNT_LESHI = 16;
+    ACCOUNT_GOOGLE = 17;
+    ACCOUNT_FACEBOOK = 18;
+}
+
+enum ServiceType {
+    SERVICE_NONE = 0;
+    SERVICE_CLIENT = 1;
+    SERVICE_GATE = 2;
+    SERVICE_GAME = 3;
+    SERVICE_NODE = 4;
+    SERVICE_DB = 5;
+    SERVICE_SNS = 6;
+    SERVICE_DISPATCH = 7;
+    SERVICE_MUIP = 8;
+    SERVICE_OFFLINE_MSG = 9;
+    SERVICE_MAIL = 10;
+    SERVICE_MP = 11;
+    SERVICE_HTTPPROXY = 12;
+}
+
+enum ClientType {
+    CLIENT_PRODUCT = 0;
+    CLIENT_DEV = 1;
+}
+
+enum RegionType {
+    REGION_PRODUCT = 0;
+    REGION_EXAM = 1;
+    REGION_DEV_PUB = 2;
+    REGION_DEV_PRI = 3;
+}
+
+enum AreaType {
+    AREA_CN = 0;
+    AREA_JP = 1;
+    AREA_KR = 2;
+}
+
+enum StoreType {
+    STORE_NONE = 0;
+    STORE_PACK = 1;
+    STORE_DEPOT = 2;
+}
+
+enum VirtualItem {
+    ITEM_VIRTUAL_NONE = 0;
+    ITEM_VIRTUAL_AVATAR_EXP = 101;
+    ITEM_VIRTUAL_PLAYER_EXP = 102;
+    ITEM_VIRTUAL_HCOIN = 201;
+    ITEM_VIRTUAL_SCOIN = 202;
+}
+
+enum AbilityScalarType {
+    ABILITY_SCALAR_TYPE_UNKNOW = 0;
+    ABILITY_SCALAR_TYPE_FLOAT = 1;
+    ABILITY_SCALAR_TYPE_INT = 2;
+    ABILITY_SCALAR_TYPE_BOOL = 3;
+    ABILITY_SCALAR_TYPE_TRIGGER = 4;
+    ABILITY_SCALAR_TYPE_STRING = 5;
+    ABILITY_SCALAR_TYPE_UINT = 6;
+}
+
+enum MotionState {
+    MOTION_NONE = 0;
+    MOTION_RESET = 1;
+    MOTION_STANDBY = 2;
+    MOTION_STANDBY_MOVE = 3;
+    MOTION_WALK = 4;
+    MOTION_RUN = 5;
+    MOTION_DASH = 6;
+    MOTION_CLIMB = 7;
+    MOTION_CLIMB_JUMP = 8;
+    MOTION_STANDBY_TO_CLIMB = 9;
+    MOTION_FIGHT = 10;
+    MOTION_JUMP = 11;
+    MOTION_DROP = 12;
+    MOTION_FLY = 13;
+    MOTION_SWIM_MOVE = 14;
+    MOTION_SWIM_IDLE = 15;
+    MOTION_SWIM_DASH = 16;
+    MOTION_SWIM_JUMP = 17;
+    MOTION_SLIP = 18;
+    MOTION_GO_UPSTAIRS = 19;
+    MOTION_FALL_ON_GROUND = 20;
+    MOTION_JUMP_UP_WALL_FOR_STANDBY = 21;
+    MOTION_JUMP_OFF_WALL = 22;
+    MOTION_POWERED_FLY = 23;
+    MOTION_LADDER_IDLE = 24;
+    MOTION_LADDER_MOVE = 25;
+    MOTION_LADDER_SLIP = 26;
+    MOTION_STANDBY_TO_LADDER = 27;
+    MOTION_LADDER_TO_STANDBY = 28;
+    MOTION_DANGER_STANDBY = 29;
+    MOTION_DANGER_STANDBY_MOVE = 30;
+    MOTION_DANGER_WALK = 31;
+    MOTION_DANGER_RUN = 32;
+    MOTION_DANGER_DASH = 33;
+    MOTION_CROUCH_IDLE = 34;
+    MOTION_CROUCH_MOVE = 35;
+    MOTION_CROUCH_ROLL = 36;
+    MOTION_NOTIFY = 37;
+    MOTION_LAND_SPEED = 38;
+    MOTION_MOVE_FAIL_ACK = 39;
+    MOTION_WATERFALL = 40;
+    MOTION_DASH_BEFORE_SHAKE = 41;
+    MOTION_NUM = 42;
+}
+
+enum ProtEntityType {
+    PROT_ENTITY_NONE = 0;
+    PROT_ENTITY_AVATAR = 1;
+    PROT_ENTITY_MONSTER = 2;
+    PROT_ENTITY_NPC = 3;
+    PROT_ENTITY_GADGET = 4;
+    PROT_ENTITY_REGION = 5;
+    PROT_ENTITY_WEAPON = 6;
+    PROT_ENTITY_WEATHER = 7;
+    PROT_ENTITY_SCENE = 8;
+    PROT_ENTITY_TEAM = 9;
+    PROT_ENTITY_MAX = 10;
+}
+
+enum NpcTalkState {
+    NPC_TALK_NONE = 0;
+    NPC_TALK_AUTO = 1;
+    NPC_TALK_MANUAL = 2;
+}
+
+enum MonsterBornType {
+    MONSTER_BORN_NONE = 0;
+    MONSTER_BORN_DEFAULT = 1;
+    MONSTER_BORN_RANDOM = 2;
+}
+
+enum GadgetBornType {
+    GADGET_BORN_NONE = 0;
+    GADGET_BORN_IN_AIR = 1;
+    GADGET_BORN_PLAYER = 2;
+    GADGET_BORN_MONSTER_HIT = 3;
+    GADGET_BORN_MONSTER_DIE = 4;
+    GADGET_BORN_GADGET = 5;
+    GADGET_BORN_GROUND = 6;
+}
+
+enum ChangHpReason {
+    CHANGE_HP_NONE = 0;
+    CHANGE_HP_SUB_AVATAR = 1;
+    CHANGE_HP_SUB_MONSTER = 2;
+    CHANGE_HP_SUB_GEAR = 3;
+    CHANGE_HP_SUB_ENVIR = 4;
+    CHANGE_HP_SUB_FALL = 5;
+    CHANGE_HP_SUB_DRAWN = 6;
+    CHANGE_HP_SUB_ABYSS = 7;
+    CHANGE_HP_SUB_ABILITY = 8;
+    CHANGE_HP_SUB_SUMMON = 9;
+    CHANGE_HP_SUB_SCRIPT = 10;
+    CHANGE_HP_SUB_GM = 11;
+    CHANGE_HP_ADD_ABILITY = 101;
+    CHANGE_HP_ADD_ITEM = 102;
+    CHANGE_HP_ADD_REVIVE = 103;
+    CHANGE_HP_ADD_UPGRADE = 104;
+    CHANGE_HP_ADD_STATUE = 105;
+    CHANGE_HP_ADD_BACKGROUND = 106;
+    CHANGE_HP_ADD_GM = 107;
+}
+
+enum PlayerDieType {
+    PLAYER_DIE_NONE = 0;
+    PLAYER_DIE_KILL_BY_MONSTER = 1;
+    PLAYER_DIE_KILL_BY_GEAR = 2;
+    PLAYER_DIE_FALL = 3;
+    PLAYER_DIE_DRAWN = 4;
+    PLAYER_DIE_ABYSS = 5;
+}
+
+enum PlayerDieOption {
+    DIE_OPT_NONE = 0;
+    DIE_OPT_REPLAY = 1;
+    DIE_OPT_CANCEL = 2;
+    DIE_OPT_REVIVE = 3;
+}
+
+enum EventTriggerType {
+    EVENT_TRIGGER_NONE = 0;
+    EVENT_TRIGGER_ENTER_FORCE = 1;
+}
+
+enum OnlinePlayerState {
+    ONLINE_PLAYER_STATE_NONE = 0;
+    ONLINE_PLAYER_STATE_IN_DYNAMIC_DUNGEON = 1;
+}
+
+enum MathExpressionType {
+    MATH_EXPR_NONE = 0;
+    MATH_EXPR_LEVEL = 1;
+    MATH_EXPR_REGISTER_TIME = 2;
+    MATH_EXPR_LAST_LOGIN_TIME = 3;
+    MATH_EXPR_TOTAL_LOGIN_DAYS = 4;
+}
+
+enum LoginRewardConfigType {
+    LOGIN_REWARD_IMMEDIDATE = 0;
+    LOGIN_REWARD_FIRST = 1;
+}
+
+enum LanguageType {
+    LANGUAGE_NONE = 0;
+    LANGUAGE_EN = 1;
+    LANGUAGE_SC = 2;
+    LANGUAGE_TC = 3;
+    LANGUAGE_FR = 4;
+    LANGUAGE_DE = 5;
+    LANGUAGE_ES = 6;
+    LANGUAGE_PT = 7;
+    LANGUAGE_RU = 8;
+    LANGUAGE_JP = 9;
+    LANGUAGE_KR = 10;
+    LANGUAGE_TH = 11;
+    LANGUAGE_VN = 12;
+    LANGUAGE_ID = 13;
+}

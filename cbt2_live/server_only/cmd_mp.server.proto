@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message UpdateMpStatusNotify {
+    uint32 uid = 1;
+    OnlinePlayerInfo mp_player_info = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10401;
+    }
+}
+
+message DelMpStatusNotify {
+    uint32 uid = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10402;
+    }
+}
+
+message GetPlayerMpStatusListReq {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10403;
+    }
+}
+
+message GetPlayerMpStatusListRsp {
+    int32 retcode = 1;
+    repeated OnlinePlayerInfo player_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10404;
+    }
+}

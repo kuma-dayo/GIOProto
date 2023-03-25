@@ -1,0 +1,171 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+import "server_only/config.server.proto";
+
+message StopServerConfigNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10001;
+    }
+}
+
+message NodeserverConnectedAndRegisteredNotify {
+    uint32 nodeserver_id = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10002;
+    }
+}
+
+message MultiPlayerMsg {
+    repeated uint32 uid_list = 1;
+    bytes proto_bin = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10003;
+    }
+}
+
+message AddGateserverNotify {
+    uint32 listen_port = 1;
+    uint32 outer_ip = 2;
+    bool use_domain_name = 3;
+    string domain_name = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10004;
+    }
+}
+
+message RegisterServiceNotify {
+    repeated ServiceType service_type_list = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10005;
+    }
+}
+
+message PlayerTransferNotify {
+    uint32 transfer_uid = 1;
+    uint32 target_uid = 2;
+    uint32 target_home_owner_uid = 3;
+    uint32 target_home_gameserver_id = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10006;
+    }
+}
+
+message PacketCountInfo {
+    uint32 cmd_id = 1;
+    uint32 count = 2;
+}
+
+message PacketFreqencyExceedNotify {
+    uint32 packet_count = 1;
+    uint32 interval = 2;
+    repeated PacketCountInfo packet_count_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10007;
+    }
+}
+
+message SceneAsyncLoadGroupBatchNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10008;
+    }
+}
+
+message CrcVersionConfig {
+    repeated string client_version_list = 1;
+}
+
+message ClientVersionSyncNotify {
+    DataVersionConfig data_version_config = 1;
+    map<uint32, ResVersionConfig> res_version_config_map = 2;
+    map<uint32, CrcVersionConfig> crc_version_config_map = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10009;
+    }
+}
+
+message RegisterServiceSuccessNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10010;
+    }
+}
+
+message ReloadConfigNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10011;
+    }
+}
+
+message MultiserverServiceTypeNotify {
+    repeated ServiceType service_type_list = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10012;
+    }
+}
+
+message MatchServiceStopNotify {
+    uint32 server_id = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10013;
+    }
+}
+
+message MatchServiceStopImplementNotify {
+    MatchServiceStopNotify msg = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10014;
+    }
+}
+
+message ServerBlockPlayerMpNotify {
+    bool is_unlock = 1;
+    uint32 end_time = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10015;
+    }
+}
+
+message ServerBlockPlayerChatNotify {
+    bool is_unlock = 1;
+    uint32 end_time = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10016;
+    }
+}
+
+message ServerCheckSegmentCrcNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10017;
+    }
+}

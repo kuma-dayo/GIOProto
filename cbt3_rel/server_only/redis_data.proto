@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin_common.server.proto";
+import "define.proto";
+
+message PlayerStatusRedisData {
+    PlayerStatusType status = 1;
+    uint32 gameserver_id = 2;
+    uint64 login_rand = 3;
+    uint32 login_time = 4;
+}
+
+message MailRedisData {
+    MailBin mail_bin = 1;
+    uint32 id = 2;
+    bool is_read = 3;
+    bool is_attachment_got = 4;
+}
+
+message MailMaxIdRedisData {
+    
+}
+
+message MailIdSortedSetRedisData {
+    
+}
+
+message MailTicketHashMapRedisData {
+    
+}
+
+message MailTransactionIdHashMapRedisData {
+    
+}
+
+message MailTicketMailIdHashMapRedisData {
+    
+}
+
+message TicketTimeBin {
+    uint32 enque_time = 1;
+    string ticket = 2;
+}
+
+message OfflineMsgRedisData {
+    uint32 last_index = 1;
+    repeated OfflineMsgBin offline_msg_list = 2;
+    repeated TicketTimeBin recent_ticket_list = 3;
+}
+
+message PlayerFriendListRedisData {
+    
+}
+
+message PlayerAskFriendListRedisData {
+    
+}
+
+message PlayerBlacklistRedisData {
+    
+}
+
+message PlayerMpBriefData {
+    bool is_mp_avaliable = 1;
+    bool is_only_mp_with_ps_player = 2;
+}
+
+message PlayerSocialBriefData {
+    Birthday birthday = 1;
+    string signature = 2;
+}
+
+message PlayerBasicBriefData {
+    string nickname = 1;
+    uint32 level = 2;
+    uint32 world_level = 3;
+    uint32 last_login_time = 4;
+    uint32 head_image_avatar_id = 5;
+    uint32 exp = 6;
+    uint32 hcoin = 7;
+    uint32 scoin = 8;
+    uint32 platform_type = 9;
+    string online_id = 10;
+}
+
+message PlayerBriefDataRedisData {
+    PlayerSocialBriefData social_brief = 1;
+    PlayerBasicBriefData basic_brief = 2;
+    PlayerMpBriefData mp_brief = 3;
+}
+
+enum PlayerStatusType {
+    PLAYER_STATUS_OFFLINE = 0;
+    PLAYER_STATUS_ONLINE = 1;
+}

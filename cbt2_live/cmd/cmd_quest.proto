@@ -1,0 +1,264 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message QuestListNotify {
+    repeated Quest quest_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 401;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message QuestListUpdateNotify {
+    repeated Quest quest_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 402;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message QuestDelNotify {
+    uint32 quest_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 403;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ChildQuest {
+    uint32 quest_id = 1;
+    uint32 state = 2;
+    uint32 quest_config_id = 3;
+}
+
+message ParentQuestRandomInfo {
+    uint32 entrance_id = 1;
+    uint32 template_id = 2;
+    repeated uint32 factor_list = 3;
+}
+
+message ParentQuest {
+    uint32 parent_quest_id = 1;
+    repeated ChildQuest child_quest_list = 2;
+    bool is_finished = 3;
+    bool is_random = 4;
+    ParentQuestRandomInfo random_info = 5;
+}
+
+message FinishedParentQuestNotify {
+    repeated ParentQuest parent_quest_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 404;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FinishedParentQuestUpdateNotify {
+    repeated ParentQuest parent_quest_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 405;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message AddQuestContentProgressReq {
+    uint32 content_type = 1;
+    uint32 param = 2;
+    uint32 add_progress = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 406;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message AddQuestContentProgressRsp {
+    int32 retcode = 1;
+    uint32 content_type = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 407;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GetQuestTalkHistoryReq {
+    uint32 parent_quest_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 408;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GetQuestTalkHistoryRsp {
+    int32 retcode = 1;
+    uint32 parent_quest_id = 2;
+    repeated uint32 talk_id_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 409;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message QuestCreateEntityReq {
+    CreateEntityInfo entity = 1;
+    uint32 quest_id = 2;
+    bool is_rewind = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 410;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message QuestCreateEntityRsp {
+    int32 retcode = 1;
+    uint32 entity_id = 2;
+    CreateEntityInfo entity = 3;
+    uint32 quest_id = 7;
+    bool is_rewind = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 411;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message QuestDestroyEntityReq {
+    uint32 entity_id = 1;
+    uint32 quest_id = 2;
+    uint32 scene_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 412;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message QuestDestroyEntityRsp {
+    int32 retcode = 1;
+    uint32 entity_id = 2;
+    uint32 quest_id = 3;
+    uint32 scene_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 413;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message LogTalkNotify {
+    uint32 talk_id = 1;
+    bool is_start = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 414;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message LogCutsceneNotify {
+    string cutscene_name = 1;
+    bool is_start = 2;
+    bool is_skip = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 415;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ChapterStateNotify {
+    uint32 chapter_id = 1;
+    ChapterState chapter_state = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 416;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message QuestProgressUpdateNotify {
+    uint32 quest_id = 1;
+    repeated uint32 finish_progress_list = 2;
+    repeated uint32 fail_progress_list = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 417;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum ChapterState {
+    CHAPTER_STATE_INVALID = 0;
+    CHAPTER_STATE_UNABLE_TO_BEGIN = 1;
+    CHAPTER_STATE_BEGIN = 2;
+    CHAPTER_STATE_END = 3;
+}

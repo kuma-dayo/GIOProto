@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package proto;
+
+message GadgetInteractReq {
+    uint32 gadget_entity_id = 1;
+    InterOpType op_type = 2;
+    uint32 gadget_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 801;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message GadgetInteractRsp {
+    int32 retcode = 1;
+    uint32 gadget_entity_id = 2;
+    InteractType interact_type = 3;
+    InterOpType op_type = 4;
+    uint32 gadget_id = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 802;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message GadgetStateNotify {
+    uint32 gadget_entity_id = 1;
+    uint32 gadget_state = 2;
+    bool is_enable_interact = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 803;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorktopOptionNotify {
+    uint32 gadget_entity_id = 1;
+    repeated uint32 option_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 804;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message SelectWorktopOptionReq {
+    uint32 gadget_entity_id = 1;
+    uint32 option_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 805;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message SelectWorktopOptionRsp {
+    int32 retcode = 1;
+    uint32 gadget_entity_id = 2;
+    uint32 option_id = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 806;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum InteractType {
+    INTERACT_NONE = 0;
+    INTERACT_PICK_ITEM = 1;
+    INTERACT_GATHER = 2;
+    INTERACT_OPEN_CHEST = 3;
+    INTERACT_OPEN_STATUE = 4;
+}
+
+enum InterOpType {
+    INTER_OP_FINISH = 0;
+    INTER_OP_START = 1;
+}

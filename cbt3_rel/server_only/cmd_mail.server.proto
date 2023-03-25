@@ -1,0 +1,238 @@
+syntax = "proto3";
+
+package proto;
+
+import "server_only/bin_common.server.proto";
+import "server_only/redis_data.proto";
+import "server_only/enum.server.proto";
+
+message AddRedisMailReq {
+    MailAddOpType op_type = 1;
+    MailBin mail_bin = 2;
+    string ticket = 3;
+    uint64 transaction_id = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10301;
+    }
+}
+
+message AddRedisMailRsp {
+    int32 retcode = 1;
+    MailAddOpType op_type = 2;
+    string ticket = 3;
+    uint64 transaction_id = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10302;
+    }
+}
+
+message DelRedisMailReq {
+    MailDelOpType op_type = 1;
+    repeated uint32 mail_id_list = 2;
+    repeated string ticket_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10303;
+    }
+}
+
+message DelRedisMailRsp {
+    int32 retcode = 1;
+    MailDelOpType op_type = 2;
+    repeated uint32 mail_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10304;
+    }
+}
+
+message GetRedisMailReq {
+    MailGetOPType op_type = 1;
+    MailGetType get_type = 2;
+    repeated uint32 mail_id_list = 7;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10305;
+    }
+}
+
+message GetRedisMailRsp {
+    int32 retcode = 1;
+    repeated MailRedisData mail_list = 2;
+    MailGetOPType op_type = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10306;
+    }
+}
+
+message RedisMailChangeNotify {
+    repeated MailRedisData update_mail_list = 1;
+    repeated uint32 del_mail_id_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10307;
+    }
+}
+
+message SendOfflineMsgReq {
+    OfflineMsgBin msg = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10308;
+    }
+}
+
+message SendOfflineMsgRsp {
+    int32 retcode = 1;
+    string ticket = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10309;
+    }
+}
+
+message NewOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10310;
+    }
+}
+
+message GetOfflineMsgReq {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10311;
+    }
+}
+
+message GetOfflineMsgRsp {
+    int32 retcode = 1;
+    uint32 last_index = 2;
+    repeated OfflineMsgBin offline_msg_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10312;
+    }
+}
+
+message RemoveOfflineMsgNotify {
+    uint32 index = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10313;
+    }
+}
+
+message ClearOfflineMsgNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10314;
+    }
+}
+
+message UpdateRedisMailReq {
+    MailUpdateOpType op_type = 1;
+    repeated uint32 mail_id_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10315;
+    }
+}
+
+message UpdateRedisMailRsp {
+    int32 retcode = 1;
+    MailUpdateOpType op_type = 2;
+    repeated uint32 mail_id_list = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10316;
+    }
+}
+
+message GetRedisMailTransactionStatusReq {
+    repeated uint64 transaction_id_list = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10317;
+    }
+}
+
+message GetRedisMailTransactionStatusRsp {
+    int32 retcode = 1;
+    map<uint64, bool> transaction_status_map = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10318;
+    }
+}
+
+message ClearUpRedisMailNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10319;
+    }
+}
+
+message CleanRedisMailNotify {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10320;
+    }
+}
+
+message ResendRedisMailReq {
+    map<uint64, MailBin> mail_bin_map = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10321;
+    }
+}
+
+message ResendRedisMailRsp {
+    int32 retcode = 1;
+    map<uint64, bool> resend_status_map = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10322;
+    }
+}
+
+message GetUntreatedRedisMailInfoReq {
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10323;
+    }
+}
+
+message GetUntreatedRedisMailInfoRsp {
+    int32 retcode = 1;
+    uint32 not_read_num = 2;
+    uint32 not_take_attachment_num = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10324;
+    }
+}

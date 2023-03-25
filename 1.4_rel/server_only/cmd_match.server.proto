@@ -1,0 +1,234 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+import "server_only/enum.server.proto";
+
+message MatchPlayer {
+    uint32 uid = 1;
+    string nickname = 2;
+    uint32 player_level = 3;
+    uint32 world_level = 4;
+    uint32 platform_type = 5;
+    bool is_only_match_with_ps_player = 6;
+    repeated uint32 blacklist_uid_list = 7;
+}
+
+message MatchUnit {
+    repeated MatchPlayer match_player_list = 1;
+    uint32 unit_id = 2;
+}
+
+message AddMatchUnitReq {
+    MatchType match_type = 1;
+    MatchUnit match_unit = 2;
+    MatchIdentity expect_identity = 3;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_tag = 13;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10901;
+    }
+}
+
+message AddMatchUnitRsp {
+    int32 retcode = 1;
+    MatchType match_type = 2;
+    MatchUnit match_unit = 3;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_tag = 13;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10902;
+    }
+}
+
+message MatchStartNotify {
+    MatchType match_type = 1;
+    uint32 match_begin_time = 2;
+    uint32 estimate_match_cost_time = 3;
+    bool is_rematch = 4;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_tag = 13;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10903;
+    }
+}
+
+message RemoveMatchUnitReq {
+    MatchType match_type = 1;
+    uint32 unit_id = 2;
+    MatchUnitRemoveOpType op_type = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10904;
+    }
+}
+
+message RemoveMatchUnitRsp {
+    int32 retcode = 1;
+    MatchType match_type = 2;
+    uint32 unit_id = 3;
+    MatchUnitRemoveOpType op_type = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10905;
+    }
+}
+
+message MatchUnitRemovedNotify {
+    MatchType match_type = 1;
+    MatchReason reason = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10906;
+    }
+}
+
+message GuestUnitMatchSuccNotify {
+    uint32 host_unit_id = 1;
+    uint32 confirm_end_time = 2;
+    uint32 match_type = 3;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_tag = 13;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10907;
+    }
+}
+
+message ConfirmGuestUnitReq {
+    MatchType match_type = 1;
+    uint32 unit_id = 2;
+    bool is_agreed = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10908;
+    }
+}
+
+message ConfirmGuestUnitRsp {
+    int32 retcode = 1;
+    MatchType match_type = 2;
+    uint32 unit_id = 3;
+    bool is_agreed = 4;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10909;
+    }
+}
+
+message MatchPlayerJoinNotify {
+    MatchType match_type = 1;
+    uint32 unit_id = 2;
+    MatchPlayer match_player = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10910;
+    }
+}
+
+message MatchPlayerQuitNotify {
+    MatchType match_type = 1;
+    uint32 unit_id = 2;
+    uint32 player_uid = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10911;
+    }
+}
+
+message GuestUnitAgreedResultNotify {
+    MatchType match_type = 1;
+    uint32 host_unit_id = 2;
+    
+    Reason reason = 3;
+    enum Reason {
+        SUCC = 0;
+        HOST_UNIT_QUIT = 1;
+    }
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10912;
+    }
+}
+
+message HostUnitMatchSuccNotify {
+    uint32 match_type = 1;
+    uint32 dungeon_id = 11;
+    uint32 mp_play_id = 12;
+    uint32 mechanicus_difficult_level = 13;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10913;
+    }
+}
+
+message SyncMatchUnitReq {
+    MatchType match_type = 1;
+    MatchUnit match_unit = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10914;
+    }
+}
+
+message SyncMatchUnitRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10915;
+    }
+}
+
+message MatchserverWorkloadInfoNotify {
+    uint32 match_unit_num = 1;
+    map<uint32, uint32> match_unit_map = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10916;
+    }
+}
+
+message MatchPlayerUpdateNotify {
+    MatchType match_type = 1;
+    uint32 unit_id = 2;
+    MatchPlayer match_player = 3;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10917;
+    }
+}
+
+message MatchIdentityNotify {
+    MatchType match_type = 1;
+    MatchIdentity match_identity = 2;
+    
+    enum CmdId {
+        NONE = 0;
+        CMD_ID = 10918;
+    }
+}

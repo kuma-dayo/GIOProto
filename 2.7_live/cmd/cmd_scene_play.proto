@@ -1,0 +1,279 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message ScenePlayBattleInfo {
+    uint32 play_id = 1;
+    uint32 play_type = 2;
+    uint32 state = 3;
+    uint32 prepare_end_time = 4;
+    uint32 start_time = 5;
+    uint32 duration = 6;
+    repeated uint32 progress_stage_list = 7;
+    uint32 progress = 8;
+    uint32 mode = 9;
+    uint32 type = 10;
+}
+
+message ScenePlayBattleInfoNotify {
+    ScenePlayBattleInfo battle_info = 13;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4359;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayOwnerCheckReq {
+    uint32 play_id = 15;
+    bool is_skip_match = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4381;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ScenePlayOwnerCheckRsp {
+    int32 retcode = 13;
+    uint32 play_id = 14;
+    bool is_skip_match = 9;
+    uint32 wrong_uid = 8;
+    repeated uint32 param_list = 12;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4391;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayOwnerStartInviteReq {
+    uint32 play_id = 4;
+    bool is_skip_match = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4387;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ScenePlayOwnerStartInviteRsp {
+    int32 retcode = 9;
+    uint32 play_id = 10;
+    bool is_skip_match = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4382;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayOwnerInviteNotify {
+    uint32 play_id = 4;
+    uint32 invite_cd = 13;
+    bool is_remain_reward = 5;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4367;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayGuestReplyInviteReq {
+    uint32 play_id = 1;
+    bool is_agree = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4435;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ScenePlayGuestReplyInviteRsp {
+    int32 retcode = 10;
+    uint32 play_id = 9;
+    bool is_agree = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4385;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayGuestReplyNotify {
+    uint32 play_id = 6;
+    uint32 guest_uid = 12;
+    bool is_agree = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4399;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayInviteResultNotify {
+    uint32 play_id = 8;
+    bool is_all_argee = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4432;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayInfo {
+    uint32 play_id = 1;
+    uint32 play_type = 2;
+    uint32 entry_id = 3;
+    bool is_open = 4;
+}
+
+message ScenePlayInfoListNotify {
+    repeated ScenePlayInfo play_info_list = 6;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4405;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayBattleInterruptNotify {
+    uint32 play_id = 10;
+    uint32 play_type = 8;
+    uint32 interrupt_state = 14;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4377;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayBattleSettlePlayerInfo {
+    uint32 uid = 1;
+    uint32 statistic_id = 2;
+    int64 param = 3;
+    uint32 head_image = 4;
+    string nickname = 5;
+    string online_id = 6;
+    ProfilePicture profile_picture = 7;
+    repeated ExhibitionDisplayInfo card_list = 8;
+}
+
+message ScenePlayBattleSettleRewardInfo {
+    uint32 uid = 1;
+    repeated ItemParam reward_item_list = 2;
+}
+
+message ScenePlayBattleResultNotify {
+    uint32 play_id = 14;
+    uint32 play_type = 3;
+    bool is_win = 1;
+    uint32 cost_time = 4;
+    repeated ScenePlayBattleSettlePlayerInfo settle_player_info_list = 6;
+    repeated ScenePlayBattleSettleRewardInfo settle_reward_info_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4357;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayBattleUidOpNotify {
+    uint32 play_id = 14;
+    uint32 play_type = 7;
+    uint32 entity_id = 1;
+    repeated uint32 uid_list = 11;
+    uint32 op = 8;
+    string param_str = 12;
+    repeated uint32 param_list = 2;
+    repeated uint32 param_target_list = 6;
+    uint32 param_index = 4;
+    uint32 param_duration = 10;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4380;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayBattleInfoListNotify {
+    repeated ScenePlayBattleInfo battle_info_list = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4447;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ScenePlayOutofRegionNotify {
+    uint32 play_id = 8;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 4448;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+enum ScenePlayBattleState {
+    SCENE_PLAY_BATTLE_NONE = 0;
+    SCENE_PLAY_BATTLE_INIT = 1;
+    SCENE_PLAY_BATTLE_PREPARE = 2;
+    SCENE_PLAY_BATTLE_READY = 3;
+    SCENE_PLAY_BATTLE_PRESTART = 4;
+    SCENE_PLAY_BATTLE_START = 5;
+    SCENE_PLAY_BATTLE_STOP = 6;
+}

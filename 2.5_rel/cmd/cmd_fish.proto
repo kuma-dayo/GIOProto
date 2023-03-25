@@ -1,0 +1,289 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message EnterFishingReq {
+    uint32 fish_pool_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5835;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message EnterFishingRsp {
+    int32 retcode = 1;
+    uint32 fish_pool_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5825;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message StartFishingReq {
+    uint32 fish_pool_id = 1;
+    uint32 rod_entity_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5845;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message StartFishingRsp {
+    int32 retcode = 1;
+    uint32 fish_pool_id = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5848;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishCastRodReq {
+    uint32 bait_id = 1;
+    uint32 rod_id = 2;
+    Vector pos = 3;
+    uint32 rod_entity_id = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5813;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FishCastRodRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5801;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishChosenNotify {
+    uint32 fish_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5817;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishEscapeNotify {
+    repeated uint32 fish_id_list = 1;
+    Vector pos = 2;
+    uint32 uid = 3;
+    FishEscapeReason reason = 4;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5836;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishBiteReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5843;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FishBiteRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5826;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishBattleBeginReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5815;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FishBattleBeginRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5827;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishBattleEndReq {
+    FishBattleResult battle_result = 1;
+    bool is_always_bonus = 2;
+    uint32 max_bonus_time = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5837;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message FishBattleEndRsp {
+    int32 retcode = 1;
+    FishBattleResult battle_result = 2;
+    bool is_got_reward = 3;
+    
+    FishNoRewardReason no_reward_reason = 4;
+    enum FishNoRewardReason {
+        FISH_NO_REWARD_NONE = 0;
+        FISH_NO_REWARD_ACTIVITY_LIMIT = 1;
+        FISH_NO_REWARD_BAG_LIMIT = 2;
+        FISH_NO_REWARD_POOL_LIMIT = 3;
+    }
+    
+    repeated ItemParam reward_item_list = 5;
+    repeated ItemParam drop_item_list = 6;
+    repeated ItemParam talent_item_list = 7;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5806;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message ExitFishingReq {
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5812;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+        IS_ALLOW_CLIENT = 1;
+    }
+}
+
+message ExitFishingRsp {
+    int32 retcode = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5839;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishAttractNotify {
+    repeated uint32 fish_id_list = 1;
+    Vector pos = 2;
+    uint32 uid = 3;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5821;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishBaitGoneNotify {
+    uint32 uid = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5846;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message PlayerFishingDataNotify {
+    uint32 last_fish_rod_id = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5831;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message FishPoolDataNotify {
+    uint32 entity_id = 1;
+    uint32 today_fish_num = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 5850;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+enum FishEscapeReason {
+    FISN_ESCAPE_NONE = 0;
+    FISH_ESCAPE_SHOCKED = 1;
+    FISH_ESCAPE_UNHOOK = 2;
+}
+
+enum FishBattleResult {
+    FISH_BATTLE_RESULT_NONE = 0;
+    FISH_BATTLE_RESULT_SUCC = 1;
+    FISH_BATTLE_RESULT_FAIL = 2;
+    FISH_BATTLE_RESULT_TIMEOUT = 3;
+    FISH_BATTLE_RESULT_CANCEL = 4;
+    FISH_BATTLE_RESULT_EXIT = 5;
+}

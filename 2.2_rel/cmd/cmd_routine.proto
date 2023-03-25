@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+
+message PlayerRoutineInfo {
+    uint32 routine_type = 1;
+    uint32 finished_num = 2;
+}
+
+message PlayerRoutineDataNotify {
+    repeated PlayerRoutineInfo routine_info_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 3503;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorldRoutineInfo {
+    uint32 routine_id = 1;
+    uint32 progress = 2;
+    uint32 finish_progress = 3;
+    bool is_finished = 4;
+}
+
+message WorldRoutineTypeInfo {
+    uint32 routine_type = 1;
+    repeated WorldRoutineInfo world_routine_info_list = 2;
+    uint32 next_refresh_time = 3;
+}
+
+message WorldAllRoutineTypeNotify {
+    repeated WorldRoutineTypeInfo world_routine_type_list = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 3543;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorldRoutineTypeRefreshNotify {
+    WorldRoutineTypeInfo world_routine_type = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 3527;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorldRoutineChangeNotify {
+    uint32 routine_type = 1;
+    WorldRoutineInfo routine_info = 2;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 3505;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}
+
+message WorldRoutineTypeCloseNotify {
+    uint32 routine_type = 1;
+    
+    enum CmdId {
+        option allow_alias = true;
+        NONE = 0;
+        CMD_ID = 3524;
+        ENET_CHANNEL_ID = 0;
+        ENET_IS_RELIABLE = 1;
+    }
+}

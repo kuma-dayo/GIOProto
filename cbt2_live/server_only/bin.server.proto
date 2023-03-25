@@ -1,0 +1,638 @@
+syntax = "proto3";
+
+package proto;
+
+import "define.proto";
+import "server_only/redis_data.proto";
+
+message PlayerBasicCompBin {
+    uint32 level = 1;
+    uint32 exp = 2;
+    string nickname = 3;
+    uint32 total_game_time = 4;
+    uint64 trans_no_count = 5;
+    bool is_weather_locked = 6;
+    bool is_game_time_locked = 7;
+    float persist_stamina_limit = 8;
+    float cur_persist_stamina = 9;
+    float cur_temporary_stamina = 10;
+    map<uint32, uint32> open_state_map = 11;
+    uint64 player_time_ms = 12;
+    uint32 last_login_time = 13;
+    uint32 register_time = 14;
+    uint32 total_login_days = 15;
+    uint32 update_login_days_time = 16;
+    repeated uint32 reward_taken_level_list = 17;
+    uint32 level_lock_id = 18;
+    LanguageType language_type = 19;
+    string client_app_version = 20;
+    string client_device_info = 21;
+    string client_system_version = 22;
+    bool is_guest = 23;
+    uint32 online_time = 24;
+}
+
+message AvatarSkillBin {
+    uint32 pass_cd_time = 1;
+    repeated uint32 full_cd_time_list = 2;
+}
+
+message AvatarBuffBin {
+    uint32 left_time = 1;
+}
+
+message AvatarFetterBin {
+    uint32 exp_number = 1;
+    repeated uint32 open_id_list = 2;
+    uint32 pb_only_level = 3;
+    uint32 pb_only_exp = 4;
+}
+
+message AvatarExpeditionBin {
+    AvatarExpeditionState state = 1;
+    uint32 exp_id = 2;
+    uint32 hour_time = 3;
+    uint32 start_time = 4;
+    uint64 transaction = 5;
+}
+
+message AvatarSkillDepotBin {
+    repeated uint32 talent_id_list = 1;
+    uint32 core_proud_skill_level = 2;
+    repeated uint32 inherent_proud_skill_list = 3;
+    map<uint32, uint32> skill_level_map = 4;
+}
+
+message AvatarBin {
+    uint32 avatar_id = 1;
+    uint64 guid = 2;
+    uint32 level = 3;
+    uint32 exp = 4;
+    uint32 life_state = 5;
+    repeated uint64 equip_guid_list = 6;
+    float cur_hp = 7;
+    float cur_elem_energy = 9;
+    uint32 promote_level = 10;
+    uint32 skill_depot_id = 11;
+    map<uint32, AvatarSkillBin> skill_map = 13;
+    map<uint32, AvatarBuffBin> buff_map = 14;
+    AvatarFetterBin fetter = 15;
+    map<uint32, AvatarSkillDepotBin> depot_map = 16;
+    AvatarExpeditionBin expedition_data = 17;
+    uint32 avatar_repeat_count = 18;
+}
+
+message TrialAvatarBin {
+    uint32 trial_avatar_id = 1;
+    uint64 guid = 2;
+    uint32 life_state = 3;
+    float cur_hp = 4;
+    float cur_elem_energy = 5;
+    TrialAvatarGrantRecord grant_record_bin = 6;
+}
+
+message AvatarTeamBin {
+    repeated uint64 avatar_guid_list = 1;
+    string team_name = 2;
+    uint64 last_cur_avatar_guid = 3;
+}
+
+message PlayerAvatarCompBin {
+    repeated AvatarBin avatar_list = 1;
+    uint64 cur_avatar_guid = 2;
+    Vector pb_only_cur_pos = 4;
+    Vector pb_only_cur_rot = 5;
+    map<uint32, AvatarTeamBin> team_map = 6;
+    uint32 cur_team_id = 7;
+    uint64 last_change_avatar_time = 8;
+    bool is_spring_auto_use = 9;
+    uint32 spring_auto_use_percent = 10;
+    uint32 last_backgroud_avatar_recover_time = 11;
+    uint32 cur_spring_volume = 12;
+    bool is_flyable = 13;
+    bool is_transferable = 14;
+    repeated TrialAvatarBin trial_avatar_list = 15;
+    uint32 last_avatar_guid = 16;
+    uint64 choose_avatar_guid = 17;
+    PlayerDieType die_type = 18;
+    repeated uint64 temp_avatar_guid_list = 20;
+}
+
+message GroupMonsterBin {
+    uint32 dropped_hp_percent = 3;
+}
+
+message GadgetPlatformBin {
+    uint32 route_id = 1;
+    int32 point_index = 2;
+    bool is_started = 3;
+}
+
+message GroupGadgetBin {
+    uint32 gadget_state = 3;
+    
+    oneof component {
+        GadgetPlatformBin platform = 4;
+    }
+}
+
+message GroupTriggerBin {
+    uint32 trigger_count = 3;
+}
+
+message GroupVariableBin {
+    int32 value = 2;
+}
+
+message ChallengeRecordBin {
+    uint32 challenge_index = 1;
+    uint32 challenge_id = 2;
+    uint32 challenge_record_type = 3;
+    uint32 best_value = 4;
+}
+
+message GroupBin {
+    map<uint32, GroupMonsterBin> monster_map = 1;
+    repeated uint32 del_monster_list = 2;
+    map<uint32, GroupGadgetBin> gadget_map = 3;
+    repeated uint32 del_gadget_list = 4;
+    map<string, GroupTriggerBin> trigger_map = 5;
+    map<string, GroupVariableBin> variable_map = 6;
+    uint32 suite_index = 7;
+    repeated uint32 show_cutscene_chest_list = 9;
+    repeated ChallengeRecordBin challenge_record_list = 11;
+    uint32 revise_level = 12;
+    uint32 last_refresh_time = 13;
+    uint32 target_suite_index = 15;
+}
+
+message GroupPermBin {
+    map<uint32, GroupGadgetBin> gadget_map = 1;
+}
+
+message AreaBin {
+    repeated uint32 events_finished_list = 1;
+}
+
+message CityBin {
+    uint32 level = 1;
+    uint32 crystal_num = 2;
+}
+
+message ScenePlayerLocationBin {
+    Vector cur_pos = 1;
+    Vector cur_rot = 2;
+    Vector last_valid_pos = 3;
+    Vector last_valid_rot = 4;
+}
+
+message EnvZoneInfoBin {
+    uint32 last_refresh_time = 1;
+    uint32 animal_num = 2;
+}
+
+message SceneEnvAnimalCompBin {
+    map<uint32, EnvZoneInfoBin> zone_info_map = 1;
+}
+
+message SceneWeatherInfoBin {
+    uint32 weather_area_id = 1;
+    uint32 climate_type = 3;
+    uint64 next_climate_time = 4;
+    repeated uint32 forcast_climate_list = 5;
+}
+
+message SceneAllWeatherInfoBin {
+    repeated SceneWeatherInfoBin weather_info_list = 1;
+    repeated uint32 closed_weather_area_list = 2;
+}
+
+message SceneBlockGroupCompBin {
+    map<uint32, GroupBin> group_map = 2;
+    repeated uint32 dead_oneoff_gather_point_list = 3;
+}
+
+message SceneAreaCompBin {
+    repeated uint32 unlocked_area_list = 1;
+    map<uint32, AreaBin> area_map = 2;
+    map<uint32, CityBin> city_map = 3;
+}
+
+message SceneEncounterCompBin {
+    repeated uint32 parent_quest_id_list = 1;
+}
+
+message SceneBin {
+    repeated uint32 unlocked_point_list = 4;
+    repeated uint32 unlocked_force_list = 6;
+    repeated uint32 locked_point_list = 9;
+    SceneAllWeatherInfoBin all_weather_info = 14;
+    ScenePlayerLocationBin owner_player_location = 15;
+    SceneBlockGroupCompBin block_group_bin = 16;
+    SceneEnvAnimalCompBin env_animal_bin = 17;
+    SceneAreaCompBin area_comp_bin = 18;
+    SceneEncounterCompBin encounter_comp_bin = 19;
+    uint64 last_spring_recover_time_ms = 20;
+    
+    reserved 1, 2, 3, 5, 7, 8, 10, 11, 12, 13;
+}
+
+message WorldBin {
+    map<uint32, SceneBin> scene_map = 1;
+    uint32 level = 2;
+}
+
+message GroupProductBin {
+    map<uint32, uint32> gadget_one_off_map = 1;
+    map<uint32, uint32> monster_one_off_map = 2;
+    map<uint32, uint32> gather_refresh_time_map = 3;
+}
+
+message SceneProductBin {
+    map<uint32, GroupProductBin> group_product_map = 1;
+}
+
+message MapMarkPointBin {
+    uint32 scene_id = 1;
+    string name = 2;
+    Vector pos = 3;
+    uint32 point_type = 4;
+    uint32 monster_id = 5;
+    uint32 from_type = 6;
+    uint32 quest_id = 7;
+}
+
+message PlayerSceneCompBin {
+    WorldBin world = 1;
+    uint32 cur_scene_owner_uid = 2;
+    uint32 my_prev_scene_id = 3;
+    Vector my_prev_pos = 4;
+    Vector my_prev_rot = 5;
+    uint32 my_cur_scene_id = 6;
+    repeated uint32 monster_seen_list = 7;
+    repeated MapMarkPointBin mark_point_list = 8;
+    map<uint32, SceneProductBin> scene_product_map = 9;
+    uint32 trivial_entity_drop_num = 10;
+    uint32 trivial_entity_drop_time = 11;
+}
+
+message QuestContentBin {
+    uint32 type = 1;
+    uint32 param = 2;
+    uint32 progress = 3;
+}
+
+message QuestTalkRecordBin {
+    uint32 talk_id = 1;
+    uint32 talk_time = 2;
+}
+
+message QuestBin {
+    uint32 quest_id = 1;
+    uint32 state = 2;
+    repeated uint32 finish_progress_list = 3;
+    repeated uint32 fail_progress_list = 4;
+    uint32 start_time = 5;
+    repeated QuestTalkRecordBin talk_history_list = 6;
+    uint32 start_game_time = 7;
+    uint32 accept_time = 9;
+    
+    reserved 8;
+}
+
+message PlayerQuestBin {
+    repeated QuestBin quest_list = 1;
+}
+
+message ParentQuestRandomInfoBin {
+    uint32 entrance_id = 1;
+    uint32 template_id = 2;
+    repeated uint32 factor_list = 3;
+    map<uint32, uint32> quest_id_map = 4;
+}
+
+message ParentQuestBin {
+    uint32 parent_quest_id = 1;
+    uint32 total_finish_count = 2;
+    uint32 today_finish_count = 3;
+    uint32 last_finish_time = 4;
+    map<uint32, uint32> child_quest_state_map = 5;
+    bool is_random = 6;
+    ParentQuestRandomInfoBin random_info = 7;
+    uint32 accept_time = 9;
+}
+
+message PlayerParentQuestBin {
+    repeated ParentQuestBin parent_quest_list = 1;
+}
+
+message PlayerQuestCompBin {
+    PlayerQuestBin quest_bin = 1;
+    PlayerParentQuestBin parent_quest_bin = 2;
+    uint32 last_random_parent_quest_id = 3;
+    uint32 last_random_quest_id = 4;
+}
+
+message ReliquaryBin {
+    uint32 level = 1;
+    uint32 exp = 2;
+    uint32 main_prop_id = 4;
+    repeated uint32 append_prop_id_list = 5;
+}
+
+message WeaponBin {
+    uint32 level = 1;
+    uint32 exp = 2;
+    uint32 promote_level = 3;
+    map<uint32, uint32> affix_map = 4;
+}
+
+message EquipBin {
+    oneof detail {
+        ReliquaryBin reliquary = 1;
+        WeaponBin weapon = 2;
+    }
+}
+
+message MaterialBin {
+    uint32 count = 1;
+}
+
+message ItemBin {
+    uint32 item_type = 1;
+    uint32 item_id = 2;
+    uint64 guid = 3;
+    
+    oneof detail {
+        MaterialBin material = 101;
+        EquipBin equip = 102;
+    }
+}
+
+message PackItemStoreBin {
+    
+}
+
+message DepotItemStoreBin {
+    
+}
+
+message ItemStoreBin {
+    map<uint64, ItemBin> item_map = 1;
+    
+    oneof ext {
+        PackItemStoreBin pack_store = 101;
+        DepotItemStoreBin depot_store = 102;
+    }
+}
+
+message PlayerItemCompBin {
+    ItemStoreBin pack_store = 1;
+    ItemStoreBin depot_store = 2;
+    repeated uint32 history_item_list = 3;
+    uint32 hcoin = 4;
+    uint32 scoin = 5;
+    map<uint32, uint64> item_cd_map = 6;
+}
+
+message DungeonGroupRecordBin {
+    map<uint32, uint32> chest_open_map = 1;
+}
+
+message DungeonRecordBin {
+    uint32 enter_count = 1;
+    map<uint32, DungeonGroupRecordBin> group_map = 2;
+    uint32 start_time = 3;
+    uint32 end_time = 4;
+}
+
+message DungeonRandomRecordBin {
+    repeated uint32 dungeon_list = 1;
+    repeated uint32 last_dungeon_list = 2;
+    uint32 refresh_time = 3;
+}
+
+message DungeonDurableRecordBin {
+    bool is_passed = 1;
+}
+
+message PlayerDungeonRecordBin {
+    map<uint32, DungeonRecordBin> dungeon_daily_map = 1;
+    map<uint32, DungeonDurableRecordBin> dungeon_durable_map = 2;
+    map<uint32, DungeonRandomRecordBin> dungeon_random_map = 3;
+}
+
+message PlayerDungeonCompBin {
+    uint32 cur_dungeon_id = 1;
+    uint32 last_enter_time = 2;
+    uint32 quit_scene_id = 3;
+    uint32 quit_point_id = 4;
+    PlayerDungeonRecordBin record_bin = 5;
+    bool is_join_other_scene = 6;
+    uint32 last_time_daily_item_add = 7;
+    uint32 last_time_weekly_item_add = 8;
+    uint32 drop_subfield_num = 9;
+    uint32 drop_subfield_time = 10;
+}
+
+message PlayerBoredCompBin {
+    bool is_open = 1;
+}
+
+message PlayerMpCompBin {
+    uint32 mp_setting_type = 2;
+}
+
+message CompoundOutputBin {
+    uint32 output_time = 1;
+}
+
+message CompoundQueueBin {
+    repeated CompoundOutputBin output_list = 1;
+}
+
+message CookRecipeDataBin {
+    uint32 proficiency = 1;
+}
+
+message PlayerCookCompBin {
+    uint32 grade = 1;
+    map<uint32, CookRecipeDataBin> recipe_data_map = 2;
+    repeated uint32 unlock_compound_list = 3;
+    map<uint32, CompoundQueueBin> compound_que_bin_map = 4;
+}
+
+message PlayerActivityCompBin {
+    repeated uint32 taken_login_reward_config_list = 1;
+    uint32 last_login_refresh_time = 2;
+}
+
+message OfflineMsgExeBin {
+    OfflineMsg msg = 1;
+    uint32 exe_times = 2;
+}
+
+message PlayerOfflineMsgCompBin {
+    uint32 index = 1;
+    repeated OfflineMsgExeBin next_offline_msg_list = 2;
+}
+
+message DailyTaskInfoBin {
+    uint32 daily_task_id = 1;
+    uint32 drop_id = 2;
+    uint32 progress = 3;
+    bool is_finished = 4;
+    uint32 preview_reward_id = 5;
+}
+
+message PlayerDailyTaskCompBin {
+    uint32 last_time = 1;
+    repeated DailyTaskInfoBin task_list = 2;
+    uint32 score_player_level = 4;
+    bool is_taken_score_reward = 5;
+    uint32 finished_num = 6;
+}
+
+message PlayerRandTaskCompBin {
+    uint32 last_reward_time = 1;
+    uint32 reward_num = 2;
+}
+
+message InvestigationBin {
+    uint32 investigation_id = 1;
+    uint32 progress = 2;
+    bool is_taken_reward = 3;
+}
+
+message PlayerInvestigationCompBin {
+    repeated InvestigationBin investigation_list = 1;
+    repeated uint32 reward_taken_target_quest_id_list = 2;
+}
+
+message PlayerDataBin {
+    PlayerBasicCompBin basic_bin = 1;
+    PlayerAvatarCompBin avatar_bin = 2;
+    PlayerQuestCompBin quest_bin = 4;
+    PlayerShopCompBin shop_bin = 6;
+    PlayerItemCompBin item_bin = 7;
+    PlayerDungeonCompBin dungeon_bin = 8;
+    PlayerSceneCompBin scene_bin = 9;
+    PlayerBoredCompBin bored_bin = 11;
+    PlayerMpCompBin mp_bin = 12;
+    PlayerCookCompBin cook_bin = 13;
+    PlayerMailCompBin mail_bin = 15;
+    PlayerActivityCompBin activity_bin = 16;
+    PlayerOfflineMsgCompBin offline_msg_bin = 17;
+    PlayerDailyTaskCompBin daily_task_bin = 18;
+    PlayerRandTaskCompBin rand_task_bin = 19;
+    PlayerGachaCompBin gacha_bin = 20;
+    PlayerGivingCompBin giving_bin = 21;
+    PlayerForgeCompBin forge_bin = 22;
+    PlayerInvestigationCompBin investigation_bin = 23;
+}
+
+message PlayerData {
+    uint32 uid = 1;
+    string nickname = 2;
+    uint32 last_login_time = 3;
+    bytes bin = 4;
+    uint32 data_version = 5;
+    uint32 level = 6;
+    uint32 exp = 7;
+}
+
+message MailTextContentBin {
+    string title = 1;
+    string content = 2;
+    string sender = 3;
+}
+
+message EquipParamBin {
+    uint32 item_id = 1;
+    uint32 item_num = 2;
+    uint32 item_level = 3;
+    uint32 promote_level = 4;
+}
+
+message MailDataBin {
+    uint32 mail_id = 1;
+    MailTextContentBin mail_text_content = 3;
+    repeated EquipParamBin item_list = 6;
+    uint32 send_time = 7;
+    uint32 expire_time = 8;
+    uint32 importance = 9;
+    bool is_read = 10;
+    bool is_attachment_got = 11;
+    uint32 source_type = 12;
+    
+    reserved 2, 4, 5;
+}
+
+message PlayerMailCompBin {
+    uint32 mail_index = 1;
+    repeated MailDataBin mail_data_list = 2;
+    uint32 last_mail_id = 3;
+    repeated uint32 wait_del_index_list = 4;
+}
+
+message ShopGoodsRecordBin {
+    uint32 goods_id = 1;
+    uint32 bought_num = 2;
+    uint32 last_refresh_time = 3;
+}
+
+message ShopRecordBin {
+    uint32 shop_type = 1;
+    repeated ShopGoodsRecordBin goods_record_list = 2;
+}
+
+message PlayerShopCompBin {
+    repeated ShopRecordBin shop_record_list = 1;
+}
+
+message GachaGuaranteeDataBin {
+    uint32 gacha_rule_id = 1;
+    uint32 last_gacha_guarantee_times = 2;
+    bool is_cur_schedule_triggered = 3;
+}
+
+message GachaRecordBin {
+    uint32 gacha_type = 1;
+    uint32 cur_schedule_id = 2;
+    uint32 total_gacha_times = 3;
+    map<uint32, GachaGuaranteeDataBin> gacha_guarantee_map = 4;
+    uint32 cur_schedule_total_gacha_times = 5;
+}
+
+message PlayerGachaCompBin {
+    map<uint32, GachaRecordBin> gacha_record_map = 1;
+    uint32 gacha_random = 2;
+}
+
+message GivingRecordBin {
+    uint32 giving_id = 1;
+    bool is_finished = 2;
+    uint32 last_group_id = 3;
+}
+
+message PlayerGivingCompBin {
+    map<uint32, GivingRecordBin> giving_record_map = 1;
+}
+
+message ForgeQueueBin {
+    uint32 transaction_no = 1;
+    uint32 queue_id = 2;
+    uint32 forge_id = 3;
+    uint32 forge_count = 4;
+    uint32 finish_count = 5;
+    uint32 taken_count = 6;
+    uint32 start_time = 7;
+    uint32 single_time_cost = 8;
+    repeated uint32 proud_skill_id_list = 9;
+    uint32 avatar_id = 10;
+}
+
+message PlayerForgeCompBin {
+    uint32 last_transaction_no = 1;
+    map<uint32, ForgeQueueBin> forge_queue_map = 2;
+}
